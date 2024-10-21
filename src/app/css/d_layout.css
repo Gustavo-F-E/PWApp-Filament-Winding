@@ -1,0 +1,14 @@
+.container {
+  display: flex; /* flex */
+  flex-direction: column; /* flex-col */
+  align-items: center; /* items-center */
+  gap: 1rem; /* space-y-4 (equivalente a 1rem) */
+}
+
+/* Estilos responsivos */
+@media (min-width: 640px) { /* sm: */
+  .container {
+    flex-direction: row; /* Cambia a fila en pantallas pequeñas y más grandes */
+    gap: 1.5rem; /* Ajusta el espacio entre elementos si es necesario */
+  }
+}

@@ -2,6 +2,7 @@ import React from 'react'; // Asegúrate de importar React
 import localFont from "next/font/local";
 import "./globals.css";
 import type { Metadata, Viewport } from "next";
+import Link from 'next/link';
 
 //const APP_NAME = "Filament Path Generator";
 //const APP_DEFAULT_TITLE = "Filament Path Generator";
@@ -70,7 +71,31 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+      <nav className="navigation_bar">
+        {/* Botón que enlaza a la página 1 */}
+        <Link href="/ejemplo_1" className="btn">
+          Grafico de Barras
+        </Link>
+
+        {/* Botón que enlaza a la página 2 */}
+        <Link href="/parametric" className="btn">
+          Grafico Curva Parametrica
+        </Link>
+
+        {/* Botón que enlaza a la página 3 */}
+        <Link href="/ejemplo_3" className="btn">
+          Ir a Ejemplo 3
+        </Link>
+        <Link href="/three" className="btn">
+          Ejemplo biblioteca ThreeJS
+        </Link>
+        <Link href="/prueba-fast-api" className="btn">
+          Ejemplo fast api
+        </Link>
+        </nav>
+        <div>
         {children}
+        </div>
         </body>
       </html>
   );
