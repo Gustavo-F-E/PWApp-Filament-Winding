@@ -1,12 +1,17 @@
+.divFormulario{
+  min-height: 85vh;
+  max-height: max-content;
+}
+
 .formulario {
   display: flex;
   flex-direction: column; /* Coloca los elementos en una columna */
-  margin: 20px 0; /* Espaciado superior e inferior */
-  padding: 15px; /* Espaciado interno */
-  background-color: #ffffff; /* Color de fondo blanco para el formulario */
+  margin: 0; /* Espaciado superior e inferior */
+  padding: 1rem; /* Espaciado interno */
+  background-color: #fff; /* Color de fondo blanco para el formulario */
   border-radius: 8px; /* Bordes redondeados */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
-  color: black;
+  color: #000;
 }
 
 .formulario label {
@@ -23,11 +28,10 @@
 .formulario button {
   padding: 10px; /* Espaciado interno en el botón */
   background-color: #0070f3; /* Color de fondo del botón */
-  color: white; /* Color del texto */
   border: none; /* Sin bordes */
   border-radius: 4px; /* Bordes redondeados en el botón */
   cursor: pointer; /* Cambia el cursor al pasar el mouse */
-  color: black;
+  color: #000;
 }
 
 .formulario button:hover {
@@ -35,5 +39,5 @@
 }
 
 .h1, .h2{
-  color: black;
+  color: #fff;
 }

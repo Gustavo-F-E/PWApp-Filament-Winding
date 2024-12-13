@@ -1,7 +1,7 @@
 .container {
   display: flex; /* flex */
   flex-direction: column; /* flex-col */
-  align-items: center; /* items-center */
+  align-items: flex-start; /* items-center */
   gap: 1rem; /* space-y-4 (equivalente a 1rem) */
 }
 

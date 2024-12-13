@@ -49,7 +49,7 @@ const Page = () => {
     };
 
     return (
-<div style={{ fontFamily: 'Arial, sans-serif', margin: '20px', padding: '20px', backgroundColor: '#f4f4f4' }}>
+<div className={styles.divFormulario}>
         <h1 className={styles.h1}>Generar Gráfico 3D</h1>
         <form id="plotForm" className={styles.formulario} onSubmit={handleSubmit}>
             <label htmlFor="X">Valor de X:</label>

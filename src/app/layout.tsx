@@ -3,6 +3,10 @@ import localFont from "next/font/local";
 import "./globals.css";
 import type { Metadata, Viewport } from "next";
 import Link from 'next/link';
+import styles from './landing-page.module.css';
+import Image from 'next/image'
+import profilePic from './favicon/android-chrome-512x512.png'
+import userImage from './user_red.svg'
 
 //const APP_NAME = "Filament Path Generator";
 //const APP_DEFAULT_TITLE = "Filament Path Generator";
@@ -69,33 +73,57 @@ export default function RootLayout({
   return (
       <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased ${styles.body}`}
       >
-      <nav className="navigation_bar">
-        {/* Botón que enlaza a la página 1 */}
-        <Link href="/ejemplo_1" className="btn">
-          Grafico de Barras
-        </Link>
-
-        {/* Botón que enlaza a la página 2 */}
-        <Link href="/parametric" className="btn">
-          Grafico Curva Parametrica
-        </Link>
-
-        {/* Botón que enlaza a la página 3 */}
-        <Link href="/ejemplo_3" className="btn">
-          Ir a Ejemplo 3
-        </Link>
-        <Link href="/three" className="btn">
-          Ejemplo biblioteca ThreeJS
-        </Link>
-        <Link href="/prueba-fast-api" className="btn">
-          Ejemplo fast api
-        </Link>
-        </nav>
-        <div>
+        <section className={styles.barraSuperior}>
+          <div className={`${styles.logo} ${styles.flexCentered}`}>
+          <Image
+            src={profilePic}
+            alt="Picture of the author"
+            width={80} 
+            height={80}
+            placeholder="blur" // Optional blur-up while loading
+          />
+          </div>
+          <div className={`${styles.titulo} ${styles.flexCentered}`}>Filament Path Generator</div>
+          <div className={`${styles.inicioSecion} ${styles.flexCentered}`}>
+            <Link href="/inicioSecion" title='Iniciar Sesión'>
+              <Image
+                src={userImage}
+                alt="usuario"
+                width={70} 
+                height={70}
+              />
+            </Link></div>
+        </section>
+        <section  className={`${styles.navegacion} ${styles.flexCentered}`}>
+          <nav className={styles.navigationBar}>
+          {/* Botón que enlaza a la página 1 */}
+          <Link href="/" className={styles.btn}>
+            Inicio
+          </Link>
+          <Link href="/prueba-fast-api" className={styles.btn}>
+            Ejemplo fast api
+          </Link>
+          <Link href="/crear-mandril" className={styles.btn}>
+            Crear Bobinado
+          </Link>
+          <Link href="/ayuda" className={styles.btn}>
+            Ayuda
+            </Link>
+          <Link href="/acercaDe" className={styles.btn}>
+            Acerca del autor
+          </Link>
+          <Link href="/contacto" className={styles.btn}>
+            Contacto
+          </Link>
+          </nav>
+        </section>
+        <section className={`${styles["cuerpo-dinamico-de-la-pagina"]}`}>
         {children}
-        </div>
+        </section>
+        <footer className={`${styles.footer}`}><span>Hecho por&nbsp;</span><a href="https://gustavo-f-eichhorn.netlify.app/" title='Portfolio Web del Autor'> Gustavo Francisco Eichhorn</a><span>. Todos los derechos reservados.</span>
+        </footer>
         </body>
       </html>
   );

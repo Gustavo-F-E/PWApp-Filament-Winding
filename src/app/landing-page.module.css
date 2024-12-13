@@ -1,0 +1,127 @@
+.body{
+  display: grid;
+  grid-template-rows: 15vh auto 10vh; /* Barra superior, contenido principal, footer */
+  grid-template-columns: repeat(8, 1fr); /* Divisiones en columnas iguales */
+  background-color:#333
+}
+
+.barraSuperior{
+  grid-column: 1 / -1; /* Ocupa todas las columnas */
+  grid-row: 1 / 2; /* Ocupa la primera fila */
+  width: 100%;
+  height: 15vh;
+  position: fixed;
+  top:0;
+  display: grid;
+  grid-template-columns: repeat(8, 12.5vw); /* Logo, título, inicio sesión */
+  grid-template-rows: 1fr; /* Una fila */
+}
+
+.logo{
+  grid-row: 1 / 2;
+  grid-column: 7 / -1; /* Primera columna */
+  background-color:#333;
+}
+
+.titulo{
+  grid-row: 1 / 2;
+  grid-column: 3 / 7;
+  background-color:#333;
+  color: #eee;
+  font-size: 2rem;
+  font-weight: bold;
+  padding-left: 10vw;
+}
+
+.inicioSecion{
+  grid-row: 1 / 2;
+  grid-column: 1 / 3;
+  background-color: green;
+  background-color:#333;
+}
+
+.navegacion{
+  position:fixed;
+  top:15vh;
+  left: 0;
+  padding: 5vh 0vw;
+  grid-column: 1 / 3; /* Primera columna */
+  grid-row: 2 / 3; /* Segunda fila */
+  background-color: yellow;
+  background-color:#333;
+}
+
+.cuerpo-dinamico-de-la-pagina{
+  grid-column: 3 / -1; /* Desde la segunda columna hasta el final */
+  grid-row: 2 / 3; /* Segunda fila */
+  height: max-content;
+  width: 75vw;
+  background-color: orange;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.footer{
+  grid-column: 1 / -1; /* Ocupa todas las columnas */
+  grid-row: 3 / 4; /* Última fila */
+  background-color: purple;
+  margin-left: 20vw;
+  background-color:#333; 
+  text-align: center;
+  vertical-align: middle;
+  font-size: 0.8rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer a{
+    font-weight: bold;
+}
+
+.footer a:hover{
+  font-size: 0.9rem;
+  padding: 0rem 0.3rem;
+  transition: padding 0.3s, font-size 0.3s; /* transition-300 */
+}
+
+.navigationBar{
+  background-color:#333; 
+  color: white; 
+  height: 100%;
+  width: 25vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.btn {
+  width: 85%;
+  margin: 1rem;
+  padding-left: 1rem; /* px-4 */
+  padding-right: 1rem; /* px-4 */
+  padding-top: 0.5rem; /* py-2 */
+  padding-bottom: 0.5rem; /* py-2 */
+  background-color: #3b82f6; /* bg-blue-500 */
+  background-color: rgba(255, 255, 255, 0.5);
+  color: rgba(40, 40, 40, 1);; /* text-white */
+  font-weight: 600; /* font-semibold */
+  border-radius: 0.5rem; /* rounded-lg */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(255, 255, 255, 0.06); /* shadow-md */
+  transition: background-color 0.3s; /* transition-colors duration-300 */
+}
+
+.btn:hover {
+  background-color: #2563eb; /* hover:bg-blue-700 */
+}
+
+.flexCentered{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
