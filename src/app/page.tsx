@@ -1,5 +1,6 @@
 import styles from './menuInicio.module.css';
 
+
 export default function Home() {
   return (
     <section className={styles.container}>
@@ -10,10 +11,10 @@ export default function Home() {
           <li>Obtener el Código-G para fabricar un tubo mediante la técnica de Filament-Winding.</li>
           <li>La App se debe adaptar a diferentes dispositivos, e incluso a PC de escritorio con sistemas operativos muy antiguos sin conexión a internet.</li>
           <li>La App App debe proveer elementos de análisis mediante elementos finitos y renderizados para previsualizar el proceso de fabricación.</li>
-          <li>Tambien debe ser intuitiva, fácil de usar y debe proveer el acceso a la documentación y/o videos para aprender a usarla (ver <a href="#minitutorial">Minitutorial</a> ).</li>
+          <li>Tambien debe ser intuitiva, fácil de usar y debe proveer el acceso a la documentación y/o videos para aprender a usarla (ver <a className={styles.links}href="#minitutorial">Minitutorial</a> ).</li>
       </ul>
       <p>En esta primera versión, se ofrece el cálculo para mandriles únicamente cilíndricos, pero a futuro se piensa extender las capacidades para todo tipo de mandriles.</p>
-      <p><h2 id='minitutorial' className={styles.h2}>Minitutorial</h2></p>
+      <h2 id='minitutorial' className={styles.h2}>Minitutorial</h2>
 
     </section>
   );
