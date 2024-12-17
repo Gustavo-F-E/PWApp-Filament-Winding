@@ -1,9 +1,11 @@
-import styles from './acercaDe.module.css';
+import styles from '../css/acercaDe.module.css';
 
-export default function Home() {
+function AcercaDe() {
   return (
     <section className={styles.container}>
       Acerca del autor
     </section>
   );
 }
+
+export default AcercaDe

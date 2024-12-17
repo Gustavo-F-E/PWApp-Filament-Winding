@@ -1,0 +1,45 @@
+.h2{
+  text-align: center;
+  padding: 0.5rem 0rem;
+  font-size: 1rem;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+/* Estilos básicos */
+.tablaBobinadoElegido {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0rem 0.8rem;
+  font-size: 0.6rem;
+  text-align: center;
+}
+
+.tablaBobinadoElegido th, .tablaBobinadoElegido td {
+  border: 1px solid #ddd;
+  padding: 0.2rem;
+  background-color: #666;
+}
+
+.tablaBobinadoElegido th {
+  background-color: #111;
+}
+
+.tablaBobinadoElegido tr:hover {
+  background-color: #eee;
+  color: #333;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.tablaBobinadoElegido th:hover {
+  font-weight: bolder !important;
+}
+
+.mostrarBobinadoElegido{
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: max-content max-content max-content max-content;
+  padding: 0rem 1rem;
+}

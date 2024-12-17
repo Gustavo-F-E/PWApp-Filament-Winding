@@ -1,9 +1,11 @@
-import styles from './contacto.module.css';
+import styles from '../css/contacto.module.css';
 
-export default function Contacto() {
+function Contacto() {
   return (
     <section className={styles.container}>
       Formulario de contacto
     </section>
   );
 }
+
+export default Contacto

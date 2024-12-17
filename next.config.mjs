@@ -14,9 +14,11 @@ const withPWA = withPWAInit({
   },
 });
 
-export default withPWA({
-  // Your Next.js config
-});
+const nextConfig = {
+  experimental: { turbo: true, // Habilitar Turbo 
+  },
+};
+export default withPWA(nextConfig);
 
 //const nextConfig = {};
 //export nextConfig;

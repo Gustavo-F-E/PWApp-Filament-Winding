@@ -1,10 +1,10 @@
-import styles from './inicioSecion.module.css';
+import styles from '../css/inicioSecion.module.css';
 import Image from 'next/image'
 import userImage from './user_red.svg'
 
 
 
-export default function Home() {
+function IniciarSecion() {
   return (
     <section className={styles.container}>
           <Image
@@ -16,3 +16,5 @@ export default function Home() {
     </section>
   );
 }
+
+export default IniciarSecion

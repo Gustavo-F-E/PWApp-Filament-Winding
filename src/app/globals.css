@@ -2,11 +2,51 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url(./css/a_variables.css);
-@import url(./css/b_resets.css);
+/*@import url(./css/a_variables.css);*/
+/*@import url(./css/b_resets.css);*/
 /*@import url(./css/c_navigation_bar.css);*/
 /*@import url(./css/d_layout.css);*/
 /*@import url(./css/e-formulario.css);*/
+
+:root {
+  --background: #151634;
+  --foreground: #fff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #942580;
+    --foreground: #ededed;
+  }
+}
+
+/**************************/
+/*Normalizaciones y resets*/
+/**************************/
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 16px;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  scroll-behavior: smooth;
+}
+
+body {
+  color: #fff;
+  background: #151634;
+  font-family: Arial, Helvetica, sans-serif;
+  height: auto;
+  width: 100vw;
+  margin: 0;
+  padding: 0rem;
+}
 
 
 

@@ -3,7 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import type { Metadata, Viewport } from "next";
 import Link from 'next/link';
-import styles from './landing-page.module.css';
+import styles from './css/landing-page.module.css';
 import Image from 'next/image'
 import logo from './favicon/android-chrome-512x512.png'
 import userImage from './user_red.svg'
@@ -104,8 +104,8 @@ export default function RootLayout({
             <Link href="/prueba-fast-api" className={styles.btn}>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ejemplo fast api&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </Link>
-            <Link href="/crear-mandril" className={styles.btn}>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Crear Bobinado&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <Link href="/crearMandril" className={styles.btn}>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Crear Mandril&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </Link>
             <Link href="/ayuda" className={styles.btn}>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ayuda&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

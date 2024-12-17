@@ -3,7 +3,7 @@
 "use client"; // Indica que este es un Client Component
 
 import React from 'react';
-import styles from './formulario.module.css';
+import styles from '../css/formulario.module.css';
 
 const Page = () => {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {

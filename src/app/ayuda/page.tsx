@@ -1,9 +1,11 @@
-import styles from './ayuda.module.css';
+import styles from '../css/ayuda.module.css';
 
-export default function Home() {
+function Ayuda() {
   return (
     <section className={styles.container}>
       Ayuda
     </section>
   );
 }
+
+export default Ayuda

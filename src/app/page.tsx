@@ -1,7 +1,7 @@
-import styles from './menuInicio.module.css';
+import styles from './css/menuInicio.module.css';
 
 
-export default function Home() {
+function Home() {
   return (
     <section className={styles.container}>
       <p  className={styles.primerParrafo}>
@@ -19,3 +19,5 @@ export default function Home() {
     </section>
   );
 }
+
+export default Home
