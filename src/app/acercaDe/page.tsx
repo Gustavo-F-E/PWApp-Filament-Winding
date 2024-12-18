@@ -1,4 +1,4 @@
-import styles from '../css/acercaDe.module.css';
+import styles from '../css/acercaDe_page.module.css';
 
 function AcercaDe() {
   return (

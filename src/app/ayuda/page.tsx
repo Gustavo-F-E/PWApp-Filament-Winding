@@ -1,4 +1,4 @@
-import styles from '../css/ayuda.module.css';
+import styles from '../css/ayuda_page.module.css';
 
 function Ayuda() {
   return (

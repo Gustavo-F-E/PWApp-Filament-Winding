@@ -3,10 +3,10 @@ import localFont from "next/font/local";
 import "./globals.css";
 import type { Metadata, Viewport } from "next";
 import Link from 'next/link';
-import styles from './css/landing-page.module.css';
+import styles from './css/home_layout.module.css';
 import Image from 'next/image'
 import logo from './favicon/android-chrome-512x512.png'
-import userImage from './user_red.svg'
+import userImage from '../../public/images/icons/user_red.svg'
 
 //const APP_NAME = "Filament Path Generator";
 //const APP_DEFAULT_TITLE = "Filament Path Generator";

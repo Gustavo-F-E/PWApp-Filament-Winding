@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../css/MostrarBobinado.module.css';
+import styles from '../css/crearMandril_component_MostrarBobinado.module.css';
 
 interface Bobinado {
   nombre_del_bobinado: string;
@@ -7,6 +7,7 @@ interface Bobinado {
   longitud: number;
   pines: boolean;
   usuario: string;
+  espesor: number;
 }
 
 interface MostrarBobinadoProps {
@@ -15,7 +16,7 @@ interface MostrarBobinadoProps {
 
 const MostrarBobinado: React.FC<MostrarBobinadoProps> = ({ bobinadoElegido }) => {
   if (!bobinadoElegido) {
-    return <h2 className={styles.h2}>Elegir Bobinado para mostrar</h2>;
+    return <h2 className={styles.h2}>Crear/Elegir Bobinado</h2>;
   }
 
   return (
@@ -29,6 +30,10 @@ const MostrarBobinado: React.FC<MostrarBobinadoProps> = ({ bobinadoElegido }) =>
           </tr>
         </thead>
         <tbody>
+          <tr>
+            <td>Usuario</td>
+            <td>{bobinadoElegido.usuario}</td>
+          </tr>
           <tr>
             <td>Denominación</td>
             <td>{bobinadoElegido.nombre_del_bobinado}</td>
@@ -46,8 +51,8 @@ const MostrarBobinado: React.FC<MostrarBobinadoProps> = ({ bobinadoElegido }) =>
             <td>{bobinadoElegido.pines ? 'Sí' : 'No'}</td>
           </tr>
           <tr>
-            <td>Usuario</td>
-            <td>{bobinadoElegido.usuario}</td>
+            <td>Espesor de capa</td>
+            <td>{bobinadoElegido.espesor}</td>
           </tr>
         </tbody>
       </table>

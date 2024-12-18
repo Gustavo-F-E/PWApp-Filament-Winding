@@ -1,4 +1,4 @@
-import styles from '../css/contacto.module.css';
+import styles from '../css/contacto_page.module.css';
 
 function Contacto() {
   return (

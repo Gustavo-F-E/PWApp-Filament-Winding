@@ -1,4 +1,4 @@
-import styles from './css/menuInicio.module.css';
+import styles from './css/home_page.module.css';
 
 
 function Home() {
