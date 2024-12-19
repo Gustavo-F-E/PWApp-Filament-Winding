@@ -28,12 +28,12 @@
 }
 
 .capasBobinadoElegido{
-  grid-column: 2 / 3; /* Ocupa todas las columnas */
+  grid-column: 2 / 4; /* Ocupa todas las columnas */
   grid-row: 1 / 2; /* Ocupa la primera fila */
   width: 100%;
 }
 
-.opcionesBobinado{
+.editarBobinado{
   grid-column: 2 / 3; /* Ocupa todas las columnas */
   grid-row: 2 / 3; /* Ocupa la primera fila */
   width: 100%;

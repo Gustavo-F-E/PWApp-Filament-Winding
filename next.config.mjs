@@ -15,7 +15,8 @@ const withPWA = withPWAInit({
 });
 
 const nextConfig = {
-  experimental: { turbo: true, // Habilitar Turbo 
+  experimental: {
+    turbo: {},
   },
 };
 export default withPWA(nextConfig);
