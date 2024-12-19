@@ -1,6 +1,6 @@
 import styles from '../css/inicioSecion_page.module.css';
 import Image from 'next/image'
-import userImage from './user_red.svg'
+import userImage from '../../../public/images/icons/user_red.svg'
 
 
 
