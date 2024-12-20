@@ -9,14 +9,8 @@ import MostrarBobinado from '../components/MostrarBobinado';
 import MostrarCapas from '../components/MostrarCapas';
 
 
-interface VerBobinados {
-  nombre_del_bobinado: string;
-  fecha_creacion: string;
-  fecha_ultima_modificacion: string;
-}
-
-// Define la interfaz para los datos de cada bobinado
 interface Bobinado {
+  id: string;
   nombre_del_bobinado: string;
   fecha_creacion: string;
   fecha_ultima_modificacion: string;
@@ -25,12 +19,13 @@ interface Bobinado {
   pines: boolean;
   usuario: string;
   espesor: number;
-  capas: Capa[]; // Asegúrate de incluir la propiedad 'capas' si es necesaria
+  capas: Capa[];
 }
 
 // Define la interfaz para las capas
 interface Capa {
-  nombre: string;
+  id: string;
+  id_bobinado: string;
   alfa_original: number;
   alfa_corregido: number;
   velocidad_de_alimentacion: number;
@@ -38,18 +33,19 @@ interface Capa {
   ancho_eff: number;
   NP: number;
   patron_elegido: number;
+  diametro_mandril?: number; // Agregado para evitar problemas al acceder al diametro_mandril
 }
 
 // Función para obtener los datos del servidor
 async function fetchBobinados(): Promise<Bobinado[]> {
-  const response = await fetch('/api/crearMandril/bobinados');
+  const response = await fetch('/api/crearMandril/bobinados'); /*nextjs asume el método GET automaticamente por defecto*/
   if (!response.ok) throw new Error('Error fetching Bobinados');
   return await response.json();
 }
 
 // Función para obtener las capas del servidor
-async function fetchCapas(nombre: string): Promise<Capa[]> {
-  const response = await fetch(`/api/crearMandril/capas?nombre=${nombre}`);
+async function fetchCapas(id_bobinado: string): Promise<Capa[]> {
+  const response = await fetch(`/api/crearMandril/capas?id_bobinado=${id_bobinado}`); /*nextjs asume el método GET automaticamente por defecto*/
   if (!response.ok) throw new Error('Error fetching Capas');
   return await response.json();
 }
@@ -64,18 +60,13 @@ function CrearMandril() {
       .catch(console.error);
   }, []);
 
-  /*const handleVerDetalles = (nombre: string) => {
-    const bobinado = bobinados.find(b => b.nombre_del_bobinado === nombre);
-    setBobinadoElegido(bobinado || null);
-  };*/
-
-  const handleVerDetalles = async (nombre: string) => {
-    const bobinado = bobinados.find(b => b.nombre_del_bobinado === nombre);
+  const handleVerDetalles = async (id: string) => {
+    const bobinado = bobinados.find(b => b.id === id);
   
     if (bobinado) {
       try {
         // Obtén las capas relacionadas con el bobinado
-        const capas = await fetchCapas(bobinado.nombre_del_bobinado); 
+        const capas = await fetchCapas(bobinado.id); 
         setBobinadoElegido({ ...bobinado, capas });  // Aquí añadimos las capas al estado
       } catch (error) {
         console.error('Error fetching capas:', error);

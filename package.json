@@ -22,7 +22,8 @@
     "react-dom": "^19.0.0",
     "react-plotly.js": "^2.6.0",
     "sqlite3": "^5.1.7",
-    "three": "^0.169.0"
+    "three": "^0.169.0",
+    "uuid": "^11.0.3"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.12",
@@ -31,6 +32,7 @@
     "@types/plotly.js": "^2.33.4",
     "@types/react": "^19.0.1",
     "@types/react-dom": "^19.0.2",
+    "@types/uuid": "^10.0.0",
     "eslint": "^8",
     "eslint-config-next": "14.2.13",
     "postcss": "^8",

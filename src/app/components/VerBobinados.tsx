@@ -2,6 +2,7 @@ import React from 'react';
 import styles from '../css/crearMandril_component_VerBobinados.module.css';
 
 interface Bobinado {
+  id: string;
   nombre_del_bobinado: string;
   fecha_creacion: string;
   fecha_ultima_modificacion: string;
@@ -9,14 +10,14 @@ interface Bobinado {
 
 interface VerBobinadosProps {
   bobinados: Bobinado[];
-  onVerDetalles: (nombre: string) => void;
+  onVerDetalles: (id: string) => void;
   onCrearBobinado: () => void;
 }
 
 const VerBobinados: React.FC<VerBobinadosProps> = ({ bobinados, onVerDetalles, onCrearBobinado }) => {
   const mostrarBobinados = bobinados.length > 0;
 
-  const BobinadoTable: React.FC<{ bobinados: Bobinado[]; onVerDetalles: (nombre: string) => void }> = ({ bobinados, onVerDetalles }) => (
+  const BobinadoTable: React.FC<{ bobinados: Bobinado[]; onVerDetalles: (id: string) => void }> = ({ bobinados, onVerDetalles }) => (
     <table className={styles.tablaBobinados}>
       <thead>
         <tr className={styles.th}>
@@ -28,12 +29,12 @@ const VerBobinados: React.FC<VerBobinadosProps> = ({ bobinados, onVerDetalles, o
       </thead>
       <tbody>
         {bobinados.map((bobinado) => (
-          <tr key={bobinado.nombre_del_bobinado}>
+          <tr key={bobinado.id}>
             <td>{bobinado.nombre_del_bobinado}</td>
             <td>{new Date(bobinado.fecha_creacion).toLocaleDateString('es-ES')}</td>
             <td>{new Date(bobinado.fecha_ultima_modificacion).toLocaleDateString('es-ES')}</td>
             <td>
-              <button className={styles.verBobinados} onClick={() => onVerDetalles(bobinado.nombre_del_bobinado)}>Ver</button>
+              <button className={styles.verBobinados} onClick={() => onVerDetalles(bobinado.id)}>Ver</button>
             </td>
           </tr>
         ))}

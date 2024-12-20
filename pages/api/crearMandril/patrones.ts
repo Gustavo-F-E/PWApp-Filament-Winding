@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import db from './bobinadosDDBB'; // Asegúrate de que el path esté correcto
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handlerGetPatrones(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
     const { patronElegido, NP} = req.query;
 
