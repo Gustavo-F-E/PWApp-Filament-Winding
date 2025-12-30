@@ -1,0 +1,42 @@
+{
+    "NP_1": {
+        "NP": 1,
+        "cantidad_de_patrones": 1
+    },
+    "NP_2": {
+        "NP": 2,
+        "cantidad_de_patrones": 1
+    },
+    "NP_3": {
+        "NP": 3,
+        "cantidad_de_patrones": 2
+    },
+    "NP_4": {
+        "NP": 4,
+        "cantidad_de_patrones": 2
+    },
+    "NP_5": {
+        "NP": 5,
+        "cantidad_de_patrones": 3
+    },
+    "NP_6": {
+        "NP": 6,
+        "cantidad_de_patrones": 2
+    },
+    "NP_7": {
+        "NP": 7,
+        "cantidad_de_patrones": 4
+    },
+    "NP_8": {
+        "NP": 8,
+        "cantidad_de_patrones": 3
+    },
+    "NP_9": {
+        "NP": 9,
+        "cantidad_de_patrones": 4
+    },
+    "NP_10": {
+        "NP": 10,
+        "cantidad_de_patrones": 3
+    }
+}

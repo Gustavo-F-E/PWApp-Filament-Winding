@@ -1,0 +1,52 @@
+.container{
+  min-height: 85vh;
+  max-height: max-content;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 40vh max-content;
+  gap: 1rem;
+  background-color: #333;
+}
+
+.verBobinados{
+  grid-column: 1 / 2; /* Ocupa todas las columnas */
+  grid-row: 1 / 2; /* Ocupa la primera fila */
+  width: 100%;
+}
+
+.bobinadoElegido{
+  grid-column: 1 / 2; /* Ocupa todas las columnas */
+  grid-row: 2 / 3; /* Ocupa la primera fila */
+  width: 100%;
+}
+
+.crearBobinado{
+  grid-column: 1 / 2; /* Ocupa todas las columnas */
+  grid-row: 2 / 3; /* Ocupa la primera fila */
+  width: 100%;
+}
+
+.capasBobinadoElegido{
+  grid-column: 2 / 4; /* Ocupa todas las columnas */
+  grid-row: 1 / 2; /* Ocupa la primera fila */
+  width: 100%;
+}
+
+.editarBobinado{
+  grid-column: 2 / 3; /* Ocupa todas las columnas */
+  grid-row: 2 / 3; /* Ocupa la primera fila */
+  width: 100%;
+}
+
+.edicionCapa{
+  grid-column: 3 / 4; /* Ocupa todas las columnas */
+  grid-row: 1 / 2; /* Ocupa la primera fila */
+  width: 100%;
+}
+
+.graficos{
+  grid-column: 3 / 4; /* Ocupa todas las columnas */
+  grid-row: 2 / 3; /* Ocupa la primera fila */
+  width: 100%;
+}

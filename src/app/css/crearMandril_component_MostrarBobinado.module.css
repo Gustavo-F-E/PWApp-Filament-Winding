@@ -1,0 +1,105 @@
+.mostrarBobinadoElegido{
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 2rem max-content 4rem;
+  padding: 0rem 1rem;
+  gap: 0.5rem;
+  place-items: center; /* Centra el contenido en ambos ejes */
+}
+
+.h2{
+  grid-column: 1 / 3; /* Ocupa todas las columnas */
+  grid-row: 1 / 2; /* Ocupa la primera fila */
+}
+
+.h2 h2{
+  text-align: center;
+  padding: 1rem 0rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+  font-style: italic;
+}
+
+/* Estilos básicos */
+.tablaBobinadoElegido {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.6rem;
+  text-align: center;
+  grid-column: 1 / -1; /* Ocupa todas las columnas */
+  grid-row: 2 / 3; /* Ocupa la primera fila */
+}
+
+/* Estilos básicos */
+.tablaBobinadoElegido table{
+  width: 100%;
+}
+
+.tablaBobinadoElegido table th, .tablaBobinadoElegido table td {
+  border: 1px solid #ddd;
+  padding: 0.2rem;
+  background-color: #666;
+}
+
+.tablaBobinadoElegido table th {
+  background-color: #111;
+}
+
+.tablaBobinadoElegido table tr:hover {
+  background-color: #eee;
+  color: #333;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.tablaBobinadoElegido table th:hover {
+  font-weight: bolder !important;
+}
+
+.resaltar{
+  font-style: italic;
+}
+
+
+.editarBobinado{
+  grid-column: 1 / 2; /* Ocupa todas las columnas */
+  grid-row: 3 / 4; /* Ocupa la primera fila */
+}
+
+.borrarBobinado{
+  grid-column: 2 / 3; /* Ocupa todas las columnas */
+  grid-row: 3 / 4; /* Ocupa la primera fila */
+}
+
+.editarBobinado button {
+  padding: 0.5rem;
+  background-color:greenyellow;
+  color: #777;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+  position: relative;
+}
+
+.editarBobinado button:hover {
+  background-color: rgb(95, 95, 0);
+  transition: background-color 0.3s;  
+}
+
+.borrarBobinado button {
+  padding: 0.5rem;
+  background-color:red;
+  color: #eee;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+  position: relative;
+}
+
+.borrarBobinado button:hover {
+  background-color:rgb(119, 3, 3);
+  transition: background-color 0.3s;  
+}

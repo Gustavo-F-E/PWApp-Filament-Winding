@@ -1,0 +1,195 @@
+.mostrarCapas{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.h2{
+  text-align: center;
+  padding: 1rem 0rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+  font-style: italic;
+}
+
+/* Estilos básicos */
+.tablaCapas {
+  min-width: 60vw;
+  max-width: auto;
+  border-collapse: collapse;
+  margin: 0rem 1.5rem;
+  font-size: 0.6rem;
+  text-align: center;
+}
+
+.tablaCapas th, .tablaCapas td {
+  border: 1px solid #ddd;
+  padding: 0.2rem;
+  background-color: #666;
+}
+
+.tablaCapas th {
+  background-color: #111;
+}
+
+.tablaCapas tr:hover {
+  background-color: #eee;
+  color: #333;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.tablaCapas th:hover {
+  font-weight: bolder !important;
+}
+
+.nuevaCapa{
+  margin: 1rem 0rem;
+}
+
+.nuevaCapa button {
+  padding: 0.5rem;
+  background-color: darkgreen;
+  color: #eee;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.nuevaCapa button:hover {
+  background-color: rgb(1, 61, 1);
+  transition: background-color 0.3s;  
+}
+
+.verPatron {
+  background-color: #007bff;
+  color: #eee;
+  border: none;
+  padding: 0.2rem 0.5rem;
+  padding: 0.5rem;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  position: relative;
+}
+
+.verPatron:hover {
+  background-color: #0056b3;
+
+}
+
+.editarCapa {
+  background-color:greenyellow;
+  color: #777;
+  border: none;
+  padding: 0.1rem 0.3rem;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+  position: relative;
+}
+
+.editarCapa:hover {
+  background-color: rgb(95, 95, 0);
+}
+
+.borrarCapa {
+  background-color: red;
+  color: #eee;
+  border: none;
+  padding: 0.1rem 0.3rem;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+  position: relative;
+}
+
+.borrarCapa:hover {
+  background-color: rgb(119, 3, 3);
+}
+
+/* Estilos para el modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  color: black;
+}
+
+.modalContent {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 95%;
+  overflow-y: auto;
+  position: relative; /* Necesario para posicionar el botón de cerrar */
+}
+
+.close {
+  position: absolute;
+  top: 1rem;
+  right: 3rem;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.modalTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.modalTable th, .modalTable td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.image {
+  width: 100px; /* Ajusta el tamaño según lo necesites */
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.contenedorModal{
+  width: 100%;
+  display:grid;
+  grid-template-columns: 45vw 45vw;
+  grid-template-rows: 80vh;
+  place-items: center; /* Centra tanto horizontal como verticalmente */
+}
+
+.contenedorModal:first-child{
+  grid-column: 1 / 2; /* Ocupa todas las columnas */
+  grid-row: 1 / 2; /* Ocupa la primera fila */
+}
+
+.contenedorModal:last-child{
+  grid-column: 2 / 3; /* Ocupa todas las columnas */
+  grid-row: 1 / 2; /* Ocupa la primera fila */
+}
+
+.imagenModal {
+  width: 500px;  /* Ancho fijo */
+  height: 300px; /* Altura fija */
+  object-fit: cover; /* Ajuste de la imagen (opcional) */
+}
+
+.tablaCapas tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+.tablaCapas tr:nth-child(even) {
+  background-color: #fff;
+}

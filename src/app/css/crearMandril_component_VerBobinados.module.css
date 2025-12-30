@@ -1,0 +1,77 @@
+.h2, .h3{
+  text-align: center;
+  padding: 1rem 0rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+  font-style: italic;
+}
+
+/* Estilos básicos */
+.tablaBobinados {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0rem 0.8rem;
+  font-size: 0.6rem;
+  text-align: center;
+}
+
+.tablaBobinados th, .tablaBobinados td {
+  border: 1px solid #ddd;
+  padding: 0.2rem;
+  background-color: #666;
+  color: #ddd;
+}
+
+.tablaBobinados th {
+  background-color: #111;
+}
+
+.tablaBobinados tr:hover {
+  background-color: #eee;
+  color: #666;
+  cursor: pointer;
+}
+
+.tablaBobinados th:hover {
+  font-weight: bolder !important;
+  color: #eee !important;
+}
+
+
+.verBobinados {
+  background-color: #007bff;
+  color: #eee;
+  border: none;
+  padding: 0.1rem 0.3rem;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.verBobinados:hover {
+  background-color: #0056b3;
+}
+
+.crearBobinado{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 0rem;
+}
+
+.crearBobinado button {
+  padding: 0.5rem;
+  background-color: darkgreen;
+  color: #eee;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.crearBobinado button:hover {
+  background-color: rgb(1, 61, 1);
+  transition: background-color 0.3s;  
+}
