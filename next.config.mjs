@@ -15,27 +15,16 @@ const withPWA = withPWAInit({
 
 const nextConfig = {
   typescript: {
-    ignoreBuildErrors: true,  // <-- IGNORAR ERRORES DE TYPESCRIPT
+    ignoreBuildErrors: true,
   },
   eslint: {
-    ignoreDuringBuilds: true,  // <-- IGNORAR ERRORES DE ESLINT
+    ignoreDuringBuilds: true,
   },
   
-  // ⚠️ REMOVER o COMENTAR ESTAS LÍNEAS ⚠️
-  // experimental: {
-  //   turbo: {},  // <-- ESTA LÍNEA CAUSA EL ERROR
-  // },
+  // SOLO Turbopack - SIN webpack
+  turbopack: {},
+  // Nota: No hay configuración de webpack aquí
   
-  // ✅ MANTENER webpack config (funciona sin turbo)
-  webpack(config) {
-    config.module.rules.push({
-      test: /\.svg$/,
-      issuer: /\.[jt]sx?$/,
-      use: ['@svgr/webpack'],
-    });
-
-    return config;
-  },
 };
 
 export default withPWA(nextConfig);
