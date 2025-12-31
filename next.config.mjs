@@ -14,7 +14,6 @@ const withPWA = withPWAInit({
 });
 
 const nextConfig = {
-  // AGREGA ESTAS LÍNEAS:
   typescript: {
     ignoreBuildErrors: true,  // <-- IGNORAR ERRORES DE TYPESCRIPT
   },
@@ -22,10 +21,12 @@ const nextConfig = {
     ignoreDuringBuilds: true,  // <-- IGNORAR ERRORES DE ESLINT
   },
   
-  experimental: {
-    turbo: {},
-  },
-
+  // ⚠️ REMOVER o COMENTAR ESTAS LÍNEAS ⚠️
+  // experimental: {
+  //   turbo: {},  // <-- ESTA LÍNEA CAUSA EL ERROR
+  // },
+  
+  // ✅ MANTENER webpack config (funciona sin turbo)
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,
