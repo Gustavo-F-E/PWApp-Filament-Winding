@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     template: "Filament Path Generator"
   },
   description: "Creada por Gustavo Francisco Eichhorn",
-  manifest: "/manifest.json",
+  manifest: "/manifest.json?v=2",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
