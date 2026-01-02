@@ -1,0 +1,44 @@
+{
+    "HomePage": {
+        "description": "es un software libre diseñado para obtener el código G de los patrones de bobinados de piezas fabricadas mediante Filament Winding.",
+        "alertAlt": "Alerta",
+        "toStart": "Para comenzar a utilizar",
+        "recommendation": "te recomendamos el",
+        "tourLink": "Tour de Inicio",
+        "andToView": "y para visualizar el mismo debes",
+        "loginLink": "Iniciar Sesión"
+        },
+    "IdiomaPage": {
+        "title": "Idioma",
+        "description": "Selecciona tu idioma preferido.",
+        "description2": "En caso de que no encuentres tu idioma, siempre puedes utilizar las herramientas automaticas de los navegadores."
+    },
+    "UserBadge": {
+        "user": "Usuario"
+    },
+    "Navegacion": {
+        "inicio": "Inicio",
+        "proyecto": "Proyecto",
+        "capas": "Capas",
+        "ayuda": "Ayuda",
+        "acercaDe": "Acerca de",
+        "contacto": "Contacto",
+        "idioma": "Idioma"
+    },
+        "MenuHome": {
+        "tourDeInicio": "Tour de Inicio"
+    },
+        "MenuProyecto": {
+        "CrearProyecto": "Crear Proyecto",
+        "Liner": "Liner",
+        "Maquina": "Maquina",
+        "CodigoG": "Código G"
+    }
+    ,
+        "MenuCapas": {
+        "CrearProyecto": "Crear Proyecto",
+        "Liner": "Liner",
+        "Maquina": "Maquina",
+        "CodigoG": "Código G"
+    }
+}

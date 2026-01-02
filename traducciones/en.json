@@ -1,0 +1,33 @@
+{
+  "IdiomaPage": {
+    "title": "Language",
+    "description": "Select your preferred language"
+  },
+    "Navegacion": {
+    "inicio": "Home",
+    "proyecto": "Project",
+    "capas": "Layers",
+    "ayuda": "Help",
+    "acercaDe": "About",
+    "contacto": "Contact",
+    "idioma": "Language"
+  },
+  "LanguageOptions": {
+    "english": "English",
+    "spanish": "Spanish",
+    "german": "German",
+    "portuguese": "Portuguese"
+  },
+  "Auth": {
+    "login": "Login",
+    "logout": "Logout",
+    "register": "Register",
+    "noAccount": "Don't have an account?"
+  },
+    "MenuHome": {
+    "login": "Login",
+    "logout": "Logout",
+    "register": "Register",
+    "noAccount": "Don't have an account?"
+  }
+}

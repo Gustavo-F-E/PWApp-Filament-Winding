@@ -1,8 +1,8 @@
-import React from 'react';
+// src/components/MenuList.tsx
 import { MenuItem, MenuItemProps } from './MenuItem';
 
 interface MenuListProps {
-  items: MenuItemProps[];
+  items: (MenuItemProps & { onClick?: () => void })[]; // ← AÑADIR onClick aquí
 }
 
 export function MenuList({ items = [] }: MenuListProps) {
@@ -18,6 +18,7 @@ export function MenuList({ items = [] }: MenuListProps) {
           isActive={item.isActive}
           iconColor={item.iconColor}
           textClass={item.textClass}
+          onClick={item.onClick} // ← Pasar onClick
         />
       ))}
     </>

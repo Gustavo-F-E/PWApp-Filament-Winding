@@ -4,17 +4,19 @@ import { usePathname } from 'next/navigation'
 import { NuevoProyectoIcon, LinerIcon, MaquinaIcon, GCodeIcon} from './IconosSVG'
 import { useAuth } from '@/context/AuthContext'
 import { MenuList } from './MenuList'
+import { useIdioma } from '@/context/IdiomaContext';
 
 export default function MenuIniciarSesion() {
   const pathname = usePathname()
   const isActive = pathname === '/sesion'
   const { isLogged } = useAuth()
+  const { t } = useIdioma();
   const menuItems = [
   {
     columnas: 'col-[1/3]',
     href: '/nuevoProyecto',
     Icon: NuevoProyectoIcon,
-    text: 'Crear Proyecto',
+    text: t('MenuProyecto.CrearProyecto'),
     isActive,
     iconColor: isLogged ? 'var(--blue-950)' : 'var(--blue-400)',
     textClass: isLogged ? 'text-blue-950' : 'text-blue-400',
@@ -23,7 +25,7 @@ export default function MenuIniciarSesion() {
     columnas: 'col-[3/6]',
     href: '/liner',
     Icon: LinerIcon,
-    text: 'Liner',
+    text: t('MenuProyecto.Liner'),
     isActive,
     iconColor: isLogged ? 'var(--blue-950)' : 'var(--blue-400)',
     textClass: isLogged ? 'text-blue-950' : 'text-blue-400',
@@ -32,7 +34,7 @@ export default function MenuIniciarSesion() {
     columnas: 'col-[6/9]',
     href: '/maquina',
     Icon: MaquinaIcon,
-    text: 'Maquina',
+    text: t('MenuProyecto.Maquina'),
     isActive,
     iconColor: isLogged ? 'var(--blue-950)' : 'var(--blue-400)',
     textClass: isLogged ? 'text-blue-950' : 'text-blue-400',
@@ -41,7 +43,7 @@ export default function MenuIniciarSesion() {
     columnas: 'col-[9/12]',
     href: '/GCode',
     Icon: GCodeIcon,
-    text: 'Código G',
+    text: t('MenuProyecto.CodigoG'),
     isActive,
     iconColor: isLogged ? 'var(--blue-950)' : 'var(--blue-400)',
     textClass: isLogged ? 'text-blue-950' : 'text-blue-400',

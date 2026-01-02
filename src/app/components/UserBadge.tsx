@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { UserIcon } from './IconosSVG';
+import { useIdioma } from '@/context/IdiomaContext';
 
 type User = {
   name: string
@@ -11,6 +12,7 @@ type User = {
 
 export default function UserBadge() {
   const [user, setUser] = useState<User | null>(null)
+  const { t } = useIdioma();
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user')
@@ -43,7 +45,7 @@ export default function UserBadge() {
       {/* TEXTO */}
       <div className="row-[5/7] col-[1/-1] flex items-center justify-center">
         <span className="font-bold text-center text-blue-950">
-          {user ? user.name : 'Usuario'}
+          {user ? user.name : t('UserBadge.user')}
         </span>
       </div>
 

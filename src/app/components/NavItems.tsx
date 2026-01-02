@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 //import Image from 'next/image'
 import { ReactElement } from 'react'
+import { useIdioma } from '@/context/IdiomaContext' // ← AÑADIR
 
 type NavItemProps = {
   href: string
@@ -13,6 +14,7 @@ type NavItemProps = {
 
 export default function NavItem({ href, text, icon }: NavItemProps) {
   const pathname = usePathname()
+  const { t } = useIdioma() // ← AÑADIR
 
   const isActive = pathname === href
 
@@ -39,7 +41,7 @@ export default function NavItem({ href, text, icon }: NavItemProps) {
       {/* TEXTO */}
       <span className="col-start-3 col-end-7 text-sm  transition-all duration-200 group-hover:text-lg group-hover:scale-y-110"
         style={{ transformOrigin: 'left center' }}>
-        {text}
+        {t(text)} {/* ← USAR t() aquí */}
       </span>
     </Link>
   )

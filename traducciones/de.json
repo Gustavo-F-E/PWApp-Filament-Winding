@@ -1,0 +1,27 @@
+{
+  "IdiomaPage": {
+    "title": "Idioma",
+    "description": "Selecciona tu idioma preferido"
+  },
+  "Navegacion": {
+    "inicio": "Inicio",
+    "proyecto": "Proyecto",
+    "capas": "Capas",
+    "ayuda": "Ayuda",
+    "acercaDe": "Acerca de",
+    "contacto": "Contacto",
+    "idioma": "Idioma"
+  },
+  "LanguageOptions": {
+    "english": "Inglés",
+    "spanish": "Español",
+    "german": "Alemán",
+    "portuguese": "Portugués"
+  },
+  "Auth": {
+    "login": "Iniciar Sesión",
+    "logout": "Cerrar Sesión",
+    "register": "Regístrate",
+    "noAccount": "¿No tienes cuenta?"
+  }
+}

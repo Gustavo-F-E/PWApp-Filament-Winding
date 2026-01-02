@@ -1,56 +1,59 @@
+// src/components/MenuIdioma.tsx
 'use client'
 
-import { usePathname } from 'next/navigation'
-import { InglesIcon, EspañolIcon, AlemanIcon, PortuguesIcon} from './IconosSVG'
-import { useAuth } from '@/context/AuthContext'
-import { MenuList } from './MenuList'
+import { useIdioma } from '@/context/IdiomaContext';
+import { InglesIcon, EspañolIcon, AlemanIcon, PortuguesIcon } from './IconosSVG';
+import { MenuList } from './MenuList';
 
-export default function MenuIniciarSesion() {
-  const pathname = usePathname()
-  const isActive = pathname === '/sesion'
-  const { isLogged } = useAuth()
+export default function MenuIdioma() {
+  const { idioma, setIdioma} = useIdioma();
+
   const menuItems = [
-  {
-    columnas: 'col-[1/3]',
-    href: '/ingles',
-    Icon: InglesIcon,
-    text: 'English',
-    isActive,
-    iconColor: isLogged ? 'var(--blue-400)' : 'var(--blue-950)',
-    textClass: isLogged ? 'text-blue-950' : 'text-blue-950',
-  },
-  {
-    columnas: 'col-[3/6]',
-    href: '/español',
-    Icon: EspañolIcon,
-    text: 'Español',
-    isActive,
-    iconColor: isLogged ? 'var(--blue-400)' : 'var(--blue-950)',
-    textClass: isLogged ? 'text-blue-950' : 'text-blue-950',
-  },
-  {
-    columnas: 'col-[6/9]',
-    href: '/aleman',
-    Icon: AlemanIcon,
-    text: 'Deuch',
-    isActive,
-    iconColor: isLogged ? 'var(--blue-400)' : 'var(--blue-950)',
-    textClass: isLogged ? 'text-blue-950' : 'text-blue-950',
-  },
-  {
-    columnas: 'col-[9/12]',
-    href: '/portugues',
-    Icon: PortuguesIcon,
-    text: 'Portugues',
-    isActive,
-    iconColor: isLogged ? 'var(--blue-400)' : 'var(--blue-950)',
-    textClass: isLogged ? 'text-blue-950' : 'text-blue-950',
-  },
-];
+    {
+      columnas: 'col-[1/3]',
+      href: '#',
+      Icon: InglesIcon,
+      text: 'English', // "English" o "Inglés"
+      isActive: idioma === 'en',
+      iconColor: 'var(--blue-950)',
+      textClass: idioma === 'en' ? 'text-blue-50' : 'text-blue-950',
+      onClick: () => setIdioma('en')
+    },
+    {
+      columnas: 'col-[3/6]',
+      href: '#',
+      Icon: EspañolIcon,
+      text: 'Español',
+      isActive: idioma === 'es',
+      iconColor: 'var(--blue-950)',
+      textClass: idioma === 'es' ? 'text-blue-50' : 'text-blue-950',
+      onClick: () => setIdioma('es')
+    },
+    {
+      columnas: 'col-[6/9]',
+      href: '#',
+      Icon: AlemanIcon,
+      text: 'Deuch',
+      isActive: idioma === 'de',
+      iconColor: 'var(--blue-950)',
+      textClass: idioma === 'de' ? 'text-blue-50' : 'text-blue-950',
+      onClick: () => setIdioma('de')
+    },
+    {
+      columnas: 'col-[9/12]',
+      href: '#',
+      Icon: PortuguesIcon,
+      text: 'Portugues',
+      isActive: idioma === 'pt',
+      iconColor: 'var(--blue-950)',
+      textClass: idioma === 'pt' ? 'text-blue-50' : 'text-blue-950',
+      onClick: () => setIdioma('pt')
+    },
+  ];
 
   return (
     <div className="h-full w-full grid grid-rows-[repeat(6,1fr)] grid-cols-[repeat(18,1fr)]">
       <MenuList items={menuItems} />
     </div>
-  )
+  );
 }

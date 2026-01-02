@@ -1,7 +1,7 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
-import { TourDeInicioIcon, FAQIcon, ForumIcon, VideotutorialesIcon} from './IconosSVG'
+import { FAQIcon, ForumIcon, VideotutorialesIcon} from './IconosSVG'
 import { useAuth } from '@/context/AuthContext'
 import { MenuList } from './MenuList'
 
@@ -10,15 +10,6 @@ export default function MenuIniciarSesion() {
   const isActive = pathname === '/sesion'
   const { isLogged } = useAuth()
   const menuItems = [
-  {
-    columnas: 'col-[1/3]',
-    href: '/tourDeInicio',
-    Icon: TourDeInicioIcon,
-    text: 'Tour de Inicio',
-    isActive,
-    iconColor: isLogged ? 'var(--blue-400)' : 'var(--blue-950)',
-    textClass: isLogged ? 'text-blue-400' : 'text-blue-950',
-  },
   {
     columnas: 'col-[3/6]',
     href: '/FAQs',
@@ -38,7 +29,7 @@ export default function MenuIniciarSesion() {
     textClass: isLogged ? 'text-blue-950' : 'text-blue-400',
   },
     {
-    columnas: 'col-[9/12]',
+    columnas: 'col-[1/3]',
     href: '/videoTutoriales',
     Icon: VideotutorialesIcon,
     text: 'Videotutoriales',
