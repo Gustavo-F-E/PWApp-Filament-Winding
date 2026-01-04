@@ -1,27 +1,56 @@
 {
-  "IdiomaPage": {
-    "title": "Idioma",
-    "description": "Selecciona tu idioma preferido"
-  },
-  "Navegacion": {
-    "inicio": "Inicio",
-    "proyecto": "Proyecto",
-    "capas": "Capas",
-    "ayuda": "Ayuda",
-    "acercaDe": "Acerca de",
-    "contacto": "Contacto",
-    "idioma": "Idioma"
-  },
-  "LanguageOptions": {
-    "english": "Inglés",
-    "spanish": "Español",
-    "german": "Alemán",
-    "portuguese": "Portugués"
-  },
-  "Auth": {
-    "login": "Iniciar Sesión",
-    "logout": "Cerrar Sesión",
-    "register": "Regístrate",
-    "noAccount": "¿No tienes cuenta?"
-  }
+    "HomePage": {
+        "description": "ist eine freie Software, die entwickelt wurde, um den G-Code für Wickelmuster von Teilen zu erhalten, die mittels Filament Winding hergestellt werden.",
+        "alertAlt": "Warnung",
+        "toStart": "Um zu beginnen",
+        "recommendation": "empfehlen wir die",
+        "tourLink": "Einführungstour",
+        "andToView": "und um sie anzuzeigen müssen Sie",
+        "loginLink": "Anmelden"
+    },
+    "IdiomaPage": {
+        "title": "Sprache",
+        "description": "Wählen Sie Ihre bevorzugte Sprache.",
+        "description2": "Falls Sie Ihre Sprache nicht finden, können Sie immer die automatischen Übersetzungstools des Browsers verwenden."
+    },
+    "UserBadge": {
+        "user": "Benutzer"
+    },
+    "Navegacion": {
+        "inicio": "Startseite",
+        "proyecto": "Projekt",
+        "capas": "Schichten",
+        "ayuda": "Hilfe",
+        "acercaDe": "Über",
+        "contacto": "Kontakt",
+        "idioma": "Sprache"
+    },
+    "layout": {
+        "description": "Anwendung erstellt von"
+    },
+    "MenuHome": {
+        "tourDeInicio": "Einführungstour"
+    },
+    "MenuProyecto": {
+        "CrearProyecto": "Projekt erstellen",
+        "Liner": "Liner",
+        "Maquina": "Maschine",
+        "CodigoG": "G-Code"
+    },
+    "MenuAyuda": {
+        "foroDeUsuarios": "Benutzerforum",
+        "videoTutoriales": "Video-Tutorials"
+    },
+    "MenuCapas": {
+        "nuevaCapa": "Neue Schicht",
+        "material": "Material",
+        "seleccionarPatron": "Muster auswählen",
+        "graficos": "Grafiken"
+    },
+    "sesion": {
+        "iniciar": "Anmelden",
+        "pregunta": "Kein Konto?",
+        "registro": "Registrieren",
+        "cerrar": "Abmelden"
+    }
 }

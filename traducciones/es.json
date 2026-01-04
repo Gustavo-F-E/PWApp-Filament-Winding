@@ -7,7 +7,7 @@
         "tourLink": "Tour de Inicio",
         "andToView": "y para visualizar el mismo debes",
         "loginLink": "Iniciar Sesión"
-        },
+    },
     "IdiomaPage": {
         "title": "Idioma",
         "description": "Selecciona tu idioma preferido.",
@@ -25,20 +25,32 @@
         "contacto": "Contacto",
         "idioma": "Idioma"
     },
-        "MenuHome": {
+    "layout": {
+        "description": "Aplicación creada por"
+    },
+    "MenuHome": {
         "tourDeInicio": "Tour de Inicio"
     },
-        "MenuProyecto": {
+    "MenuProyecto": {
         "CrearProyecto": "Crear Proyecto",
         "Liner": "Liner",
         "Maquina": "Maquina",
         "CodigoG": "Código G"
-    }
-    ,
-        "MenuCapas": {
-        "CrearProyecto": "Crear Proyecto",
-        "Liner": "Liner",
-        "Maquina": "Maquina",
-        "CodigoG": "Código G"
+    },
+    "MenuAyuda": {
+        "foroDeUsuarios": "Foro de Usuarios",
+        "videoTutoriales": "Videotutoriales"
+    },
+    "MenuCapas": {
+        "nuevaCapa": "Nueva Capa",
+        "material": "Material",
+        "seleccionarPatron": "Seleccionar Patrón",
+        "graficos": "Gráficos"
+    },
+    "sesion": {
+        "iniciar": "Iniciar Sesión",
+        "pregunta": "¿No tienes cuenta?",
+        "registro": "Regístrate",
+        "cerrar": "Cerrar Sesión"
     }
 }

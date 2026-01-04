@@ -1,27 +1,56 @@
 {
-  "IdiomaPage": {
-    "title": "Idioma",
-    "description": "Selecciona tu idioma preferido"
-  },
-  "Navegacion": {
-    "inicio": "Inicio",
-    "proyecto": "Proyecto",
-    "capas": "Capas",
-    "ayuda": "Ayuda",
-    "acercaDe": "Acerca de",
-    "contacto": "Contacto",
-    "idioma": "Idioma"
-  },
-  "LanguageOptions": {
-    "english": "Inglés",
-    "spanish": "Español",
-    "german": "Alemán",
-    "portuguese": "Portugués"
-  },
-  "Auth": {
-    "login": "Iniciar Sesión",
-    "logout": "Cerrar Sesión",
-    "register": "Regístrate",
-    "noAccount": "¿No tienes cuenta?"
-  }
+    "HomePage": {
+        "description": "é um software livre projetado para obter o código G dos padrões de enrolamento de peças fabricadas por Filament Winding.",
+        "alertAlt": "Alerta",
+        "toStart": "Para começar a usar",
+        "recommendation": "recomendamos o",
+        "tourLink": "Tour de Início",
+        "andToView": "e para visualizá-lo você deve",
+        "loginLink": "Iniciar Sessão"
+    },
+    "IdiomaPage": {
+        "title": "Idioma",
+        "description": "Selecione seu idioma preferido.",
+        "description2": "Caso não encontre seu idioma, você sempre pode usar as ferramentas automáticas dos navegadores."
+    },
+    "UserBadge": {
+        "user": "Usuário"
+    },
+    "Navegacion": {
+        "inicio": "Início",
+        "proyecto": "Projeto",
+        "capas": "Camadas",
+        "ayuda": "Ajuda",
+        "acercaDe": "Sobre",
+        "contacto": "Contato",
+        "idioma": "Idioma"
+    },
+    "layout": {
+        "description": "Aplicação criada por"
+    },
+    "MenuHome": {
+        "tourDeInicio": "Tour de Início"
+    },
+    "MenuProyecto": {
+        "CrearProyecto": "Criar Projeto",
+        "Liner": "Revestimento",
+        "Maquina": "Máquina",
+        "CodigoG": "Código G"
+    },
+    "MenuAyuda": {
+        "foroDeUsuarios": "Fórum de Usuários",
+        "videoTutoriales": "Tutoriais em Vídeo"
+    },
+    "MenuCapas": {
+        "nuevaCapa": "Nova Camada",
+        "material": "Material",
+        "seleccionarPatron": "Selecionar Padrão",
+        "graficos": "Gráficos"
+    },
+    "sesion": {
+        "iniciar": "Iniciar Sessão",
+        "pregunta": "Não tem uma conta?",
+        "registro": "Registrar-se",
+        "cerrar": "Terminar Sessão"
+    }
 }

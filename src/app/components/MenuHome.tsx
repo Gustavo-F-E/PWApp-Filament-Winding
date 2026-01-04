@@ -6,7 +6,7 @@ import { useAuth } from '@/context/AuthContext'
 import { MenuList } from './MenuList'
 import { useIdioma } from '@/context/IdiomaContext';
 
-export default function MenuHome() {
+export default function MenuHome({ mobileMode = false }: { mobileMode?: boolean }) {
   const pathname = usePathname()
   const isActive = pathname === '/sesion'
   const { isLogged } = useAuth()
@@ -24,8 +24,8 @@ export default function MenuHome() {
 ];
 
   return (
-    <div className="h-full w-full grid grid-rows-[repeat(6,1fr)] grid-cols-[repeat(18,1fr)]">
-      <MenuList items={menuItems} />
+    <div className={mobileMode ? "w-full flex flex-col" : "h-full w-full grid grid-rows-[repeat(6,1fr)] grid-cols-[repeat(18,1fr)]"}>
+      <MenuList items={menuItems} mobileMode={mobileMode} />
     </div>
   )
 }

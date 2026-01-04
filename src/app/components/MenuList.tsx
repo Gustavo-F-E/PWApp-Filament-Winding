@@ -2,10 +2,11 @@
 import { MenuItem, MenuItemProps } from './MenuItem';
 
 interface MenuListProps {
-  items: (MenuItemProps & { onClick?: () => void })[]; // ← AÑADIR onClick aquí
+  items: (MenuItemProps & { onClick?: () => void })[]; 
+  mobileMode?: boolean;
 }
 
-export function MenuList({ items = [] }: MenuListProps) {
+export function MenuList({ items = [], mobileMode = false }: MenuListProps) {
   return (
     <>
       {items.map((item, index) => (
@@ -18,7 +19,8 @@ export function MenuList({ items = [] }: MenuListProps) {
           isActive={item.isActive}
           iconColor={item.iconColor}
           textClass={item.textClass}
-          onClick={item.onClick} // ← Pasar onClick
+          onClick={item.onClick}
+          mobileMode={mobileMode}
         />
       ))}
     </>

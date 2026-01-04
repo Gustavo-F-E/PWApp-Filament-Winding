@@ -39,7 +39,7 @@ export default function NavItem({ href, text, icon }: NavItemProps) {
       </span>
 
       {/* TEXTO */}
-      <span className="col-start-3 col-end-7 text-sm  transition-all duration-200 group-hover:text-lg group-hover:scale-y-110"
+      <span className="col-start-3 col-end-7 text-fluid-sm  transition-all duration-200 group-hover:text-fluid-lg group-hover:scale-y-110"
         style={{ transformOrigin: 'left center' }}>
         {t(text)} {/* ← USAR t() aquí */}
       </span>

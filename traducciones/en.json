@@ -1,33 +1,56 @@
 {
-  "IdiomaPage": {
-    "title": "Language",
-    "description": "Select your preferred language"
-  },
+    "HomePage": {
+        "description": "is free software designed to obtain the G-code for winding patterns of parts manufactured using Filament Winding.",
+        "alertAlt": "Alert",
+        "toStart": "To start using",
+        "recommendation": "we recommend the",
+        "tourLink": "Getting Started",
+        "andToView": "and to view it you must",
+        "loginLink": "Log In"
+    },
+    "IdiomaPage": {
+        "title": "Language",
+        "description": "Select your preferred language.",
+        "description2": "If you don't find your language, you can always use the browser's automatic translation tools."
+    },
+    "UserBadge": {
+        "user": "User"
+    },
     "Navegacion": {
-    "inicio": "Home",
-    "proyecto": "Project",
-    "capas": "Layers",
-    "ayuda": "Help",
-    "acercaDe": "About",
-    "contacto": "Contact",
-    "idioma": "Language"
-  },
-  "LanguageOptions": {
-    "english": "English",
-    "spanish": "Spanish",
-    "german": "German",
-    "portuguese": "Portuguese"
-  },
-  "Auth": {
-    "login": "Login",
-    "logout": "Logout",
-    "register": "Register",
-    "noAccount": "Don't have an account?"
-  },
+        "inicio": "Home",
+        "proyecto": "Project",
+        "capas": "Layers",
+        "ayuda": "Help",
+        "acercaDe": "About",
+        "contacto": "Contact",
+        "idioma": "Language"
+    },
+    "layout": {
+        "description": "Application created by"
+    },
     "MenuHome": {
-    "login": "Login",
-    "logout": "Logout",
-    "register": "Register",
-    "noAccount": "Don't have an account?"
-  }
+        "tourDeInicio": "Getting Started Tour"
+    },
+    "MenuProyecto": {
+        "CrearProyecto": "Create Project",
+        "Liner": "Liner",
+        "Maquina": "Machine",
+        "CodigoG": "G-Code"
+    },
+    "MenuAyuda": {
+        "foroDeUsuarios": "User Forum",
+        "videoTutoriales": "Video Tutorials"
+    },
+    "MenuCapas": {
+        "nuevaCapa": "New Layer",
+        "material": "Material",
+        "seleccionarPatron": "Select Pattern",
+        "graficos": "Graphics"
+    },
+    "sesion": {
+        "iniciar": "Log In",
+        "pregunta": "Don't have an account?",
+        "registro": "Sign Up",
+        "cerrar": "Log Out"
+    }
 }

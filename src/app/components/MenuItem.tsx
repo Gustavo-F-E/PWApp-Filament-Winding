@@ -17,7 +17,8 @@ export interface MenuItemProps {
   isActive?: boolean;
   iconColor?: string;
   textClass?: string;
-  onClick?: () => void; // ← AÑADIR esta prop
+  onClick?: () => void;
+  mobileMode?: boolean; // ← AÑADIR
 }
 
 export function MenuItem({
@@ -28,7 +29,8 @@ export function MenuItem({
   isActive = false,
   iconColor = undefined,
   textClass = '',
-  onClick
+  onClick,
+  mobileMode = false
 }: MenuItemProps) {
   
   const handleClick = (e: React.MouseEvent) => {
@@ -37,6 +39,29 @@ export function MenuItem({
       onClick();
     }
   };
+
+  if (mobileMode) {
+     return (
+        <div className="w-full h-16 mb-2">
+            <Link
+                href={href}
+                onClick={handleClick}
+                className={`
+                    w-full h-full flex items-center px-4 rounded-lg
+                    ${isActive ? 'bg-blue-900 border-l-4 border-blue-50' : 'hover:bg-blue-900'}
+                    transition-colors duration-200
+                `}
+            >
+                <div className="flex-shrink-0 mr-4">
+                    <Icon className="w-8 h-8" colorClass={iconColor || 'var(--blue-50)'} />
+                </div>
+                <div className={`flex-grow text-left text-blue-50 ${textClass}`}>
+                    <span className="font-bold">{text}</span>
+                </div>
+            </Link>
+        </div>
+     );
+  }
 
   return (
     <div className={`row-span-6 ${columnas} h-full`}>
@@ -47,7 +72,7 @@ export function MenuItem({
           h-full w-full
           grid grid-rows-[4fr_2fr]  // 4 partes para icono, 2 para texto
           items-center
-          text-lg
+          text-fluid-lg
           transition-all
           duration-200
           font-light 
@@ -80,7 +105,7 @@ export function MenuItem({
             ${textClass}
           `}
         >
-          <span className="text-center text-sm line-clamp-2">{text}</span>
+          <span className="text-center text-fluid-sm line-clamp-2">{text}</span>
         </div>
       </Link>
     </div>

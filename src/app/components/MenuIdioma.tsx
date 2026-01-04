@@ -5,7 +5,7 @@ import { useIdioma } from '@/context/IdiomaContext';
 import { InglesIcon, EspañolIcon, AlemanIcon, PortuguesIcon } from './IconosSVG';
 import { MenuList } from './MenuList';
 
-export default function MenuIdioma() {
+export default function MenuIdioma({ mobileMode = false }: { mobileMode?: boolean }) {
   const { idioma, setIdioma} = useIdioma();
 
   const menuItems = [
@@ -52,8 +52,8 @@ export default function MenuIdioma() {
   ];
 
   return (
-    <div className="h-full w-full grid grid-rows-[repeat(6,1fr)] grid-cols-[repeat(18,1fr)]">
-      <MenuList items={menuItems} />
+    <div className={mobileMode ? "w-full flex flex-col" : "h-full w-full grid grid-rows-[repeat(6,1fr)] grid-cols-[repeat(18,1fr)]"}>
+      <MenuList items={menuItems} mobileMode={mobileMode} />
     </div>
   );
 }
