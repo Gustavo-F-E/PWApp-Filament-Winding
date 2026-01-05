@@ -29,7 +29,7 @@ export default function MobileLayoutWrapper({
   desktopFooter: React.ReactNode,
   desktopUserBadge: React.ReactNode
 }) {
-  const { togglePageMenu, isPageMenuOpen, pageMenuContent, closePageMenu } = useMobile();
+  const { togglePageMenu, isPageMenuOpen, pageMenuContent, closePageMenu, isLandscapeSidebarOpen } = useMobile();
   const [isGlobalNavOpen, setIsGlobalNavOpen] = useState(false);
 
   const toggleGlobalNav = () => setIsGlobalNavOpen(!isGlobalNavOpen);
@@ -47,100 +47,182 @@ export default function MobileLayoutWrapper({
             {desktopFooter}
         </div>
 
-        {/* --- MOBILE LAYOUT (Hidden on large screens) --- */}
-        <div className="lg:hidden fixed inset-0 flex flex-col bg-blue-50">
-            
-            {/* FIXED TOP BAR (10% height) */}
-            <header className="h-[10%] bg-blue-950 flex items-center px-4 shrink-0 z-40">
-                 <div className="w-1/4 h-full flex items-center justify-start py-2">
-                    <FillWindPathIcon className="h-full w-auto max-h-12" colorClass="var(--white-950)" />
-                 </div>
-                 <div className="w-3/4 flex justify-end">
-                    <h1 className="text-white font-bold text-fluid-lg truncate">
-                        Filament Path Generator
-                    </h1>
-                 </div>
-            </header>
 
-            {/* MAIN CONTENT (Scrollable) */}
-            <main className="flex-1 overflow-y-auto overflow-x-hidden relative w-full">
-                {children}
+            {/* --- MOBILE PORTRAIT LAYOUT (Hidden on large screens and landscape) --- */}
+            <div className="lg:hidden landscape:hidden fixed inset-0 flex flex-col bg-blue-50">
                 
-                {/* Footer only visible at bottom of scroll */}
-                 <footer className="bg-red-100 text-red-950 text-center py-4 mt-auto">
-                    <div className="flex items-center justify-center">
-                        <TranslatedFooter />
+                {/* FIXED TOP BAR (10% height) */}
+                <header className="h-[10%] bg-blue-950 flex items-center px-4 shrink-0 z-40">
+                     <div className="w-1/4 h-full flex items-center justify-start py-2">
+                        <FillWindPathIcon className="h-full w-auto max-h-12" colorClass="var(--white-950)" />
+                     </div>
+                     <div className="w-3/4 flex justify-end">
+                        <h1 className="text-white font-bold text-fluid-lg truncate">
+                            Filament Path Generator
+                        </h1>
+                     </div>
+                </header>
+    
+                {/* MAIN CONTENT (Scrollable) */}
+                <main className="flex-1 overflow-y-auto overflow-x-hidden relative w-full">
+                    {children}
+                    
+                    {/* Footer only visible at bottom of scroll */}
+                     <footer className="bg-red-100 text-red-950 text-center py-4 mt-auto">
+                        <div className="flex items-center justify-center">
+                            <TranslatedFooter />
+                        </div>
+                    </footer>
+                </main>
+    
+                {/* PAGE MENU MODAL (Right Sidebar) */}
+                {/* Rendered to be z-indexed below the bottom bar (z-50) but above content */}
+                {isPageMenuOpen && pageMenuContent && (
+                    <div className="fixed inset-0 z-40 bg-black bg-opacity-50 flex justify-end lg:hidden" onClick={closePageMenu} style={{ paddingBottom: '10%' }}>
+                         <div 
+                            className="w-[80%] h-full bg-blue-300 p-4 text-blue-950 overflow-y-auto shadow-2xl"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            {pageMenuContent}
+                        </div>
                     </div>
-                </footer>
-            </main>
-
-            {/* PAGE MENU MODAL (Left Sidebar) */}
-            {/* Rendered to be z-indexed below the bottom bar (z-50) but above content */}
-            {isPageMenuOpen && pageMenuContent && (
-                <div className="fixed inset-0 z-40 bg-black bg-opacity-50 flex justify-start lg:hidden" onClick={closePageMenu} style={{ paddingBottom: '10%' }}>
-                     <div 
-                        className="w-[80%] h-full bg-blue-300 p-4 text-blue-950 overflow-y-auto shadow-2xl"
-                        onClick={(e) => e.stopPropagation()}
-                    >
-                        {pageMenuContent}
-                    </div>
-                </div>
-            )}
-
-
-            {/* FIXED BOTTOM BAR (10% height) */}
+                )}
+    
+    
+                {/* FIXED BOTTOM BAR (10% height) */}
             <nav className="h-[10%] bg-blue-950 flex items-center justify-between px-6 shrink-0 z-50">
-                {/* LEFT: Page Menu Hamburger (3 lines) */}
-                 <button onClick={togglePageMenu} className="p-2 text-white bg-transparent z-[60]">
-                    {isPageMenuOpen ? (
-                        <span className="text-xl font-bold">X</span>
-                    ) : (
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                            <line x1="3" y1="12" x2="21" y2="12"></line>
-                            <line x1="3" y1="6" x2="21" y2="6"></line>
-                            <line x1="3" y1="18" x2="21" y2="18"></line>
-                        </svg>
-                    )}
-                 </button>
-
-                {/* CENTER: User Badge (Icon Only) */}
-                <div className="flex-1 px-4 flex justify-center h-full py-2">
-                    <UserBadge mobileMode={true} />
-                </div>
-
-                {/* RIGHT: Global Nav (Home Icon) */}
-                <button onClick={toggleGlobalNav} className="p-2 text-white">
-                    <HomeIcon className="w-8 h-8" colorClass="var(--white-50)" />
-                </button>
-            </nav>
-
-            {/* GLOBAL NAV DRAWER (Right Side - Full Width) 
-                Requirement: "El aside que contiene el nav debe ser un botón de hamburguesa que ocupe la derecha de una barra inferior fija"
-                It implies clicking it opens the nav. Let's make it a bottom sheet or side drawer.
-            */}
-            {isGlobalNavOpen && (
-                <div className="fixed inset-0 z-[60] bg-black bg-opacity-50 flex justify-end" onClick={toggleGlobalNav}>
-                    <div className="w-[80%] h-full bg-blue-950 text-blue-50 p-6 flex flex-col shadow-xl" onClick={e => e.stopPropagation()}>
-                         <div className="flex flex-col gap-6 overflow-y-auto flex-1">
-                            <NavItem href="/" text="Navegacion.inicio" icon={<HomeIcon className="w-8 h-8" colorClass="var(--blue-50)" />} />
-                            <NavItem href="/proyecto" text="Navegacion.proyecto" icon={<ProyectoIcon className="w-8 h-8" colorClass="var(--blue-50)" />} />
-                            <NavItem href="/capas" text="Navegacion.capas" icon={<CapasIcon className="w-8 h-8" colorClass="var(--blue-50)" />} />
-                            <NavItem href="/ayuda" text="Navegacion.ayuda" icon={<AyudaIcon className="w-8 h-8" colorClass="var(--blue-50)" />} />
-                            <NavItem href="/acercaDe" text="Navegacion.acercaDe" icon={<AcercaDeIcon className="w-8 h-8" colorClass="var(--blue-50)" />} />
-                            <NavItem href="/contacto" text="Navegacion.contacto" icon={<ContactoIcon className="w-8 h-8" colorClass="var(--blue-50)" />} />
-                            <NavItem href="/idioma" text="Navegacion.idioma" icon={<IdiomaIcon className="w-8 h-8" colorClass="var(--blue-50)" />} />
-                            
-                            <div className="mt-4">
-                                <BotonSesion />
-                            </div>
-                         </div>
-                         <div className="mt-4 flex justify-end">
-                            <button onClick={toggleGlobalNav} className="text-white text-xl font-bold p-2 border border-white rounded-full w-10 h-10 flex items-center justify-center hover:bg-white transition-colors">X</button>
-                         </div>
+                    {/* Left: Global Nav (Home Icon) */}
+                    <button onClick={toggleGlobalNav} className="p-2 text-white">
+                        <HomeIcon className="w-8 h-8" colorClass="var(--white-50)" />
+                    </button>
+                    
+    
+                    {/* CENTER: User Badge (Icon Only) */}
+                    <div className="flex-1 px-4 flex justify-center h-full py-2">
+                        <UserBadge mobileMode={true} />
                     </div>
-                </div>
-            )}
-        </div>
+    
+                    {/* RIGHT: Page Menu Hamburger (3 lines) */}
+                     <button onClick={togglePageMenu} className="p-2 text-white bg-transparent z-[60]">
+                        {isPageMenuOpen ? (
+                            <span className="text-xl font-bold">X</span>
+                        ) : (
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                <line x1="3" y1="12" x2="21" y2="12"></line>
+                                <line x1="3" y1="6" x2="21" y2="6"></line>
+                                <line x1="3" y1="18" x2="21" y2="18"></line>
+                            </svg>
+                        )}
+                     </button>
+                </nav>
+    
+                {/* GLOBAL NAV DRAWER (Right Side - Full Width) 
+                    Requirement: "El aside que contiene el nav debe ser un botón de hamburguesa que ocupe la derecha de una barra inferior fija"
+                    It implies clicking it opens the nav. Let's make it a bottom sheet or side drawer.
+                */}
+                {isGlobalNavOpen && (
+                    <div className="fixed inset-0 z-[60] bg-black bg-opacity-50 flex justify-start" onClick={toggleGlobalNav}>
+                        <div className="w-[80%] h-full bg-blue-950 text-blue-50 p-6 flex flex-col shadow-xl" onClick={e => e.stopPropagation()}>
+                             <div className="flex flex-col gap-6 overflow-y-auto flex-1">
+                                <NavItem href="/" text="Navegacion.inicio" icon={<HomeIcon className="w-8 h-8" colorClass="var(--blue-50)" />} />
+                                <NavItem href="/proyecto" text="Navegacion.proyecto" icon={<ProyectoIcon className="w-8 h-8" colorClass="var(--blue-50)" />} />
+                                <NavItem href="/capas" text="Navegacion.capas" icon={<CapasIcon className="w-8 h-8" colorClass="var(--blue-50)" />} />
+                                <NavItem href="/ayuda" text="Navegacion.ayuda" icon={<AyudaIcon className="w-8 h-8" colorClass="var(--blue-50)" />} />
+                                <NavItem href="/acercaDe" text="Navegacion.acercaDe" icon={<AcercaDeIcon className="w-8 h-8" colorClass="var(--blue-50)" />} />
+                                <NavItem href="/contacto" text="Navegacion.contacto" icon={<ContactoIcon className="w-8 h-8" colorClass="var(--blue-50)" />} />
+                                <NavItem href="/idioma" text="Navegacion.idioma" icon={<IdiomaIcon className="w-8 h-8" colorClass="var(--blue-50)" />} />
+                                
+                                <div className="mt-4">
+                                    <BotonSesion />
+                                </div>
+                             </div>
+                             <div className="mt-4 flex justify-start">
+                                <button onClick={toggleGlobalNav} className="text-white text-xl font-bold p-2 border border-white rounded-full w-10 h-10 flex items-center justify-center hover:bg-white transition-colors">X</button>
+                             </div>
+                        </div>
+                    </div>
+                )}
+            </div>
+
+            {/* --- MOBILE LANDSCAPE LAYOUT (Hidden on portrait and large screens) --- */}
+            <div className="hidden lg:!hidden landscape:flex fixed inset-0 bg-blue-50 w-screen h-screen overflow-hidden">
+                {/* LEFT SIDEBAR (20vw) */}
+                <aside className="w-[20vw] h-full bg-blue-950 flex flex-col text-white fixed left-0 top-0 z-50">
+                    {/* Top: Logo + H1 */}
+                    <div className="flex flex-col items-center justify-center p-4 border-b border-blue-800">
+                        <FillWindPathIcon className="w-16 h-16 mb-2" colorClass="var(--white-950)" />
+                        <h1 className="text-center font-bold text-fluid-sm leading-tight">
+                            Filament Path Generator
+                        </h1>
+                    </div>
+                    
+                    {/* Center: UserBadge */}
+                    <div className="flex-1 flex items-center justify-center">
+                         <UserBadge mobileMode={true} />
+                    </div>
+
+                    {/* Bottom: Home Icon (Toggle Nav) */}
+                    <div className="p-4 flex justify-center border-t border-blue-800">
+                        <button onClick={toggleGlobalNav} className="p-2 hover:bg-blue-900 rounded-lg transition-colors">
+                            <HomeIcon className="w-10 h-10" colorClass="var(--white-50)" />
+                        </button>
+                    </div>
+                </aside>
+
+                {/* MAIN CONTENT (Center) */}
+                {/* Margin Left 20vw to clear left sidebar */}
+                {/* Margin Right 20vw ONLY if right sidebar is visible */}
+                <main 
+                    className={`
+                        flex-1 h-full overflow-y-auto ml-[20vw]
+                        ${isLandscapeSidebarOpen ? 'mr-[20vw]' : 'mr-0'}
+                        transition-all duration-300
+                    `}
+                >
+                    {children}
+                    
+                    <footer className="bg-red-100 text-red-950 text-center py-4 mt-auto">
+                        <div className="flex items-center justify-center">
+                            <TranslatedFooter />
+                        </div>
+                    </footer>
+                </main>
+
+                {/* RIGHT SIDEBAR (20vw) */}
+                {/* Only visible if isLandscapeSidebarOpen is true */}
+                {isLandscapeSidebarOpen && (
+                    <aside className="w-[20vw] h-full bg-blue-300 border-l border-blue-200 fixed right-0 top-0 z-40 overflow-y-auto">
+                        <div className="p-4 h-full">
+                            {pageMenuContent}
+                        </div>
+                    </aside>
+                )}
+
+                {/* GLOBAL NAV DRAWER (Mobile Landscape) */}
+                 {isGlobalNavOpen && (
+                    <div className="fixed inset-0 z-[60] bg-black bg-opacity-50 flex justify-start" onClick={toggleGlobalNav}>
+                        <div className="w-[40vw] h-full bg-blue-950 text-blue-50 p-6 flex flex-col shadow-xl" onClick={e => e.stopPropagation()}>
+                             <div className="flex flex-col gap-6 overflow-y-auto flex-1">
+                                <NavItem href="/" text="Navegacion.inicio" icon={<HomeIcon className="w-8 h-8" colorClass="var(--blue-50)" />} />
+                                <NavItem href="/proyecto" text="Navegacion.proyecto" icon={<ProyectoIcon className="w-8 h-8" colorClass="var(--blue-50)" />} />
+                                <NavItem href="/capas" text="Navegacion.capas" icon={<CapasIcon className="w-8 h-8" colorClass="var(--blue-50)" />} />
+                                <NavItem href="/ayuda" text="Navegacion.ayuda" icon={<AyudaIcon className="w-8 h-8" colorClass="var(--blue-50)" />} />
+                                <NavItem href="/acercaDe" text="Navegacion.acercaDe" icon={<AcercaDeIcon className="w-8 h-8" colorClass="var(--blue-50)" />} />
+                                <NavItem href="/contacto" text="Navegacion.contacto" icon={<ContactoIcon className="w-8 h-8" colorClass="var(--blue-50)" />} />
+                                <NavItem href="/idioma" text="Navegacion.idioma" icon={<IdiomaIcon className="w-8 h-8" colorClass="var(--blue-50)" />} />
+                                
+                                <div className="mt-4">
+                                    <BotonSesion />
+                                </div>
+                             </div>
+                             <div className="mt-4 flex justify-start">
+                                <button onClick={toggleGlobalNav} className="text-white text-xl font-bold p-2 border border-white rounded-full w-10 h-10 flex items-center justify-center hover:bg-white transition-colors">X</button>
+                             </div>
+                        </div>
+                    </div>
+                )}
+            </div>
+
     </div>
   );
 }

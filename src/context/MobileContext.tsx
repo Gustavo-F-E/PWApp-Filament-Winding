@@ -2,12 +2,17 @@
 
 import React, { createContext, useContext, useState, ReactNode, useCallback, useMemo } from 'react';
 
+// ... imports
+
 interface MobileContextType {
     setPageMenuContent: (content: ReactNode) => void;
     pageMenuContent: ReactNode;
     isPageMenuOpen: boolean;
     togglePageMenu: () => void;
     closePageMenu: () => void;
+    // New state for Landscape Right Sidebar
+    isLandscapeSidebarOpen: boolean;
+    setLandscapeSidebarOpen: (isOpen: boolean) => void;
 }
 
 const MobileContext = createContext<MobileContextType | undefined>(undefined);
@@ -15,6 +20,9 @@ const MobileContext = createContext<MobileContextType | undefined>(undefined);
 export function MobileProvider({ children }: { children: ReactNode }) {
     const [pageMenuContent, setPageMenuContent] = useState<ReactNode>(null);
     const [isPageMenuOpen, setIsPageMenuOpen] = useState(false);
+    
+    // Default open for most pages in landscape
+    const [isLandscapeSidebarOpen, setLandscapeSidebarOpen] = useState(true);
 
     const togglePageMenu = useCallback(() => setIsPageMenuOpen(prev => !prev), []);
     const closePageMenu = useCallback(() => setIsPageMenuOpen(false), []);
@@ -29,8 +37,10 @@ export function MobileProvider({ children }: { children: ReactNode }) {
         pageMenuContent,
         isPageMenuOpen,
         togglePageMenu,
-        closePageMenu
-    }), [setContent, pageMenuContent, isPageMenuOpen, togglePageMenu, closePageMenu]);
+        closePageMenu,
+        isLandscapeSidebarOpen,
+        setLandscapeSidebarOpen
+    }), [setContent, pageMenuContent, isPageMenuOpen, togglePageMenu, closePageMenu, isLandscapeSidebarOpen, setLandscapeSidebarOpen]);
 
     return (
         <MobileContext.Provider value={contextValue}>
@@ -38,6 +48,7 @@ export function MobileProvider({ children }: { children: ReactNode }) {
         </MobileContext.Provider>
     );
 }
+
 
 export function useMobile() {
     const context = useContext(MobileContext);

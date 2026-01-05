@@ -42,21 +42,22 @@ export function MenuItem({
 
   if (mobileMode) {
      return (
-        <div className="w-full h-16 mb-2">
+        <div className="w-full h-16 mb-2 landscape:h-full landscape:mb-0">
             <Link
                 href={href}
                 onClick={handleClick}
                 className={`
                     w-full h-full flex items-center px-4 rounded-lg
-                    ${isActive ? 'bg-blue-900 border-l-4 border-blue-50' : 'hover:bg-blue-900'}
+                    landscape:flex-col landscape:justify-center landscape:items-center landscape:px-1
+                    ${isActive ? 'bg-blue-900 border-l-4 border-blue-50 landscape:border-l-0 landscape:border-b-4' : 'hover:bg-blue-900'}
                     transition-colors duration-200
                 `}
             >
-                <div className="flex-shrink-0 mr-4">
-                    <Icon className="w-8 h-8" colorClass={iconColor || 'var(--blue-50)'} />
+                <div className="flex-shrink-0 mr-4 landscape:mr-0 landscape:mb-1">
+                    <Icon className="w-8 h-8 landscape:w-10 landscape:h-10" colorClass={iconColor || 'var(--blue-50)'} />
                 </div>
-                <div className={`flex-grow text-left text-blue-50 ${textClass}`}>
-                    <span className="font-bold">{text}</span>
+                <div className={`flex-grow text-left text-blue-50 ${textClass} landscape:text-center`}>
+                    <span className="font-bold landscape:text-xs">{text}</span>
                 </div>
             </Link>
         </div>
@@ -70,7 +71,7 @@ export function MenuItem({
         onClick={handleClick}
         className={`
           h-full w-full
-          grid grid-rows-[4fr_2fr]  // 4 partes para icono, 2 para texto
+          grid grid-rows-[4fr_2fr]
           items-center
           text-fluid-lg
           transition-all
