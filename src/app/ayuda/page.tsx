@@ -21,8 +21,12 @@ function Ayuda() {
       </header>
 
       {/* contenido principal */}
-      <main className="flex-1 w-full lg:row-[7/24] lg:col-[1/13] bg-blue-50 grid grid-rows-[repeat(17,1fr)] grid-cols-[repeat(12,1fr)] lg:h-full">
-        <p className="text-blue-950 px-4 pt-4">Ayuda</p>
+      <main className="flex-1 w-full lg:row-[7/24] lg:col-[1/13] bg-blue-50 lg:grid lg:grid-rows-[repeat(17,1fr)] lg:grid-cols-[repeat(12,1fr)] lg:h-full">
+        <div className="lg:row-[1/18] lg:col-[1/13] overflow-auto">
+          <p className="text-blue-950 px-4 pt-4">Ayuda</p>
+          {/* Más contenido aquí */}
+        </div>
+        
         
       </main>
 

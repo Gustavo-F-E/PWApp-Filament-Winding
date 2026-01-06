@@ -22,9 +22,12 @@ function Idioma() {
       </header>
 
       {/* contenido principal */}
-      <main className="flex-1 w-full lg:row-[7/24] lg:col-[1/13] bg-blue-50 flex flex-col items-center justify-center lg:h-full text-blue-950">
-        <p className="text-blue-950 w-[80%] lg:w-[60%] text-center text-fluid-lg">{t('IdiomaPage.description')}</p>
-        <p className="text-blue-950 w-[80%] lg:w-[60%] text-center  text-fluid-lg pt-10">{t('IdiomaPage.description2')}</p>
+      <main className="flex-1 w-full lg:row-[7/24] lg:col-[1/13] bg-blue-50 lg:grid lg:grid-rows-[repeat(17,1fr)] lg:grid-cols-[repeat(12,1fr)] lg:h-full">
+        <div className="lg:row-[1/18] lg:col-[1/13] overflow-auto">
+          <p className="text-blue-950 w-[80%] lg:w-[60%] text-center text-fluid-lg">{t('IdiomaPage.description')}</p>
+          <p className="text-blue-950 w-[80%] lg:w-[60%] text-center  text-fluid-lg pt-10">{t('IdiomaPage.description2')}</p>
+          {/* Más contenido aquí */}
+        </div>
       </main>
 
       {/* aside derecho */}

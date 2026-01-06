@@ -71,8 +71,9 @@ export function MenuItem({
         onClick={handleClick}
         className={`
           h-full w-full
-          grid grid-rows-[4fr_2fr]
+          grid grid-rows-6 grid-cols-1
           items-center
+          justify-center
           text-fluid-lg
           transition-all
           duration-200
@@ -83,7 +84,7 @@ export function MenuItem({
         `}
       >
         {/* ICONO */}
-        <div className="row-span-1 flex items-center justify-center">
+        <div className="row-span-4 flex items-center justify-center">
           <Icon
             className="w-[60px] h-[60px] block mx-auto transition-colors group-hover:scale-110 duration-200"
             colorClass={iconColor}
@@ -93,7 +94,7 @@ export function MenuItem({
         {/* TEXTO */}
         <div
           className={`
-            row-span-1
+            row-span-2
             flex
             items-center
             justify-center
