@@ -1,14 +1,14 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import MenuAcercaDe from '../components/MenuAcercaDe'
+import MenuVacio from '../components/MenuVacio'
 import { useMobile } from '@/context/MobileContext';
 
 function AcercaDe() {
   const { setPageMenuContent } = useMobile();
 
   useEffect(() => {
-     setPageMenuContent(<MenuAcercaDe />); // MenuAcercaDe might not accept mobileMode but it's empty anyway
+     setPageMenuContent(<MenuVacio />); // MenuVacio might not accept mobileMode but it's empty anyway
   }, [setPageMenuContent]);
 
   return (
@@ -17,7 +17,7 @@ function AcercaDe() {
       {/* menú superior interno */}
       <header className="hidden lg:block lg:row-[1/7] lg:col-[1/19] bg-blue-300">
         {/* Aquí va el contenido del header */}
-        <MenuAcercaDe/>
+        <MenuVacio/>
       </header>
 
       {/* contenido principal */}

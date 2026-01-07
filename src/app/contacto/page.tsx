@@ -1,14 +1,14 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import MenuContacto from '../components/MenuContacto'
+import MenuVacio from '../components/MenuVacio'
 import { useMobile } from '@/context/MobileContext';
 
 function Contacto() {
   const { setPageMenuContent } = useMobile();
 
   useEffect(() => {
-     setPageMenuContent(<MenuContacto />);
+     setPageMenuContent(<MenuVacio />);
   }, [setPageMenuContent]);
 
   return (
@@ -17,7 +17,7 @@ function Contacto() {
       {/* menú superior interno */}
       <header className="hidden lg:block lg:row-[1/7] lg:col-[1/19] bg-blue-300">
         {/* Aquí va el contenido del header */}
-        <MenuContacto/>
+        <MenuVacio/>
       </header>
 
       {/* contenido principal */}

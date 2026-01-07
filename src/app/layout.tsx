@@ -10,9 +10,10 @@ import { HomeIcon, ProyectoIcon, CapasIcon, AyudaIcon, AcercaDeIcon, ContactoIco
 import TranslatedFooter from "./components/TranslatedFooter";
 import { MobileProvider } from '@/context/MobileContext';
 import MobileLayoutWrapper from './components/MobileLayoutWrapper';
-import ModalProviderWrapper from './components/ModalProviderWrapper';
+//import ModalProviderWrapper from './components/ModalProviderWrapper';
 import OrientationHandler from './components/OrientationHandler';
-import { registerServiceWorker } from './registerServiceWorker'
+import BotonSesion from './components/BotonSesion'
+//import { registerServiceWorker } from './registerServiceWorker'
 
 export const metadata: Metadata = {
   applicationName: "Filament Path Generator",
@@ -191,8 +192,8 @@ export default function RootLayout({ children }: Readonly<{
                                   </div>
                               </nav>
 
-                              <div className="flex-grow-[35] flex flex-col justify-center align p-4">
-                                    <ModalProviderWrapper />
+                              <div className="flex-grow-[35] flex flex-col justify-center align-center p-4">
+                                    <BotonSesion />
                               </div>
                           </aside>
                         }

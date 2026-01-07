@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from 'react'
 import { useAuth } from '@/context/AuthContext'
-import { useIdioma } from '@/context/IdiomaContext'
+//import { useIdioma } from '@/context/IdiomaContext'
 import ModalPoliticas from './ModalPoliticas'
 
 interface ModalRegistroProps {
@@ -17,7 +17,7 @@ export default function ModalRegistro({
   onClose, 
   onOpenLogin 
 }: ModalRegistroProps) {
-  const { t } = useIdioma()
+  //const { t } = useIdioma()
   const { login } = useAuth()
   const [isPoliticasOpen, setIsPoliticasOpen] = useState(false)
   
@@ -137,7 +137,8 @@ export default function ModalRegistro({
         resetForm()
       }, 500)
       
-    } catch (err) {
+    } catch (error) {
+      console.log(`Error ${error}`)
       setErrors({
         general: 'Error al registrar. Intenta nuevamente.'
       })
@@ -165,6 +166,7 @@ export default function ModalRegistro({
 
   const handleSocialRegister = (provider: string) => {
     // Simulación de registro con redes sociales
+    console.log(`Registro con ${provider}`)
     setIsLoading(true)
     setTimeout(() => {
       login() // Auto-login después de registro con red social

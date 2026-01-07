@@ -1,7 +1,7 @@
 // app/components/ModalPoliticas.tsx
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 
 interface ModalPoliticasProps {
   isOpen: boolean
@@ -16,7 +16,7 @@ export default function ModalPoliticas({
   onAccept,
   showAcceptButton = false 
 }: ModalPoliticasProps) {
-  const [hasAccepted, setHasAccepted] = useState(false)
+
 
   // Cerrar modal con Escape key
   useEffect(() => {
@@ -47,7 +47,7 @@ export default function ModalPoliticas({
   }, [isOpen])
 
   const handleAccept = () => {
-    setHasAccepted(true)
+
     if (onAccept) {
       onAccept()
     }
