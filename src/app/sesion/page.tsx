@@ -14,7 +14,7 @@ export default function Sesion() {
     const router = useRouter();
     const { setPageMenuContent } = useMobile();
 
-    const [username, setUsername] = useState("");
+    const [loginInput, setLoginInput] = useState(""); // Puede ser username o email
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -24,32 +24,41 @@ export default function Sesion() {
         setPageMenuContent(<MenuVacio />);
     }, [setPageMenuContent]);
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setError("");
+const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
 
-        if (!username || !password) {
-            setError("Por favor, completa todos los campos.");
-            return;
+    if (!loginInput || !password) {
+        setError("Por favor, completa todos los campos.");
+        return;
+    }
+
+    setIsLoading(true);
+    try {
+        // Determinar si es email o username
+        const isEmail = /\S+@\S+\.\S+/.test(loginInput);
+
+        // Usar directamente tu función login del contexto
+        if (isEmail) {
+            await login({ email: loginInput, password });
+        } else {
+            await login({ username: loginInput, password });
         }
 
-        setIsLoading(true);
-        try {
-            await login({ username, password });
-            // Redirección ya se maneja en el contexto
-        } catch (error: unknown) {
-            setError(
-                error instanceof Error
-                    ? error.message
-                    : "Error al iniciar sesión"
-            );
-        } finally {
-            setIsLoading(false);
-        }
-    };
+        // Si no hay error, redirigir
+        router.push("/");
+    } catch (error: unknown) {
+        setError(
+            error instanceof Error ? error.message : "Error al iniciar sesión"
+        );
+    } finally {
+        setIsLoading(false);
+    }
+};
 
+  
 const handleSocialLogin = async (
-    provider: "google" | "facebook" | "twitter"
+    provider: "google" | "facebook" | "microsoft"
 ) => {
     setIsLoading(true);
     setError("");
@@ -92,7 +101,10 @@ const handleSocialLogin = async (
                 <div className="lg:col-[1/13] flex flex-col min-h-0 items-center py-10 h-full lg:py-6">
                     <article className="w-full max-w-md h-full">
                         {/* CARD */}
-                        <div className="bg-white rounded-xl shadow-2xl flex flex-col h-full">
+                        <div
+                            className="bg-white rounded-xl shadow-2xl flex flex-col h-full"
+                            style={{ background: "white" }}
+                        >
                             {/* ZONA SCROLLEABLE */}
                             <div
                                 className="flex-1 overflow-y-auto p-6"
@@ -113,22 +125,23 @@ const handleSocialLogin = async (
                                     className="space-y-4"
                                 >
                                     {/* Usuario */}
+                                    {/* Input combinado */}
                                     <div>
                                         <label
-                                            htmlFor="username"
+                                            htmlFor="loginInput"
                                             className="block text-sm font-medium text-gray-700 mb-2"
                                         >
-                                            Usuario
+                                            Usuario o E-Mail
                                         </label>
                                         <input
-                                            id="username"
+                                            id="loginInput"
                                             type="text"
-                                            value={username}
+                                            value={loginInput}
                                             onChange={(e) =>
-                                                setUsername(e.target.value)
+                                                setLoginInput(e.target.value)
                                             }
                                             className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-gray-700"
-                                            placeholder="Ingresa tu nombre de usuario"
+                                            placeholder="Nombre de usuario o dirección de email"
                                             disabled={isLoading}
                                             autoFocus
                                         />
@@ -273,7 +286,37 @@ const handleSocialLogin = async (
                                                 />
                                             </svg>
                                         </button>
-
+                                        <button
+                                            type="button"
+                                            onClick={() =>
+                                                handleSocialLogin("microsoft")
+                                            }
+                                            disabled={isLoading}
+                                            className="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors disabled:opacity-50"
+                                            aria-label="Iniciar sesión con Microsoft"
+                                        >
+                                            <svg
+                                                className="w-6 h-6"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path
+                                                    fill="#f25022"
+                                                    d="M1 1h10v10H1z"
+                                                />
+                                                <path
+                                                    fill="#00a4ef"
+                                                    d="M13 1h10v10H13z"
+                                                />
+                                                <path
+                                                    fill="#7fba00"
+                                                    d="M1 13h10v10H1z"
+                                                />
+                                                <path
+                                                    fill="#ffb900"
+                                                    d="M13 13h10v10H13z"
+                                                />
+                                            </svg>
+                                        </button>
                                         <button
                                             type="button"
                                             onClick={() =>
@@ -289,24 +332,6 @@ const handleSocialLogin = async (
                                                 viewBox="0 0 24 24"
                                             >
                                                 <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-                                            </svg>
-                                        </button>
-
-                                        <button
-                                            type="button"
-                                            onClick={() =>
-                                                handleSocialLogin("twitter")
-                                            }
-                                            disabled={isLoading}
-                                            className="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors disabled:opacity-50"
-                                            aria-label="Iniciar sesión con Twitter"
-                                        >
-                                            <svg
-                                                className="w-6 h-6"
-                                                fill="#1DA1F2"
-                                                viewBox="0 0 24 24"
-                                            >
-                                                <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.213c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
                                             </svg>
                                         </button>
                                     </div>
@@ -328,6 +353,18 @@ const handleSocialLogin = async (
                             </div>
 
                             {/* FOOTER FIJO */}
+                            {/* Opcional: Enlace para recuperar contraseña */}
+                            <div className="text-center mt-2 mb-4 bg-white">
+                                <button
+                                    type="button"
+                                    className="text-sm text-blue-600 hover:text-blue-800 hover:underline"
+                                    onClick={() =>
+                                        router.push("/recuperar-contrasena")
+                                    }
+                                >
+                                    ¿Olvidaste tu contraseña?
+                                </button>
+                            </div>
                             <div className="border-t border-gray-200 p-4 bg-gray-50 rounded-b-xl">
                                 <div className="text-center text-xs text-gray-500">
                                     Demo: Cualquier credencial funcionará. La

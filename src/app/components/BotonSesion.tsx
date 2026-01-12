@@ -29,11 +29,13 @@ export default function BotonSesion() {
   }
 
   return (
-    <button
-      onClick={logout}
-      className="py-[3%] w-[70%] text-fluid-lg bg-red-300 text-red-950 rounded-full font-bold"
-    >
-      {t("sesion.cerrar")}
-    </button>
-  )
+      <div className="flex items-center justify-center">
+          <button
+              onClick={logout}
+              className="py-[3%] w-[70%] text-fluid-lg bg-red-50 text-red-900 rounded-full font-bold border-2 border-red-900 hover:bg-red-900 hover:text-red-50 transition-colors duration-200"
+          >
+              {t("sesion.cerrar")}
+          </button>
+      </div>
+  );
 }

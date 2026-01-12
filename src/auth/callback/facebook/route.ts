@@ -40,8 +40,14 @@ export async function GET(request: NextRequest) {
             new URL("/sesion?error=auth_failed", request.url)
         );
     } catch (error) {
+        console.error("Facebook OAuth callback error:", error);
         return NextResponse.redirect(
-            new URL("/sesion?error=server_error", request.url)
+            new URL(
+                `/sesion?error=server_error&details=${encodeURIComponent(
+                    error instanceof Error ? error.message : "unknown"
+                )}`,
+                request.url
+            )
         );
     }
 }

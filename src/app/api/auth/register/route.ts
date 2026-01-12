@@ -20,7 +20,11 @@ export async function POST(request: NextRequest) {
         return NextResponse.json(data, { status: response.status });
     } catch (error) {
         return NextResponse.json(
-            { error: "Internal server error" },
+            {
+                error: `Internal server error: ${
+                    error instanceof Error ? error.message : "Unknown error"
+                }`,
+            },
             { status: 500 }
         );
     }

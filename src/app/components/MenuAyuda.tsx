@@ -18,8 +18,8 @@ export default function MenuAyuda({ mobileMode = false }: { mobileMode?: boolean
           Icon: FAQIcon,
           text: "FAQs",
           isActive,
-          iconColor: isLogged ? "var(--blue-400)" : "var(--blue-950)",
-          textClass: isLogged ? "text-blue-400" : "text-blue-950",
+          iconColor: isLogged ? "var(--blue-950)" : "var(--blue-950)",
+          textClass: isLogged ? "text-blue-950" : "text-blue-950",
       },
       {
           columnas: "col-[6/9]",
@@ -36,8 +36,8 @@ export default function MenuAyuda({ mobileMode = false }: { mobileMode?: boolean
           Icon: VideotutorialesIcon,
           text: t("MenuAyuda.videoTutoriales"),
           isActive,
-          iconColor: isLogged ? "var(--blue-400)" : "var(--blue-950)",
-          textClass: isLogged ? "text-blue-400" : "text-blue-950",
+          iconColor: isLogged ? "var(--blue-950)" : "var(--blue-950)",
+          textClass: isLogged ? "text-blue-950" : "text-blue-950",
       },
   ];
 

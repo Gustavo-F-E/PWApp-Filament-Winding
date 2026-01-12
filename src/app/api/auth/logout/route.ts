@@ -16,10 +16,10 @@ export async function POST(request: NextRequest) {
             { success: true },
             { status: response.status }
         );
-    } catch (error) {
-        return NextResponse.json(
-            { error: "Internal server error" },
-            { status: 500 }
-        );
-    }
+    }  catch (error) {
+    return NextResponse.json(
+        { error: `Internal server error: ${error instanceof Error ? error.message : 'Unknown error'}` },
+        { status: 500 }
+    );
+}
 }

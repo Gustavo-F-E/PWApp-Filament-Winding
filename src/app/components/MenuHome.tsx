@@ -18,8 +18,8 @@ export default function MenuHome({ mobileMode = false }: { mobileMode?: boolean 
     Icon: TourDeInicioIcon,
     text: t('MenuHome.tourDeInicio'),
     isActive,
-    iconColor: isLogged ? 'var(--blue-950)' : 'var(--blue-400)',
-    textClass: isLogged ? 'text-blue-950' : 'text-blue-400',
+    iconColor: isLogged ? 'var(--blue-950)' : 'var(--blue-950)',
+    textClass: isLogged ? 'text-blue-950' : 'text-blue-950',
   },
 ];
 

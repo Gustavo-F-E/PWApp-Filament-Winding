@@ -1,3 +1,5 @@
+//src\lib\api.ts
+
 const API_BASE_URL = "https://fast-api-filpath.vercel.app";
 
 export async function apiFetch<T>(
@@ -31,9 +33,9 @@ export async function apiFetch<T>(
 // Métodos específicos
 export const api = {
     get: <T>(endpoint: string) => apiFetch<T>(endpoint, { method: "GET" }),
-    post: <T>(endpoint: string, data?: any) =>
+    post: <T>(endpoint: string, data?: unknown) =>
         apiFetch<T>(endpoint, { method: "POST", body: JSON.stringify(data) }),
-    put: <T>(endpoint: string, data?: any) =>
+    put: <T>(endpoint: string, data?: unknown) =>
         apiFetch<T>(endpoint, { method: "PUT", body: JSON.stringify(data) }),
     delete: <T>(endpoint: string) =>
         apiFetch<T>(endpoint, { method: "DELETE" }),

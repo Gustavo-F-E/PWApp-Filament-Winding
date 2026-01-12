@@ -1,3 +1,5 @@
+//src/context/AuthContext.tsx
+
 "use client";
 
 import { createContext, useContext, useState, useEffect } from "react";
@@ -12,15 +14,8 @@ import {
 type AuthContextType = {
     user: User | null;
     isLogged: boolean;
-    login: (credentials: {
-        username: string;
-        password: string;
-    }) => Promise<void>;
-    register: (data: {
-        username: string;
-        email: string;
-        password: string;
-    }) => Promise<void>;
+    login: (credentials: { username?: string; email?: string; password: string }) => Promise<void>;
+    register: (data: {username: string; email: string; password: string;}) => Promise<void>;
     logout: () => Promise<void>;
     isLoading: boolean;
 };
@@ -54,7 +49,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
 
     const login = async (credentials: {
-        username: string;
+        username?: string;
+        email?: string;
         password: string;
     }) => {
         setIsLoading(true);
@@ -62,7 +58,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             const { user: loggedUser, token } = await loginWithCredentials(
                 credentials
             );
-            // Guardar token en localStorage o cookie
             localStorage.setItem("auth_token", token);
             setUser(loggedUser);
         } catch (error) {
@@ -92,13 +87,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const logout = async () => {
         setIsLoading(true);
         try {
+            // Intenta logout en el servidor
             await apiLogout();
+        } catch (error) {
+            // Ignora errores del servidor - el logout local es lo importante
+            console.warn("Advertencia (puede ignorarse):", error);
+        } finally {
+            // SIEMPRE limpia localmente, independientemente del servidor
             localStorage.removeItem("auth_token");
             setUser(null);
-        } catch (error) {
-            console.error("Error logging out:", error);
-        } finally {
             setIsLoading(false);
+            console.log("Sesión cerrada localmente");
         }
     };
 

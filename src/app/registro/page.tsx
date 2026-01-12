@@ -7,6 +7,7 @@ import { useAuth } from '@/context/AuthContext'
 import { useMobile } from '@/context/MobileContext'
 import MenuVacio from '../components/MenuVacio'
 import ModalPoliticas from '../components/ModalPoliticas'
+import Image from "next/image";
 
 export default function Registro() {
   //const { t } = useIdioma()
@@ -384,7 +385,15 @@ export default function Registro() {
                               )}
                           </div>
                           {/* Footer con términos y políticas */}
-                          <div className="mt-6 pb-10">
+                          <div className="pt-10 pb-10 flex flex-row items-center justify-center gap-0 w-[80%] mx-auto">
+                              <div className="relative min-w-8 min-h-8 max-w-16 max-h-16">
+                                  <Image
+                                      src="/images/icons/alert.svg"
+                                      alt={"Alerta"}
+                                      fill={true} // Ocupa todo el contenedor
+                                      className="object-contain"
+                                  />
+                              </div>
                               <div className="text-center text-xs text-gray-500">
                                   Para registrarte, debes leer y aceptar
                                   nuestros{" "}
@@ -399,18 +408,31 @@ export default function Registro() {
                               </div>
                           </div>
                           {/* Botón de Registro */}
+                          {/* Botón de Registro */}
                           <button
-                              type="submit"
-                              disabled={!acceptedTerms || isLoading}
+                              type="button"
+                              onClick={() => {
+                                  if (!acceptedTerms) {
+                                      setIsPoliticasOpen(true);
+                                      return;
+                                  }
+                                  // Si aceptó términos, ejecutar handleSubmit programáticamente
+                                  const event = new Event("submit", {
+                                      cancelable: true,
+                                      bubbles: true,
+                                  }) as unknown as React.FormEvent;
+                                  handleSubmit(event as React.FormEvent);
+                              }}
+                              disabled={isLoading}
                               className={`
-                        w-full py-3 px-4 rounded-lg font-semibold text-white
-                        transition-all duration-200 mb-6
-                        ${
-                            !acceptedTerms || isLoading
-                                ? "bg-blue-400 cursor-not-allowed"
-                                : "bg-blue-600 hover:bg-blue-700 active:bg-blue-800"
-                        }
-                    `}
+        w-full py-3 px-4 rounded-lg font-semibold text-white
+        transition-all duration-200 mb-6
+        ${
+            isLoading
+                ? "bg-blue-400 cursor-not-allowed"
+                : "bg-blue-600 hover:bg-blue-700 active:bg-blue-800"
+        }
+    `}
                           >
                               {isLoading ? (
                                   <span className="flex items-center justify-center">
@@ -456,17 +478,23 @@ export default function Registro() {
                               {/* Google */}
                               <button
                                   type="button"
-                                  onClick={() => handleSocialRegister("google")}
-                                  disabled={isLoading || !acceptedTerms}
+                                  onClick={() => {
+                                      if (!acceptedTerms) {
+                                          setIsPoliticasOpen(true);
+                                          return;
+                                      }
+                                      handleSocialRegister("google");
+                                  }}
+                                  disabled={isLoading}
                                   className={`
-                        w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center 
-                        transition-colors 
-                        ${
-                            !acceptedTerms || isLoading
-                                ? "cursor-not-allowed opacity-50"
-                                : "hover:bg-gray-50"
-                        }
-                    `}
+                                        w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center 
+                                        transition-colors 
+                                        ${
+                                            isLoading
+                                                ? "cursor-not-allowed opacity-50"
+                                                : "hover:bg-gray-50"
+                                        }
+                                    `}
                                   aria-label="Registrarse con Google"
                               >
                                   <svg className="w-6 h-6" viewBox="0 0 24 24">
@@ -488,18 +516,23 @@ export default function Registro() {
                                       />
                                   </svg>
                               </button>
+
                               {/* Microsoft */}
                               <button
                                   type="button"
-                                  onClick={() =>
-                                      handleSocialRegister("microsoft")
-                                  }
-                                  disabled={isLoading || !acceptedTerms}
+                                  onClick={() => {
+                                      if (!acceptedTerms) {
+                                          setIsPoliticasOpen(true);
+                                          return;
+                                      }
+                                      handleSocialRegister("microsoft");
+                                  }}
+                                  disabled={isLoading}
                                   className={`
                                         w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center 
                                         transition-colors 
                                         ${
-                                            !acceptedTerms || isLoading
+                                            isLoading
                                                 ? "cursor-not-allowed opacity-50"
                                                 : "hover:bg-gray-50"
                                         }
@@ -519,22 +552,27 @@ export default function Registro() {
                                       />
                                   </svg>
                               </button>
+
                               {/* Facebook */}
                               <button
                                   type="button"
-                                  onClick={() =>
-                                      handleSocialRegister("facebook")
-                                  }
-                                  disabled={isLoading || !acceptedTerms}
+                                  onClick={() => {
+                                      if (!acceptedTerms) {
+                                          setIsPoliticasOpen(true);
+                                          return;
+                                      }
+                                      handleSocialRegister("facebook");
+                                  }}
+                                  disabled={isLoading}
                                   className={`
-                        w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center 
-                        transition-colors 
-                        ${
-                            !acceptedTerms || isLoading
-                                ? "cursor-not-allowed opacity-50"
-                                : "hover:bg-gray-50"
-                        }
-                    `}
+                                        w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center 
+                                        transition-colors 
+                                        ${
+                                            isLoading
+                                                ? "cursor-not-allowed opacity-50"
+                                                : "hover:bg-gray-50"
+                                        }
+                                    `}
                                   aria-label="Registrarse con Facebook"
                               >
                                   <svg
