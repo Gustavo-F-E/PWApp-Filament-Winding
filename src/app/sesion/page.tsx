@@ -34,29 +34,42 @@ export default function Sesion() {
         }
 
         setIsLoading(true);
-        await new Promise((r) => setTimeout(r, 800));
-
-        login();
-        router.push("/");
-    };
-
-    const handleSocialLogin = async (
-        provider: "google" | "facebook" | "twitter"
-    ) => {
-        setIsLoading(true);
-        setError("");
-
         try {
-            await new Promise((r) => setTimeout(r, 800));
-            login();
-            router.push("/");
-        } catch {
-            setError("Error al iniciar sesión con " + provider);
+            await login({ username, password });
+            // Redirección ya se maneja en el contexto
+        } catch (error: unknown) {
+            setError(
+                error instanceof Error
+                    ? error.message
+                    : "Error al iniciar sesión"
+            );
         } finally {
             setIsLoading(false);
         }
     };
 
+const handleSocialLogin = async (
+    provider: "google" | "facebook" | "twitter"
+) => {
+    setIsLoading(true);
+    setError("");
+
+    try {
+        console.log(`Login con ${provider}`);
+        // Simulación temporal
+        setTimeout(() => {
+            window.location.href = "/";
+        }, 1000);
+    } catch (error: unknown) {
+        setError(
+            `Error al conectar con ${provider}: ${
+                error instanceof Error ? error.message : "Error desconocido"
+            }`
+        );
+        setIsLoading(false);
+    }
+};
+  
     return (
         <section className="h-full w-full flex flex-col lg:grid lg:grid-rows-[repeat(23,1fr)] lg:grid-cols-[repeat(18,1fr)]">
             {/* Header interno */}

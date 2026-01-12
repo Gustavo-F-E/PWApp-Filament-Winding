@@ -1,40 +1,123 @@
-// context/AuthContext.tsx
-'use client'
+"use client";
 
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useState, useEffect } from "react";
+import {
+    User,
+    getSession,
+    loginWithCredentials,
+    registerUser,
+    logout as apiLogout,
+} from "@/lib/auth";
 
 type AuthContextType = {
-  isLogged: boolean
-  login: () => void
-  logout: () => void
-}
+    user: User | null;
+    isLogged: boolean;
+    login: (credentials: {
+        username: string;
+        password: string;
+    }) => Promise<void>;
+    register: (data: {
+        username: string;
+        email: string;
+        password: string;
+    }) => Promise<void>;
+    logout: () => Promise<void>;
+    isLoading: boolean;
+};
 
 const AuthContext = createContext<AuthContextType>({
-  isLogged: false,
-  login: () => {},
-  logout: () => {},
-})
+    user: null,
+    isLogged: false,
+    login: async () => {},
+    register: async () => {},
+    logout: async () => {},
+    isLoading: true,
+});
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [isLogged, setIsLogged] = useState(false) // 👈 Estado para simular sesión
+    const [user, setUser] = useState<User | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
 
-  const login = () => {
-    setIsLogged(true)
-    // Aquí podrías agregar lógica real de login
-  }
+    useEffect(() => {
+        checkSession();
+    }, []);
 
-  const logout = () => {
-    setIsLogged(false)
-    // Aquí podrías agregar lógica real de logout
-  }
+    const checkSession = async () => {
+        try {
+            const sessionUser = await getSession();
+            setUser(sessionUser);
+        } catch (error) {
+            console.error("Error checking session:", error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
-  return (
-    <AuthContext.Provider value={{ isLogged, login, logout }}>
-      {children}
-    </AuthContext.Provider>
-  )
+    const login = async (credentials: {
+        username: string;
+        password: string;
+    }) => {
+        setIsLoading(true);
+        try {
+            const { user: loggedUser, token } = await loginWithCredentials(
+                credentials
+            );
+            // Guardar token en localStorage o cookie
+            localStorage.setItem("auth_token", token);
+            setUser(loggedUser);
+        } catch (error) {
+            throw error;
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const register = async (data: {
+        username: string;
+        email: string;
+        password: string;
+    }) => {
+        setIsLoading(true);
+        try {
+            const { user: newUser, token } = await registerUser(data);
+            localStorage.setItem("auth_token", token);
+            setUser(newUser);
+        } catch (error) {
+            throw error;
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const logout = async () => {
+        setIsLoading(true);
+        try {
+            await apiLogout();
+            localStorage.removeItem("auth_token");
+            setUser(null);
+        } catch (error) {
+            console.error("Error logging out:", error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    return (
+        <AuthContext.Provider
+            value={{
+                user,
+                isLogged: !!user,
+                login,
+                register,
+                logout,
+                isLoading,
+            }}
+        >
+            {children}
+        </AuthContext.Provider>
+    );
 }
 
 export function useAuth() {
-  return useContext(AuthContext)
+    return useContext(AuthContext);
 }

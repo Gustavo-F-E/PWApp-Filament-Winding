@@ -10,7 +10,7 @@ import ModalPoliticas from '../components/ModalPoliticas'
 
 export default function Registro() {
   //const { t } = useIdioma()
-  const { login } = useAuth()
+  const { register } = useAuth();
   const router = useRouter()
   const { setPageMenuContent } = useMobile()
   const [isPoliticasOpen, setIsPoliticasOpen] = useState(false)
@@ -81,47 +81,54 @@ export default function Registro() {
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    
-    if (!validateForm()) {
-      return
-    }
-    
-    setIsLoading(true)
-    
-    // Simular registro
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    
-    try {
-      console.log('Registrando usuario:', {
-        username: formData.username,
-        email: formData.email
-      })
-      
-      // Auto-login después del registro exitoso
-      login()
-      
-      // Redirigir al inicio
-      router.push('/')
-      
-    } catch {
-      setErrors({
-        general: 'Error al registrar. Intenta nuevamente.'
-      })
-    } finally {
-      setIsLoading(false)
-    }
-  }
+      e.preventDefault();
 
-  const handleSocialRegister = (provider: string) => {
-    console.log(`Registro con ${provider}`)
-    setIsLoading(true)
-    setTimeout(() => {
-      login()
-      setIsLoading(false)
-      router.push('/')
-    }, 800)
-  }
+      if (!validateForm()) {
+          return;
+      }
+
+      setIsLoading(true);
+
+      try {
+          // Llamada real al backend
+          await register({
+              username: formData.username,
+              email: formData.email,
+              password: formData.password,
+          });
+
+          // Auto-login ya se hace en el contexto
+          // Redirigir al inicio
+          router.push("/");
+      } catch (error: unknown) {
+          setErrors({
+              general:
+                  error instanceof Error
+                      ? error.message
+                      : "Error al registrar. Intenta nuevamente.",
+          });
+      } finally {
+          setIsLoading(false);
+      }
+  };
+
+    const handleSocialRegister = async (provider: string) => {
+        setIsLoading(true);
+        try {
+            console.log(`Registro con ${provider}`);
+            // Simulación temporal
+            setTimeout(() => {
+                window.location.href = "/";
+            }, 1000);
+        } catch (error) {
+            setErrors({
+                general: `Error al conectar con ${provider}: ${
+                    error instanceof Error ? error.message : "Error desconocido"
+                }`,
+            });
+            setIsLoading(false);
+        }
+    };
 
   return (
       <section className="lg:h-[calc(100vh-(100vh/24))] h-full w-full flex flex-col lg:grid lg:grid-rows-[repeat(23,1fr)] lg:grid-cols-[repeat(18,1fr)] overflow-hidden">
@@ -446,6 +453,7 @@ export default function Registro() {
 
                           {/* Botones de Redes Sociales */}
                           <div className="flex justify-center space-x-4 mb-6">
+                              {/* Google */}
                               <button
                                   type="button"
                                   onClick={() => handleSocialRegister("google")}
@@ -480,7 +488,38 @@ export default function Registro() {
                                       />
                                   </svg>
                               </button>
-
+                              {/* Microsoft */}
+                              <button
+                                  type="button"
+                                  onClick={() =>
+                                      handleSocialRegister("microsoft")
+                                  }
+                                  disabled={isLoading || !acceptedTerms}
+                                  className={`
+                                        w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center 
+                                        transition-colors 
+                                        ${
+                                            !acceptedTerms || isLoading
+                                                ? "cursor-not-allowed opacity-50"
+                                                : "hover:bg-gray-50"
+                                        }
+                                    `}
+                                  aria-label="Registrarse con Microsoft"
+                              >
+                                  <svg className="w-6 h-6" viewBox="0 0 24 24">
+                                      <path fill="#f25022" d="M1 1h10v10H1z" />
+                                      <path
+                                          fill="#00a4ef"
+                                          d="M13 1h10v10H13z"
+                                      />
+                                      <path fill="#7fba00" d="M1 13h10v10H1z" />
+                                      <path
+                                          fill="#ffb900"
+                                          d="M13 13h10v10H13z"
+                                      />
+                                  </svg>
+                              </button>
+                              {/* Facebook */}
                               <button
                                   type="button"
                                   onClick={() =>
