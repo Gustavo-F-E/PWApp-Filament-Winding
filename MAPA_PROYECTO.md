@@ -38,6 +38,7 @@
 -   `src/context/` — contextos React (AuthContext, IdiomaContext, MobileContext, ModalContext).
 -   `src/lib/` — utilidades de lógica/servicios (`api.ts`, `auth.ts`).
 -   `src/utils/` — utilidades (cookies, manejo JWT, etc.).
+-   `src/proxy2.ts` — proxy inverso o utilidad de conexión.
 -   `src/types/` — tipos TypeScript (p.ej. `auth.ts`).
 
 ---
@@ -132,6 +133,7 @@ Este documento lista componentes, páginas, rutas API, contexts y utilidades pri
 | `MobileAuthTrigger`     | `src/app/components/MobileAuthTrigger.tsx`     | Elemento para abrir auth en mobile.                           |
 | `MenuVacio`             | `src/app/components/MenuVacio.tsx`             | Placeholder para menús vacíos.                                |
 | `MenuProyecto`          | `src/app/components/MenuProyecto.tsx`          | Menú para gestión de proyecto.                                |
+| `firma`                 | `src/app/components/firma.html`                | Archivo HTML de firma/pie de página.                          |
 
 > Nota: los enlaces arriba son rutas relativas; puedes abrirlos desde el editor.
 
@@ -227,3 +229,27 @@ Components -> public (images/icons)
 OAuth Callbacks -> API
 
 ---
+
+## 10. Flujo de Autenticación (Login/Registro) 🔐
+
+Sección dedicada a los archivos involucrados en la gestión de usuarios.
+
+### Páginas
+-   `src/app/sesion/page.tsx` — Pantalla principal de inicio de sesión.
+-   `src/app/registro/page.tsx` — Pantalla de registro de nuevos usuarios.
+
+### Componentes Clave
+-   `src/app/components/ModalIniciarSesion.tsx` — Modal con el formulario de login.
+-   `src/app/components/ModalRegistro.tsx` — Modal con formulario de registro validado.
+-   `src/app/components/BotonSesion.tsx` — Botón en el header que cambia según el estado (Login/Logout/Usuario).
+-   `src/app/components/MobileAuthTrigger.tsx` — Disparador de autenticación para vista móvil.
+-   `src/app/components/UserBadge.tsx` — Muestra avatar y nombre del usuario logueado.
+
+### Lógica y Estado
+-   `src/context/AuthContext.tsx` — Contexto global que mantiene el estado de la sesión (`user`, `login`, `logout`).
+-   `src/lib/auth.ts` — Funciones auxiliares y lógica de autenticación.
+-   `src/types/auth.ts` — Define interfaces como `User`, `LoginCredentials`, `RegisterData`.
+
+### API & Callbacks
+-   `src/app/api/auth/[...nextauth]/route.ts` (o rutas individuales en `api/auth/`) — Endpoints backend.
+-   `src/auth/callback/{google,microsoft,facebook}/route.ts` — Rutas para manejar el retorno de proveedores OAuth.

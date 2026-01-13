@@ -83,9 +83,68 @@ export default function Sesion() {
         setIsLoading(true);
         setError("");
 
-        // Redirigís al endpoint que inicia OAuth
-      //window.location.href = `/api/auth/${provider}`;
-      window.location.href = `/auth/${provider}/login`;
+        const redirectUri = `${window.location.origin}/auth/callback/${provider}`;
+        let url = "";
+
+        if (provider === "google") {
+            const clientId = "YOUR_GOOGLE_CLIENT_ID"; // TODO: Load from env or config if exposed
+            // Lo ideal es que el cliente tenga su ID público, o mejor aún, hacer un endpoint backend que devuelva la URL
+            // Pero para MVP rápido, hardcode o env vars públicas.
+            // MEJOR OPCIÓN: Redirigir a un endpoint de tu backend que construye la URL segura, 
+            // O construirla aquí si tienes el Client ID público (NEXT_PUBLIC_...)
+            
+            // Asumiremos que el usuario pondrá los IDs en .env.local como NEXT_PUBLIC_...
+            const googleId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
+             if (!googleId) {
+                setError("Falta configuración CLIENT_ID de Google");
+                setIsLoading(false);
+                return;
+            }
+            
+            const params = new URLSearchParams({
+                client_id: googleId,
+                redirect_uri: redirectUri,
+                response_type: "code",
+                scope: "openid email profile",
+                access_type: "offline",
+                prompt: "consent",
+            });
+            url = `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`;
+        } else if (provider === "facebook") {
+             const fbId = process.env.NEXT_PUBLIC_FACEBOOK_CLIENT_ID;
+             if (!fbId) {
+                setError("Falta configuración CLIENT_ID de Facebook");
+                setIsLoading(false);
+                return;
+            }
+            
+            const params = new URLSearchParams({
+                client_id: fbId,
+                redirect_uri: redirectUri,
+                scope: "email,public_profile",
+                response_type: "code",
+            });
+             url = `https://www.facebook.com/v19.0/dialog/oauth?${params.toString()}`;
+
+        } else if (provider === "microsoft") {
+             const msId = process.env.NEXT_PUBLIC_MICROSOFT_CLIENT_ID;
+             if (!msId) {
+                setError("Falta configuración CLIENT_ID de Microsoft");
+                setIsLoading(false);
+                return;
+            }
+            
+            const params = new URLSearchParams({
+                client_id: msId,
+                redirect_uri: redirectUri,
+                response_type: "code",
+                scope: "openid email profile User.Read",
+                response_mode: "query"
+            });
+            url = `https://login.microsoftonline.com/common/oauth2/v2.0/authorize?${params.toString()}`;
+        }
+
+        if (url) window.location.href = url;
     };
   
     return (
