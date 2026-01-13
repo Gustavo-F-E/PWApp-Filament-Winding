@@ -10,7 +10,7 @@ import MenuVacio from "../components/MenuVacio";
 
 export default function Sesion() {
     const { t } = useIdioma();
-    const { login } = useAuth();
+    const { login, loginWithOAuth } = useAuth();
     const router = useRouter();
     const { setPageMenuContent } = useMobile();
 
@@ -21,63 +21,72 @@ export default function Sesion() {
     const [error, setError] = useState("");
 
     useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        const oauth = params.get("oauth");
         setPageMenuContent(<MenuVacio />);
-    }, [setPageMenuContent]);
 
-const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
+        if (oauth) {
+            try {
+                const data = JSON.parse(atob(oauth));
+                /*
+              data debe ser:
+              {
+                user: {...},
+                token: "jwt..."
+              }
+            */
+                loginWithOAuth(data.user, data.access_token);
+                router.push("/"); // limpieza de la URL + redirección
+            } catch (e) {
+                console.error("Error procesando OAuth:", e);
+                setError("Error al iniciar sesión con proveedor externo");
+            }
+        }
+    }, [loginWithOAuth, router, setPageMenuContent]);
 
-    if (!loginInput || !password) {
-        setError("Por favor, completa todos los campos.");
-        return;
-    }
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setError("");
 
-    setIsLoading(true);
-    try {
-        // Determinar si es email o username
-        const isEmail = /\S+@\S+\.\S+/.test(loginInput);
-
-        // Usar directamente tu función login del contexto
-        if (isEmail) {
-            await login({ email: loginInput, password });
-        } else {
-            await login({ username: loginInput, password });
+        if (!loginInput || !password) {
+            setError("Por favor, completa todos los campos.");
+            return;
         }
 
-        // Si no hay error, redirigir
-        router.push("/");
-    } catch (error: unknown) {
-        setError(
-            error instanceof Error ? error.message : "Error al iniciar sesión"
-        );
-    } finally {
-        setIsLoading(false);
-    }
-};
+        setIsLoading(true);
+        try {
+            // Determinar si es email o username
+            const isEmail = /\S+@\S+\.\S+/.test(loginInput);
 
-  
-const handleSocialLogin = async (
-    provider: "google" | "facebook" | "microsoft"
-) => {
-    setIsLoading(true);
-    setError("");
+            // Usar directamente tu función login del contexto
+            if (isEmail) {
+                await login({ email: loginInput, password });
+            } else {
+                await login({ username: loginInput, password });
+            }
 
-    try {
-        console.log(`Login con ${provider}`);
-        // Simulación temporal
-        setTimeout(() => {
-            window.location.href = "/";
-        }, 1000);
-    } catch (error: unknown) {
-        setError(
-            `Error al conectar con ${provider}: ${
-                error instanceof Error ? error.message : "Error desconocido"
-            }`
-        );
-        setIsLoading(false);
-    }
-};
+            // Si no hay error, redirigir
+            router.push("/");
+        } catch (error: unknown) {
+            setError(
+                error instanceof Error ? error.message : "Error al iniciar sesión"
+            );
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+      
+    const handleSocialLogin = (
+        provider: "google" | "facebook" | "microsoft"
+    ) => {
+        setIsLoading(true);
+        setError("");
+
+        // Redirigís al endpoint que inicia OAuth
+      //window.location.href = `/api/auth/${provider}`;
+      window.location.href = `/auth/${provider}/login`;
+    };
   
     return (
         <section className="h-full w-full flex flex-col lg:grid lg:grid-rows-[repeat(23,1fr)] lg:grid-cols-[repeat(18,1fr)]">

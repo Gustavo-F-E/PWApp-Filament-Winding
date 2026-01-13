@@ -114,22 +114,42 @@ export default function Registro() {
   };
 
     const handleSocialRegister = async (provider: string) => {
-        setIsLoading(true);
+        if (!acceptedTerms) {
+            setIsPoliticasOpen(true);
+            return;
+        }
+
         try {
-            console.log(`Registro con ${provider}`);
-            // Simulación temporal
-            setTimeout(() => {
-                window.location.href = "/";
-            }, 1000);
-        } catch (error) {
-            setErrors({
-                general: `Error al conectar con ${provider}: ${
-                    error instanceof Error ? error.message : "Error desconocido"
-                }`,
+            const res = await fetch("/api/auth/social", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ provider }),
             });
-            setIsLoading(false);
+
+            if (!res.ok) {
+                throw new Error("No se pudo iniciar el login social");
+            }
+
+            const data = await res.json();
+
+            // El backend debería devolverte algo como:
+            // { url: "https://accounts.google.com/..." }
+            if (data.url) {
+                window.location.href = data.url;
+            } else {
+                throw new Error("No se recibió la URL de redirección");
+            }
+        } catch (error) {
+            console.error(error);
+            setErrors({
+                general:
+                    error instanceof Error
+                        ? error.message
+                        : "Error iniciando registro social",
+            });
         }
     };
+
 
   return (
       <section className="lg:h-[calc(100vh-(100vh/24))] h-full w-full flex flex-col lg:grid lg:grid-rows-[repeat(23,1fr)] lg:grid-cols-[repeat(18,1fr)] overflow-hidden">

@@ -1,13 +1,16 @@
+// src/app/api/auth/logout/route.ts
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
     try {
+        const token = request.cookies.get("auth_token")?.value;
+
         const response = await fetch(
             "https://fast-api-filpath.vercel.app/auth/logout",
             {
                 method: "POST",
                 headers: {
-                    Authorization: request.headers.get("Authorization") || "",
+                    Authorization: token ? `Bearer ${token}` : "",
                 },
             }
         );
@@ -16,10 +19,14 @@ export async function POST(request: NextRequest) {
             { success: true },
             { status: response.status }
         );
-    }  catch (error) {
-    return NextResponse.json(
-        { error: `Internal server error: ${error instanceof Error ? error.message : 'Unknown error'}` },
-        { status: 500 }
-    );
-}
+    } catch (error) {
+        return NextResponse.json(
+            {
+                error: `Internal server error: ${
+                    error instanceof Error ? error.message : "Unknown error"
+                }`,
+            },
+            { status: 500 }
+        );
+    }
 }

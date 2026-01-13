@@ -14,9 +14,18 @@ import {
 type AuthContextType = {
     user: User | null;
     isLogged: boolean;
-    login: (credentials: { username?: string; email?: string; password: string }) => Promise<void>;
-    register: (data: {username: string; email: string; password: string;}) => Promise<void>;
+    login: (credentials: {
+        username?: string;
+        email?: string;
+        password: string;
+    }) => Promise<void>;
+    register: (data: {
+        username: string;
+        email: string;
+        password: string;
+    }) => Promise<void>;
     logout: () => Promise<void>;
+    loginWithOAuth: (user: User, token: string) => Promise<void>; // ← AGREGAR
     isLoading: boolean;
 };
 
@@ -24,6 +33,7 @@ const AuthContext = createContext<AuthContextType>({
     user: null,
     isLogged: false,
     login: async () => {},
+    loginWithOAuth: async () => {},
     register: async () => {},
     logout: async () => {},
     isLoading: true,
@@ -34,7 +44,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        checkSession();
+        let mounted = true;
+        if (mounted) checkSession();
+        return () => {
+            mounted = false;
+        };
     }, []);
 
     const checkSession = async () => {
@@ -46,8 +60,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         } finally {
             setIsLoading(false);
         }
-    };
-
+  };
+  
+    const saveToken = (token: string) => {
+        localStorage.setItem("auth_token", token);
+        document.cookie = `auth_token=${token}; path=/; secure; samesite=lax`;
+  };
+  
     const login = async (credentials: {
         username?: string;
         email?: string;
@@ -58,7 +77,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             const { user: loggedUser, token } = await loginWithCredentials(
                 credentials
             );
-            localStorage.setItem("auth_token", token);
+
+            saveToken(token); // ← acá
             setUser(loggedUser);
         } catch (error) {
             throw error;
@@ -66,6 +86,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             setIsLoading(false);
         }
     };
+  
+ 
 
     const register = async (data: {
         username: string;
@@ -75,7 +97,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setIsLoading(true);
         try {
             const { user: newUser, token } = await registerUser(data);
-            localStorage.setItem("auth_token", token);
+
+            saveToken(token); // ← acá también
             setUser(newUser);
         } catch (error) {
             throw error;
@@ -97,9 +120,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             localStorage.removeItem("auth_token");
             setUser(null);
             setIsLoading(false);
-            console.log("Sesión cerrada localmente");
+          console.log("Sesión cerrada localmente");
+          document.cookie = "auth_token=; Max-Age=0; path=/;";
         }
-    };
+  };
+  
+  const loginWithOAuth = async (user: User, token: string) => {
+      setIsLoading(true);
+      try {
+          if (!token || !user) throw new Error("OAuth inválido");
+
+          saveToken(token); // ← mismo mecanismo
+          setUser(user);
+      } finally {
+          setIsLoading(false);
+      }
+  };
 
     return (
         <AuthContext.Provider
@@ -107,6 +143,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                 user,
                 isLogged: !!user,
                 login,
+                loginWithOAuth,
                 register,
                 logout,
                 isLoading,

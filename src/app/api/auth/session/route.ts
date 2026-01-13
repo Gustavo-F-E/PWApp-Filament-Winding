@@ -1,12 +1,15 @@
+//src\app\api\auth\session\route.ts
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
     try {
+        const token = request.cookies.get("auth_token")?.value;
+
         const response = await fetch(
             "https://fast-api-filpath.vercel.app/auth/session",
             {
                 headers: {
-                    Authorization: request.headers.get("Authorization") || "",
+                    Authorization: token ? `Bearer ${token}` : "",
                 },
             }
         );

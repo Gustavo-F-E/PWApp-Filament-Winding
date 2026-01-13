@@ -1,10 +1,11 @@
+//src\auth\callback\microsoft\route.ts
+
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
     try {
         const { searchParams } = new URL(request.url);
         const code = searchParams.get("code");
-        const state = searchParams.get("state");
 
         if (!code) {
             return NextResponse.redirect(
@@ -12,37 +13,92 @@ export async function GET(request: NextRequest) {
             );
         }
 
-        // Enviar código a tu backend
-        const response = await fetch(
-            "https://fast-api-filpath.vercel.app/auth/microsoft/callback",
+        // 1. Intercambiar code por access_token en Microsoft
+        const tokenRes = await fetch(
+            "https://login.microsoftonline.com/common/oauth2/v2.0/token",
             {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ code, state }),
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: new URLSearchParams({
+                    client_id: process.env.MICROSOFT_CLIENT_ID!,
+                    client_secret: process.env.MICROSOFT_CLIENT_SECRET!,
+                    redirect_uri: process.env.MICROSOFT_REDIRECT_URI!,
+                    grant_type: "authorization_code",
+                    code,
+                    scope: "openid profile email User.Read",
+                }),
             }
         );
 
-        const data = await response.json();
+        const tokenData = await tokenRes.json();
 
-        if (response.ok && data.token) {
-            // Guardar token y redirigir
-            const redirect = NextResponse.redirect(new URL("/", request.url));
-            redirect.cookies.set("auth_token", data.token, {
-                httpOnly: true,
-                secure: process.env.NODE_ENV === "production",
-                sameSite: "lax",
-                maxAge: 60 * 60 * 24 * 7, // 7 días
-            });
-            return redirect;
+        if (!tokenRes.ok) {
+            console.error("Microsoft token error:", tokenData);
+            return NextResponse.redirect(
+                new URL("/sesion?error=token_exchange_failed", request.url)
+            );
         }
 
-        return NextResponse.redirect(
-            new URL("/sesion?error=auth_failed", request.url)
+        // 2. Pedir datos del usuario a Microsoft Graph
+        const userRes = await fetch("https://graph.microsoft.com/v1.0/me", {
+            headers: {
+                Authorization: `Bearer ${tokenData.access_token}`,
+            },
+        });
+
+        const microsoftUser = await userRes.json();
+
+        /*
+      microsoftUser:
+      {
+        id,
+        displayName,
+        mail,
+        userPrincipalName
+      }
+    */
+
+        // 3. Mandar usuario a tu backend FastAPI
+        const backendRes = await fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/auth/oauth`,
+            {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    email:
+                        microsoftUser.mail || microsoftUser.userPrincipalName,
+                    username: microsoftUser.displayName
+                        .replace(/\s+/g, "")
+                        .toLowerCase(),
+                    provider: "microsoft",
+                    provider_id: microsoftUser.id,
+                }),
+            }
         );
+
+        const backendData = await backendRes.json();
+
+        if (!backendRes.ok) {
+            console.error("Backend auth error:", backendData);
+            return NextResponse.redirect(
+                new URL("/sesion?error=backend_auth_failed", request.url)
+            );
+        }
+
+        // 4. Redirigir al frontend con los datos serializados
+        const redirectUrl = new URL("/sesion", request.url);
+        redirectUrl.searchParams.set(
+            "oauth",
+            Buffer.from(JSON.stringify(backendData)).toString("base64")
+        );
+
+        return NextResponse.redirect(redirectUrl);
     } catch (error) {
-    console.error("Microsoft OAuth callback error:", error);
-    return NextResponse.redirect(
-        new URL(`/sesion?error=server_error&details=${encodeURIComponent(error instanceof Error ? error.message : 'unknown')}`, request.url)
-    );
-  }
+        console.error("Microsoft OAuth callback error:", error);
+        return NextResponse.redirect(
+            new URL("/sesion?error=server_error", request.url)
+        );
+    }
 }

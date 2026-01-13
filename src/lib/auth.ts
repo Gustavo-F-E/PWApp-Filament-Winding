@@ -140,19 +140,27 @@ export async function getSession(): Promise<User | null> {
 }
 
 // Funciones para login social (opcional - temporal)
-export async function loginWithSocial(
-    provider: "google" | "microsoft" | "facebook"
-): Promise<string> {
-    const response = await fetch(`${API_BASE_URL}/auth/social`, {
+
+export interface OAuthLoginData {
+    email: string;
+    username: string;
+    provider: "google" | "microsoft" | "facebook";
+    provider_id: string;
+}
+
+export async function loginWithOAuthBackend(
+    data: OAuthLoginData
+): Promise<AuthResponse> {
+    const response = await fetch(`${API_BASE_URL}/auth/oauth`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ provider }),
+        body: JSON.stringify(data),
     });
 
     if (!response.ok) {
-        throw new Error(`Error al conectar con ${provider}`);
+        const errorText = await response.text();
+        throw new Error(errorText || "Error en login OAuth");
     }
 
-    const data = await response.json();
-    return data.url; // URL para redirección OAuth
+    return response.json();
 }
