@@ -106,7 +106,7 @@ export default function RootLayout({ children }: Readonly<{
                           <OrientationHandler />
                           <MobileLayoutWrapper
                               desktopHeader={
-                                  <header className="row-[1/7] col-[1/7] bg-blue-950 grid grid-rows-6 grid-cols-6 contents">
+                                  <header key="desktop-header" className="row-[1/7] col-[1/7] bg-blue-950 grid grid-rows-6 grid-cols-6 contents">
                                       <div className="row-[1/7] col-[1/7] bg-blue-950 grid grid-rows-6 grid-cols-6 h-full w-full">
                                           <div className="row-[1/5] col-[1/-1] h-full flex items-center">
                                               <div className="relative h-full w-full flex items-center justify-center">
@@ -125,7 +125,7 @@ export default function RootLayout({ children }: Readonly<{
                                   </header>
                               }
                               desktopAside={
-                                  <aside className="row-[7/24] col-[1/7] bg-blue-950 flex flex-col h-full">
+                                  <aside key="desktop-aside" className="row-[7/24] col-[1/7] bg-blue-950 flex flex-col h-full">
                                       <nav className="flex-grow-[65] text-blue-50">
                                           <div className="grid grid-rows-14 h-full">
                                               <NavItem
@@ -207,12 +207,12 @@ export default function RootLayout({ children }: Readonly<{
                                   </aside>
                               }
                               desktopUserBadge={
-                                  <aside className="row-[1/7] col-[22/25] flex items-center justify-end pr-4">
+                                  <aside key="desktop-user-badge" className="row-[1/7] col-[22/25] flex items-center justify-end pr-4">
                                       <UserBadge />
                                   </aside>
                               }
                               desktopFooter={
-                                  <footer className="row-[24/25] col-[1/25] bg-red-100 text-red-950 text-center flex items-center justify-center">
+                                  <footer key="desktop-footer" className="row-[24/25] col-[1/25] bg-red-100 text-red-950 text-center flex items-center justify-center">
                                       <TranslatedFooter />
                                   </footer>
                               }

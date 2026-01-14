@@ -28,7 +28,7 @@ export default function Proyecto() {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const API_BASE_URL =
-        process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+        process.env.NEXT_PUBLIC_URL_BACKEND || "http://localhost:8000";
 
     // Cargar proyectos
     useEffect(() => {
@@ -55,7 +55,7 @@ export default function Proyecto() {
     const fetchProjects = async () => {
         try {
             setLoading(true);
-            const token = localStorage.getItem("access_token");
+            const token = localStorage.getItem("auth_token");
             const headers: HeadersInit = {
                 "Content-Type": "application/json",
             };
@@ -85,7 +85,7 @@ export default function Proyecto() {
     }) => {
         try {
             setIsSubmitting(true);
-            const token = localStorage.getItem("access_token");
+            const token = localStorage.getItem("auth_token");
             const headers: HeadersInit = {
                 "Content-Type": "application/json",
             };
@@ -124,7 +124,7 @@ export default function Proyecto() {
 
         try {
             setIsSubmitting(true);
-            const token = localStorage.getItem("access_token");
+            const token = localStorage.getItem("auth_token");
             const headers: HeadersInit = {
                 "Content-Type": "application/json",
             };
@@ -169,7 +169,7 @@ export default function Proyecto() {
         if (!confirm("¿Estás seguro de eliminar este proyecto?")) return;
 
         try {
-            const token = localStorage.getItem("access_token");
+            const token = localStorage.getItem("auth_token");
             const headers: HeadersInit = {};
 
             if (token) {

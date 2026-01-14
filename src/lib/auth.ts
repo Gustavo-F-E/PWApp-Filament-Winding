@@ -2,7 +2,7 @@
 
 //const API_BASE_URL = "https://fast-api-filpath.vercel.app";
 // Para desarrollo local
-const API_BASE_URL = "http://localhost:8000";
+const API_BASE_URL = process.env.NEXT_PUBLIC_URL_BACKEND || "http://localhost:8000";
 
 // Tipos exportados
 export interface User {
@@ -55,6 +55,12 @@ export async function loginWithCredentials(credentials: {
 
         const data = await response.json();
         console.log("Login exitoso:", data);
+        
+        // Map access_token to token
+        if (data.access_token && !data.token) {
+            data.token = data.access_token;
+        }
+        
         return data;
     } catch (error) {
         console.error("Error en loginWithCredentials:", error);
@@ -163,4 +169,37 @@ export async function loginWithOAuthBackend(
     }
 
     return response.json();
+}
+
+export async function loginWithSocialCode(
+    provider: string,
+    code: string,
+    redirect_uri: string
+): Promise<AuthResponse> {
+    const response = await fetch(`${API_BASE_URL}/auth/social/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ provider, code, redirect_uri }),
+    });
+
+    if (!response.ok) {
+        let errorText = "Error desconocido del servidor";
+        try {
+            const errorJson = await response.json();
+            errorText = errorJson.detail || JSON.stringify(errorJson);
+        } catch {
+             errorText = await response.text();
+        }
+        console.error("Error en loginWithSocialCode:", errorText);
+        throw new Error(errorText || "Error en login code");
+    }
+
+    const data = await response.json();
+
+    // Map access_token to token
+    if (data.access_token && !data.token) {
+        data.token = data.access_token;
+    }
+
+    return data;
 }

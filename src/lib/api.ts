@@ -1,6 +1,7 @@
 //src\lib\api.ts
 
-const API_BASE_URL = "https://fast-api-filpath.vercel.app";
+//const API_BASE_URL = "https://fast-api-filpath.vercel.app";
+const API_BASE_URL = process.env.NEXT_PUBLIC_URL_BACKEND || "http://localhost:8000";
 
 export async function apiFetch<T>(
     endpoint: string,

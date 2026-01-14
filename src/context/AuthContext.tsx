@@ -2,7 +2,7 @@
 
 "use client";
 
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, useCallback } from "react";
 import {
     User,
     getSession,
@@ -67,7 +67,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         document.cookie = `auth_token=${token}; path=/; secure; samesite=lax`;
   };
   
-    const login = async (credentials: {
+const login = useCallback(async (credentials: {
         username?: string;
         email?: string;
         password: string;
@@ -85,11 +85,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         } finally {
             setIsLoading(false);
         }
-    };
-  
- 
+    }, []);
 
-    const register = async (data: {
+    const register = useCallback(async (data: {
         username: string;
         email: string;
         password: string;
@@ -105,9 +103,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         } finally {
             setIsLoading(false);
         }
-    };
+    }, []);
 
-    const logout = async () => {
+    const logout = useCallback(async () => {
         setIsLoading(true);
         try {
             // Intenta logout en el servidor
@@ -120,22 +118,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             localStorage.removeItem("auth_token");
             setUser(null);
             setIsLoading(false);
-          console.log("Sesión cerrada localmente");
-          document.cookie = "auth_token=; Max-Age=0; path=/;";
+            console.log("Sesión cerrada localmente");
+            document.cookie = "auth_token=; Max-Age=0; path=/;";
         }
-  };
-  
-  const loginWithOAuth = async (user: User, token: string) => {
-      setIsLoading(true);
-      try {
-          if (!token || !user) throw new Error("OAuth inválido");
+    }, []);
 
-          saveToken(token); // ← mismo mecanismo
-          setUser(user);
-      } finally {
-          setIsLoading(false);
-      }
-  };
+    const loginWithOAuth = useCallback(async (user: User, token: string) => {
+        setIsLoading(true);
+        try {
+            if (!token || !user) throw new Error("OAuth inválido");
+
+            saveToken(token); // ← mismo mecanismo
+            setUser(user);
+        } finally {
+            setIsLoading(false);
+        }
+    }, []);
 
     return (
         <AuthContext.Provider
