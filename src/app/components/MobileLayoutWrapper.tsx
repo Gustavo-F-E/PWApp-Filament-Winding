@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { HomeIcon, FillWindPathIcon } from './IconosSVG';
+import { HomeIcon, FillWindPathIcon, MenuIcon } from './IconosSVG';
 import UserBadge from './UserBadge';
 import { useMobile } from '@/context/MobileContext';
 import NavItem from './NavItems';
@@ -149,11 +149,7 @@ export default function MobileLayoutWrapper({
                     {isPageMenuOpen ? (
                         <span className="text-xl font-bold">X</span>
                     ) : (
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                            <line x1="3" y1="12" x2="21" y2="12"></line>
-                            <line x1="3" y1="6" x2="21" y2="6"></line>
-                            <line x1="3" y1="18" x2="21" y2="18"></line>
-                        </svg>
+                        <MenuIcon className="w-8 h-8" strokeWidth={2.5} />
                     )}
                  </button>
             </nav>

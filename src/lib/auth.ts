@@ -4,6 +4,8 @@
 // Para desarrollo local
 const API_BASE_URL = process.env.NEXT_PUBLIC_URL_BACKEND || "http://localhost:8000";
 
+console.log("DEBUG: API_BASE_URL configurada como:", API_BASE_URL);
+
 // Tipos exportados
 export interface User {
     id: string;

@@ -63,7 +63,7 @@ export function MobileProvider({ children }: { children: ReactNode }) {
         const result = isStandalone || isIOSStandalone || isInWebApp;
         setIsPwaStandalone(result);
         
-        console.log('Modo PWA:', result ? 'standalone' : 'browser');
+        // console.log('Modo PWA:', result ? 'standalone' : 'browser');
         return result;
     }, []);
 
@@ -100,15 +100,15 @@ export function MobileProvider({ children }: { children: ReactNode }) {
         if (isStandalone && ((window as any).orientation) !== undefined) {
             // Para PWA standalone en iOS, usar window.orientation
             isLandscape = isLandscapeFromOrientation;
-            console.log('Usando window.orientation para PWA iOS');
+            // console.log('Usando window.orientation para PWA iOS');
         } else if (mediaQuery.media !== 'not all' && mediaQuery.matches !== undefined) {
             // Para navegadores normales, usar matchMedia
             isLandscape = isLandscapeFromMedia;
-            console.log('Usando matchMedia');
+            // console.log('Usando matchMedia');
         } else {
             // Fallback al ratio
             isLandscape = isLandscapeFromRatio;
-            console.log('Usando ratio width/height');
+            // console.log('Usando ratio width/height');
         }
         
         const newOrientation = isLandscape ? 'landscape' : 'portrait';
@@ -120,7 +120,7 @@ export function MobileProvider({ children }: { children: ReactNode }) {
         }
         
         // Debug log (puedes comentarlo en producción)
-        console.log(`Orientación: ${newOrientation}, Ancho: ${width}, Alto: ${height}, Móvil: ${isMobile}, PWA: ${isStandalone ? 'standalone' : 'browser'}`);
+        // console.log(`Orientación: ${newOrientation}, Ancho: ${width}, Alto: ${height}, Móvil: ${isMobile}, PWA: ${isStandalone ? 'standalone' : 'browser'}`);
         
         // Actualizar atributo en html para CSS
         document.documentElement.setAttribute('data-orientation', newOrientation);
@@ -169,7 +169,7 @@ export function MobileProvider({ children }: { children: ReactNode }) {
 
         // 1. Escuchar evento orientationchange (nativo, funciona en PWA)
         const handleOrientationChange = () => {
-            console.log('Evento orientationchange disparado');
+            // console.log('Evento orientationchange disparado');
             // Delay más largo para iOS PWA
             setTimeout(detectOrientationAndScreen, 150);
         };
@@ -190,7 +190,7 @@ export function MobileProvider({ children }: { children: ReactNode }) {
         // 3. Escuchar evento de cambio de pantalla (para PWA fullscreen)
         const handleVisibilityChange = () => {
             if (!document.hidden) {
-                console.log('App vuelve a ser visible');
+                // console.log('App vuelve a ser visible');
                 // Delay para asegurar que iOS haya actualizado las dimensiones
                 setTimeout(detectOrientationAndScreen, 200);
             }
@@ -200,7 +200,7 @@ export function MobileProvider({ children }: { children: ReactNode }) {
         const handlePwaOrientationChange = (event: Event) => {
             const customEvent = event as CustomEvent;
             if (customEvent.detail && customEvent.detail.isLandscape !== undefined) {
-                console.log('Evento personalizado pwa-orientation-change recibido');
+                // console.log('Evento personalizado pwa-orientation-change recibido');
                 const { isLandscape } = customEvent.detail;
                 const newOrientation = isLandscape ? 'landscape' : 'portrait';
                 setOrientation(newOrientation);
@@ -216,7 +216,7 @@ export function MobileProvider({ children }: { children: ReactNode }) {
         // 5. Escuchar evento pageshow (importante para iOS)
         const handlePageShow = (event: PageTransitionEvent) => {
             if (event.persisted) {
-                console.log('Page restored from bfcache');
+                // console.log('Page restored from bfcache');
                 setTimeout(detectOrientationAndScreen, 100);
             }
         };
@@ -267,7 +267,7 @@ export function MobileProvider({ children }: { children: ReactNode }) {
         const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
         
         if (isIOS && isPwaStandalone) {
-            console.log('Configurando listeners especiales para iOS PWA');
+            // console.log('Configurando listeners especiales para iOS PWA');
             
             // Detectar después de cualquier interacción del usuario
             const handleUserInteraction = () => {

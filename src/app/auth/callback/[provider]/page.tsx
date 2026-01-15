@@ -67,7 +67,10 @@ export default function SocialCallbackPage() {
                 }
 
                 // Debe coincidir EXACTAMENTE con lo configurado en Google Console y en FastAPI
-                const redirectUri = `${window.location.origin}/auth/callback/${provider}`;
+                const envRedirectUri = process.env.NEXT_PUBLIC_OAUTH_REDIRECT_URI;
+                const redirectUri = envRedirectUri 
+                    ? (envRedirectUri.includes(provider) ? envRedirectUri : `${envRedirectUri}/${provider}`)
+                    : `${window.location.origin}/auth/callback/${provider}`;
 
                 console.log("Enviando al backend:", {
                     provider,
