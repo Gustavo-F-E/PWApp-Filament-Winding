@@ -126,12 +126,12 @@ export default function Registro() {
 
         if (provider === "google") {
             const googleId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
-             if (!googleId) {
+            if (!googleId) {
                 setErrors({ general: "Falta configuración CLIENT_ID de Google" });
                 setIsLoading(false);
                 return;
             }
-            
+
             const params = new URLSearchParams({
                 client_id: googleId,
                 redirect_uri: redirectUri,
@@ -143,6 +143,7 @@ export default function Registro() {
             url = `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`;
         } else if (provider === "github") {
              const githubId = process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID;
+             const githubRedirectUri = process.env.NEXT_PUBLIC_GITHUB_REDIRECT_URI || redirectUri;
              if (!githubId) {
                 setErrors({ general: "Falta configuración CLIENT_ID de GitHub" });
                 setIsLoading(false);
@@ -151,7 +152,7 @@ export default function Registro() {
             
             const params = new URLSearchParams({
                 client_id: githubId,
-                redirect_uri: redirectUri,
+                redirect_uri: githubRedirectUri,
                 scope: "user:email",
                 response_type: "code",
             });
@@ -175,7 +176,12 @@ export default function Registro() {
             url = `https://login.microsoftonline.com/common/oauth2/v2.0/authorize?${params.toString()}`;
         }
 
-        if (url) window.location.href = url;
+        if (url) {
+            console.log(`[OAuth Debug - Registro] Iniciando con ${provider}`);
+            console.log(`[OAuth Debug - Registro] redirectUri calculada: ${redirectUri}`);
+            console.log(`[OAuth Debug - Registro] URL de autorización final: ${url}`);
+            window.location.href = url;
+        }
     };
 
 

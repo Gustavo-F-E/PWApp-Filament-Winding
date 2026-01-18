@@ -84,17 +84,13 @@ export default function Sesion() {
         setIsLoading(true);
         setError("");
 
-        const envRedirectUri = process.env.NEXT_PUBLIC_OAUTH_REDIRECT_URI;
-        const redirectUri = envRedirectUri 
-            ? (envRedirectUri.includes(provider) ? envRedirectUri : `${envRedirectUri}/${provider}`)
-            : `${window.location.origin}/auth/callback/${provider}`;
-        
-        // Pero espera, si el envRedirectUri es http://localhost:3000/api/auth/callback, 
-        // y el frontend espera /auth/callback/github, hay un problema.
-        // Lo más seguro es usar el window.location.origin + la ruta que SABEMOS que funciona en el frontend.
-        // A menos que el usuario realmente quiera sobreescribirla.
+        const redirectUri = `${window.location.origin}/auth/callback/${provider}`;
         
         let url = "";
+
+        // Logs de depuración (seguros)
+        console.log(`[OAuth Debug] Iniciando login con ${provider}`);
+        console.log(`[OAuth Debug] redirectUri: ${redirectUri}`);
 
         if (provider === "google") {
             const clientId = "YOUR_GOOGLE_CLIENT_ID"; // TODO: Load from env or config if exposed
@@ -121,6 +117,7 @@ export default function Sesion() {
             url = `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`;
         } else if (provider === "github") {
              const githubId = process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID;
+             const githubRedirectUri = process.env.NEXT_PUBLIC_GITHUB_REDIRECT_URI || redirectUri;
              if (!githubId) {
                 setError("Falta configuración CLIENT_ID de GitHub");
                 setIsLoading(false);
@@ -129,7 +126,7 @@ export default function Sesion() {
             
             const params = new URLSearchParams({
                 client_id: githubId,
-                redirect_uri: redirectUri,
+                redirect_uri: githubRedirectUri,
                 scope: "user:email",
             });
              url = `https://github.com/login/oauth/authorize?${params.toString()}`;
@@ -152,7 +149,12 @@ export default function Sesion() {
             url = `https://login.microsoftonline.com/common/oauth2/v2.0/authorize?${params.toString()}`;
         }
 
-        if (url) window.location.href = url;
+        if (url) {
+            console.log(`[OAuth Debug] Iniciando login con ${provider}`);
+            console.log(`[OAuth Debug] redirectUri calculada: ${redirectUri}`);
+            console.log(`[OAuth Debug] URL de autorización final: ${url}`);
+            window.location.href = url;
+        }
     };
   
     return (
