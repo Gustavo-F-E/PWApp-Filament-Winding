@@ -291,8 +291,13 @@ export function MobileProvider({ children }: { children: ReactNode }) {
     const closePageMenu = useCallback(() => setIsPageMenuOpen(false), []);
 
     // Wrapper to ensure that when we set content, we also have it available
+    // and to avoid unnecessary re-renders if the same type of content is set
     const setContent = useCallback((content: ReactNode) => {
-        setPageMenuContent(content);
+        setPageMenuContent(prev => {
+            // Basic optimization: if both are null, don't update
+            if (prev === null && content === null) return prev;
+            return content;
+        });
     }, []);
 
     const contextValue = useMemo(() => ({

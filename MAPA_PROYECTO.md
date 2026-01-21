@@ -24,22 +24,56 @@
 ## 3. Carpeta `src/` (núcleo de la app) 🧭
 
 -   `src/app/`
-
     -   `layout.tsx` — layout raíz de la app.
     -   `page.tsx` — página principal / entrypoint del sitio.
+    -   `HomeLogic.tsx` — Lógica separada de la página principal.
     -   `globals.css` — estilos globales.
     -   `registerServiceWorker.ts` — registro del service worker (PWA).
-    -   Subcarpetas por rutas/páginas: `acercaDe/`, `ayuda/`, `contacto/`, `capas/`, `proyecto/`, `registro/`, `sesion/`, `idioma/`, etc. Cada una contiene `page.tsx` y a veces CSS modules.
-    -   `components/` — componentes React reutilizables (modals, menús, botones, vistas: `ModalAñadirCapa.tsx`, `MenuHome.tsx`, `UserBadge.tsx`, `MostrarCapas.tsx`, etc.).
+    -   Subcarpetas por rutas/páginas: `acercaDe/`, `ayuda/`, `contacto/`, `capas/`, `proyecto/`, `registro/`, `sesion/`, `idioma/`, `oauth-success/`, etc.
+    -   `components/` — componentes React reutilizables (modals, menús, botones, vistas).
     -   `css/` — estilos modulares por componente/página (`*.module.css`).
-    -   `api/` — rutas API (por ejemplo `auth/*` con `login`, `register`, `logout`, `session`, `social`).
+    -   `api/` — rutas API (por ejemplo `auth/*`).
 
--   `src/auth/` — callbacks para OAuth (`microsoft`, `google`, `facebook` en `route.ts`).
+-   `src/auth/` — callbacks para OAuth y `social-callback.ts`.
 -   `src/context/` — contextos React (AuthContext, IdiomaContext, MobileContext, ModalContext).
 -   `src/lib/` — utilidades de lógica/servicios (`api.ts`, `auth.ts`).
 -   `src/utils/` — utilidades (cookies, manejo JWT, etc.).
--   `src/proxy2.ts` — proxy inverso o utilidad de conexión.
--   `src/types/` — tipos TypeScript (p.ej. `auth.ts`).
+-   `src/types/` — tipos TypeScript.
+
+---
+
+## 4. Estructura de la carpeta `src/app` (Rutas) 🌳
+
+```text
+src/app/
+├── acercaDe/
+├── ayuda/
+├── contacto/
+├── capas/
+├── idioma/
+├── oauth-success/             # Manejo de éxito post-OAuth
+├── registro/
+│   ├── RegistroLogic.tsx      # Lógica del formulario de registro
+│   └── page.tsx
+├── sesion/
+│   ├── SesionLogic.tsx        # Lógica del formulario de sesión
+│   └── page.tsx
+├── proyecto/                  # Gestión de proyectos (Estructura compleja)
+│   ├── @aside/                # Parallel Route: Sidebars
+│   ├── @main/                 # Parallel Route: Contenido Principal
+│   ├── GCode/                 # Generación de G-Code
+│   ├── crearProyecto/         # Creación de nuevos proyectos
+│   ├── liner/                 # Configuración de Liners
+│   ├── maquina/               # Configuración de Máquinas
+│   ├── MenuProyecto.tsx       # Menú específico de la sección
+│   ├── ProyectoContext.tsx    # Contexto local del proyecto
+│   ├── layout.tsx
+│   └── page.tsx
+├── HomeLogic.tsx              # Lógica de la página principal
+├── layout.tsx
+├── page.tsx
+└── registerServiceWorker.ts
+```
 
 ---
 
@@ -132,7 +166,7 @@ Este documento lista componentes, páginas, rutas API, contexts y utilidades pri
 | `MobileLayoutWrapper`   | `src/app/components/MobileLayoutWrapper.tsx`   | Layout adaptado para mobile.                                  |
 | `MobileAuthTrigger`     | `src/app/components/MobileAuthTrigger.tsx`     | Elemento para abrir auth en mobile.                           |
 | `MenuVacio`             | `src/app/components/MenuVacio.tsx`             | Placeholder para menús vacíos.                                |
-| `MenuProyecto`          | `src/app/components/MenuProyecto.tsx`          | Menú para gestión de proyecto.                                |
+| `MenuProyecto.tsx`          | `src/app/proyecto/MenuProyecto.tsx`           | Menú para gestión de proyecto.                                |
 | `firma`                 | `src/app/components/firma.html`                | Archivo HTML de firma/pie de página.                          |
 
 > Nota: los enlaces arriba son rutas relativas; puedes abrirlos desde el editor.

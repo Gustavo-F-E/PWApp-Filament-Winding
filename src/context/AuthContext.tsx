@@ -119,7 +119,8 @@ const login = useCallback(async (credentials: {
             setUser(null);
             setIsLoading(false);
             console.log("Sesión cerrada localmente");
-            document.cookie = "auth_token=; Max-Age=0; path=/;";
+            // Eliminar cookie con path / para asegurar consistencia
+            document.cookie = "auth_token=; Max-Age=0; path=/; SameSite=Lax";
         }
     }, []);
 

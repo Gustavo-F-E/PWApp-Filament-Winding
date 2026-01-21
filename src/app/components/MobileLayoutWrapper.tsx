@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { HomeIcon, FillWindPathIcon, MenuIcon } from './IconosSVG';
 import UserBadge from './UserBadge';
 import { useMobile } from '@/context/MobileContext';
@@ -29,7 +30,14 @@ export default function MobileLayoutWrapper({
   desktopFooter: React.ReactNode,
   desktopUserBadge: React.ReactNode
 }) {
+  const pathname = usePathname();
   const { togglePageMenu, isPageMenuOpen, pageMenuContent, closePageMenu, isLandscapeSidebarOpen } = useMobile();
+
+  // Cerrar menús al cambiar de ruta
+  React.useEffect(() => {
+    closeGlobalNav();
+    closePageMenu();
+  }, [pathname]);
   const [isGlobalNavOpen, setIsGlobalNavOpen] = useState(false);
   const [shouldRenderGlobalNav, setShouldRenderGlobalNav] = useState(false);
   const [isAnimatingIn, setIsAnimatingIn] = useState(false);
@@ -156,18 +164,18 @@ export default function MobileLayoutWrapper({
 
             {/* GLOBAL NAV DRAWER (Left Side - Home Menu) */}
             {shouldRenderGlobalNav && (
-                <div 
-                    className={`
-                        fixed inset-0 z-[60] bg-black flex justify-start
-                        transition-all duration-300 ease-in-out
-                        ${(isGlobalNavOpen || isAnimatingIn) ? 'bg-opacity-50' : 'bg-opacity-0'}
-                        ${(!isGlobalNavOpen && !isAnimatingIn) ? 'pointer-events-none' : ''}
-                    `}
-                    onClick={closeGlobalNav}
-                >
+                <>
                     <div 
                         className={`
-                            w-[80%] h-full bg-blue-950 text-blue-50 p-6 flex flex-col shadow-xl
+                            fixed inset-0 z-[60] bg-black 
+                            transition-all duration-300 ease-in-out
+                            ${(isGlobalNavOpen || isAnimatingIn) ? 'bg-opacity-50' : 'bg-opacity-0 pointer-events-none'}
+                        `}
+                        onClick={closeGlobalNav}
+                    ></div>
+                    <div 
+                        className={`
+                            fixed top-0 left-0 w-[80%] h-full bg-blue-950 text-blue-50 p-6 flex flex-col shadow-xl lg:hidden z-[70]
                             transform transition-transform duration-300 ease-in-out
                             ${(isGlobalNavOpen || isAnimatingIn) ? 'translate-x-0' : '-translate-x-full'}
                         `}
@@ -195,7 +203,7 @@ export default function MobileLayoutWrapper({
                             </button>
                          </div>
                     </div>
-                </div>
+                </>
             )}
         </div>
 
@@ -256,18 +264,18 @@ export default function MobileLayoutWrapper({
 
             {/* GLOBAL NAV DRAWER (Mobile Landscape) - Home Menu en Landscape */}
             {shouldRenderGlobalNav && (
-                <div 
-                    className={`
-                        fixed inset-0 z-[60] bg-black flex justify-start
-                        transition-all duration-300 ease-in-out
-                        ${(isGlobalNavOpen || isAnimatingIn) ? 'bg-opacity-50' : 'bg-opacity-0'}
-                        ${(!isGlobalNavOpen && !isAnimatingIn) ? 'pointer-events-none' : ''}
-                    `}
-                    onClick={closeGlobalNav}
-                >
+                <>
                     <div 
                         className={`
-                            w-[40vw] h-full bg-blue-950 text-blue-50 p-6 flex flex-col shadow-xl
+                            fixed inset-0 z-[60] bg-black 
+                            transition-all duration-300 ease-in-out
+                            ${(isGlobalNavOpen || isAnimatingIn) ? 'bg-opacity-50' : 'bg-opacity-0 pointer-events-none'}
+                        `}
+                        onClick={closeGlobalNav}
+                    ></div>
+                    <div 
+                        className={`
+                            fixed top-0 left-0 w-[40vw] h-full bg-blue-950 text-blue-50 p-6 flex flex-col shadow-xl z-[70]
                             transform transition-transform duration-300 ease-in-out
                             ${(isGlobalNavOpen || isAnimatingIn) ? 'translate-x-0' : '-translate-x-full'}
                         `}
@@ -295,7 +303,7 @@ export default function MobileLayoutWrapper({
                             </button>
                          </div>
                     </div>
-                </div>
+                </>
             )}
         </div>
     </div>

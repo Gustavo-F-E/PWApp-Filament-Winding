@@ -22,11 +22,10 @@ export function middleware(request: NextRequest) {
         return NextResponse.redirect(loginUrl);
     }
 
-    // Si está logueado e intenta volver a /sesion → lo mandamos al dashboard
-    if ((pathname === "/sesion" || pathname === "/registro") && token) {
-        const homeUrl = new URL("/", request.url);
-        return NextResponse.redirect(homeUrl);
-    }
+    // Si está en /sesion o /registro y tiene token, dejamos pasar si no hay un usuario validado en cliente
+    // Pero para evitar bucles, el middleware solo debe actuar en rutas protegidas mayormente.
+    // Eliminamos la redirección automática del middleware para /sesion y /registro 
+    // y dejamos que la lógica de cliente decida si ya está logueado.
 
     return NextResponse.next();
 }

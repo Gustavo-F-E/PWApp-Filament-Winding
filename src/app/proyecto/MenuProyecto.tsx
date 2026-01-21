@@ -1,9 +1,9 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
-import { NuevoProyectoIcon, LinerIcon, MaquinaIcon, GCodeIcon} from './IconosSVG'
+import { NuevoProyectoIcon, LinerIcon, MaquinaIcon, GCodeIcon} from '../components/IconosSVG'
 import { useAuth } from '@/context/AuthContext'
-import { MenuList } from './MenuList'
+import { MenuList } from '../components/MenuList'
 import { useIdioma } from '@/context/IdiomaContext';
 
 export default function MenuProyecto({ mobileMode = false }: { mobileMode?: boolean }) {
@@ -14,7 +14,7 @@ export default function MenuProyecto({ mobileMode = false }: { mobileMode?: bool
   const menuItems = [
   {
     columnas: 'col-[1/3]',
-    href: '/nuevoProyecto',
+    href: '/proyecto/crearProyecto',
     Icon: NuevoProyectoIcon,
     text: t('MenuProyecto.CrearProyecto'),
     isActive,
@@ -23,7 +23,7 @@ export default function MenuProyecto({ mobileMode = false }: { mobileMode?: bool
   },
   {
     columnas: 'col-[3/6]',
-    href: '/liner',
+    href: '/proyecto//liner',
     Icon: LinerIcon,
     text: t('MenuProyecto.Liner'),
     isActive,
@@ -32,7 +32,7 @@ export default function MenuProyecto({ mobileMode = false }: { mobileMode?: bool
   },
     {
     columnas: 'col-[6/9]',
-    href: '/maquina',
+    href: '/proyecto//maquina',
     Icon: MaquinaIcon,
     text: t('MenuProyecto.Maquina'),
     isActive,
@@ -41,7 +41,7 @@ export default function MenuProyecto({ mobileMode = false }: { mobileMode?: bool
   },
     {
     columnas: 'col-[9/12]',
-    href: '/GCode',
+    href: '/proyecto/GCode',
     Icon: GCodeIcon,
     text: t('MenuProyecto.CodigoG'),
     isActive,

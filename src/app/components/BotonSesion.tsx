@@ -13,14 +13,19 @@ export default function BotonSesion() {
       <div className="flex flex-col items-center justify-center">
         <Link
           href="/sesion"
-          className="py-[3%] w-[70%] text-fluid-lg mb-2 bg-blue-300 text-blue-950 rounded-full font-bold text-center block"
+          key="login-link"
+          className="py-3 w-full text-fluid-lg mb-2 bg-blue-300 text-blue-950 rounded-full font-bold text-center block hover:bg-blue-200 transition-colors"
         >
           {t("sesion.iniciar")}
         </Link>
 
-        <div className="text-center text-blue-50">
+        <div className="text-center text-blue-50 mt-2">
           {t("sesion.pregunta")}{' '}
-          <Link href="/registro" className="underline">
+          <Link 
+            href="/registro" 
+            key="register-link"
+            className="underline font-bold hover:text-blue-200 transition-colors"
+          >
             {t("sesion.registro")}
           </Link>
         </div>
