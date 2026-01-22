@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useProyecto } from "../ProyectoContext";
+import { useProyecto } from "../CapasContext";
 import AsideProyecto from "@/app/components/AsideProyecto";
 
 export default function ProyectoAside() {
@@ -39,7 +39,7 @@ export default function ProyectoAside() {
     }
 
     const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     ) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));

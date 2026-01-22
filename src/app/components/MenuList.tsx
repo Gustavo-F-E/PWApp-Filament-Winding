@@ -8,21 +8,22 @@ interface MenuListProps {
 
 export function MenuList({ items = [], mobileMode = false }: MenuListProps) {
   return (
-    <>
-      {items.map((item, index) => (
-        <MenuItem
-          key={index}
-          columnas={item.columnas}
-          href={item.href}
-          Icon={item.Icon}
-          text={item.text}
-          isActive={item.isActive}
-          iconColor={item.iconColor}
-          textClass={item.textClass}
-          onClick={item.onClick}
-          mobileMode={mobileMode}
-        />
-      ))}
-    </>
+      <>
+          {items.map((item, index) => (
+              <MenuItem
+                  key={index}
+                  columnas={item.columnas}
+                  href={item.href}
+                  Icon={item.Icon}
+                  text={item.text}
+                  isActive={item.isActive}
+                  iconColor={item.iconColor}
+                  textClass={item.textClass}
+                  onClick={item.onClick}
+                  mobileMode={mobileMode}
+                  linkEnabled={item.linkEnabled}
+              />
+          ))}
+      </>
   );
 }

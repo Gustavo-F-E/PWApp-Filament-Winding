@@ -13,6 +13,16 @@ export default function MenuAyuda({ mobileMode = false }: { mobileMode?: boolean
   const { t } = useIdioma();
   const menuItems = [
       {
+          columnas: "col-[1/3]",
+          href: "/videoTutoriales",
+          Icon: VideotutorialesIcon,
+          text: t("MenuAyuda.videoTutoriales"),
+          isActive,
+          iconColor: isLogged ? "var(--blue-950)" : "var(--blue-950)",
+          textClass: isLogged ? "text-blue-950" : "text-blue-950",
+          linkEnabled: true,
+      },
+      {
           columnas: "col-[3/6]",
           href: "/FAQs",
           Icon: FAQIcon,
@@ -20,6 +30,7 @@ export default function MenuAyuda({ mobileMode = false }: { mobileMode?: boolean
           isActive,
           iconColor: isLogged ? "var(--blue-950)" : "var(--blue-950)",
           textClass: isLogged ? "text-blue-950" : "text-blue-950",
+          linkEnabled: true,
       },
       {
           columnas: "col-[6/9]",
@@ -29,15 +40,7 @@ export default function MenuAyuda({ mobileMode = false }: { mobileMode?: boolean
           isActive,
           iconColor: isLogged ? "var(--blue-950)" : "var(--blue-400)",
           textClass: isLogged ? "text-blue-950" : "text-blue-400",
-      },
-      {
-          columnas: "col-[1/3]",
-          href: "/videoTutoriales",
-          Icon: VideotutorialesIcon,
-          text: t("MenuAyuda.videoTutoriales"),
-          isActive,
-          iconColor: isLogged ? "var(--blue-950)" : "var(--blue-950)",
-          textClass: isLogged ? "text-blue-950" : "text-blue-950",
+          linkEnabled: isLogged,
       },
   ];
 

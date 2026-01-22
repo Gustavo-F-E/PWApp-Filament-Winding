@@ -2,15 +2,15 @@
 
 import React from "react";
 import ProjectForm from "../../components/ProjectForm";
-import { useProyecto } from "../ProyectoContext";
+import { useProyecto } from "../CapasContext";
 import { useAuth } from "@/context/AuthContext";
 
 export default function ProyectoMain() {
     const {
         projects,
         liners,
-      machines,
-        
+        machines,
+
         loading,
         error,
         showForm,
@@ -28,31 +28,31 @@ export default function ProyectoMain() {
         setSelectedLiner,
         selectedMachine,
         setSelectedMachine,
-  } = useProyecto();
-  
-  const { isLogged } = useAuth()
+    } = useProyecto();
 
-  if (!isLogged) {
-    return (
-        <div className="flex-1 overflow-y-auto col-[1/13] lg:grid lg:grid-rows-[repeat(17,1fr)] h-full">
-            <div className="row-[1/18] lg:col-[1/13] p-4">
-                {/* Sección de Proyectos */}
-                <section className="mb-8">
-                    <section className="my-6 mx-[10vw]">
-                        <h1 className="text-2xl font-bold text-blue-950 mb-8">
-                            Gestión de Proyectos
-                        </h1>
-                        <p className=" text-blue-950">
-                            Inicie sesión para poder visualizar todos los
-                            proyectos del usuario, liners y maquinas creados,
-                            asi como tambien crear capas y generar el código
-                            G-Code de sus proyectos.
-                        </p>
+    const { isLogged } = useAuth();
+
+    if (!isLogged) {
+        return (
+            <div className="flex-1 overflow-y-auto col-[1/13] lg:grid lg:grid-rows-[repeat(17,1fr)] h-full">
+                <div className="row-[1/18] lg:col-[1/13] p-4">
+                    {/* Sección de Proyectos */}
+                    <section className="mb-8">
+                        <section className="my-6 mx-[10vw]">
+                            <h1 className="text-2xl font-bold text-blue-950 mb-8">
+                                Gestión de Proyectos
+                            </h1>
+                            <p className=" text-blue-950">
+                                Inicie sesión para poder visualizar todos los
+                                proyectos del usuario, liners y maquinas
+                                creados, asi como tambien crear capas y generar
+                                el código G-Code de sus proyectos.
+                            </p>
+                        </section>
                     </section>
-                </section>
+                </div>
             </div>
-        </div>
-    );
+        );
     }
 
     return (

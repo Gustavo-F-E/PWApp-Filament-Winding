@@ -14,7 +14,7 @@ export default function BotonSesion() {
         <Link
           href="/sesion"
           key="login-link"
-          className="py-3 w-full text-fluid-lg mb-2 bg-blue-300 text-blue-950 rounded-full font-bold text-center block hover:bg-blue-200 transition-colors"
+          className="py-3 w-[60%] text-fluid-lg mb-2 bg-blue-300 text-blue-950 rounded-full font-bold text-center block hover:bg-blue-200 transition-colors"
         >
           {t("sesion.iniciar")}
         </Link>

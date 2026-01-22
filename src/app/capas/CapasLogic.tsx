@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useCallback } from "react";
 import { useMobile } from "@/context/MobileContext";
-import MenuCapas from "../components/MenuCapas";
+import MenuCapas from "./MenuCapas";
 
 interface CapasLogicProps {
     children: (props: {
