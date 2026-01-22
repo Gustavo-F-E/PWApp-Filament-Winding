@@ -23,7 +23,7 @@ export default function MenuCapas({
     const menuItems = [
         {
             columnas: "col-[1/3]",
-            href: "/nuevaCapa",
+            href: "capas/nuevaCapa",
             Icon: NuevaCapaIcon,
             text: t("MenuCapas.nuevaCapa"),
             isActive,
@@ -33,7 +33,7 @@ export default function MenuCapas({
         },
         {
             columnas: "col-[3/6]",
-            href: "/material",
+            href: "capas/material",
             Icon: MaterialIcon,
             text: t("MenuCapas.material"),
             isActive,
@@ -43,7 +43,7 @@ export default function MenuCapas({
         },
         {
             columnas: "col-[6/9]",
-            href: "/seleccionarPatron",
+            href: "capas/seleccionarPatron",
             Icon: ElegirPatronIcon,
             text: t("MenuCapas.seleccionarPatron"),
             isActive,
@@ -53,7 +53,7 @@ export default function MenuCapas({
         },
         {
             columnas: "col-[9/12]",
-            href: "/graficos",
+            href: "capas/graficos",
             Icon: GraficosIcon,
             text: t("MenuCapas.graficos"),
             isActive,
