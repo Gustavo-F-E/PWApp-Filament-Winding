@@ -97,17 +97,20 @@ const MostrarCapas: React.FC<MostrarCapasProps> = ({ bobinadoElegido }) => {
     if (!bobinadoElegido || !bobinadoElegido.capas) {
       return { orden_capa: 0, diametro_mandril: 0 }; // Manejo de caso cuando bobinadoElegido es null o no tiene capas
     }
-  
+
     const orden_capa = bobinadoElegido.capas.length + 1; // Se basa en la cantidad de capas
     const diametro_mandril = bobinadoElegido.capas.length
       ? (bobinadoElegido.capas[bobinadoElegido.capas.length - 1]?.diametro_mandril || 0) + nuevaCapa.espesor
       : 0; // Si no hay capas, el valor es 0, sino se toma el último diametro y se le agrega el espesor
-  
+
     return { orden_capa, diametro_mandril };
   };
 
   // Función para manejar el cambio de los campos del formulario
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    import('../../utils/validation').then(({ handleNumericChangeValidation }) => {
+      handleNumericChangeValidation(e, (msg) => alert(msg));
+    });
     const { name, value } = e.target;
     setNuevaCapa((prev) => ({
       ...prev,
@@ -130,29 +133,29 @@ const MostrarCapas: React.FC<MostrarCapasProps> = ({ bobinadoElegido }) => {
     console.log('Nueva capa:', nuevaCapaData);
     // Aquí iría la lógica para enviar los datos
   };
-      // Handler para seleccionar una capa
-    const handleSelectCapa = (capa: Capa) => {
-      setCapaSeleccionada(capa); // Establece la capa seleccionada
-      setIsEditModalOpen(true); // Abre el modal de edición
-    };
+  // Handler para seleccionar una capa
+  const handleSelectCapa = (capa: Capa) => {
+    setCapaSeleccionada(capa); // Establece la capa seleccionada
+    setIsEditModalOpen(true); // Abre el modal de edición
+  };
 
-    const actualizarCapa = async () => {
-      if (capaSeleccionada) {
-        try {
-          const response = await fetch('/api/crearMandril/capas', {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(capaSeleccionada),
-          });
-          if (response.ok) {
-            console.log('Capa actualizada correctamente');
-          } else {
-            console.error('Error al actualizar la capa');
-          }
-        } catch (error) {
-          console.error('Error en la solicitud:', error);
+  const actualizarCapa = async () => {
+    if (capaSeleccionada) {
+      try {
+        const response = await fetch('/api/crearMandril/capas', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(capaSeleccionada),
+        });
+        if (response.ok) {
+          console.log('Capa actualizada correctamente');
+        } else {
+          console.error('Error al actualizar la capa');
         }
+      } catch (error) {
+        console.error('Error en la solicitud:', error);
       }
+    }
   };
 
   const eliminarCapa = async () => {
@@ -172,7 +175,7 @@ const MostrarCapas: React.FC<MostrarCapasProps> = ({ bobinadoElegido }) => {
       }
     }
   };
-  
+
 
   if (!bobinadoElegido) {
     return <h2 style={{ display: 'none' }}>Crear/Elegir Bobinado</h2>;
@@ -218,8 +221,8 @@ const MostrarCapas: React.FC<MostrarCapasProps> = ({ bobinadoElegido }) => {
             </tr>
           </thead>
           <tbody>
-          {bobinadoElegido.capas.map((capa, index) => (
-            <tr key={capa.id} onClick={() => handleSelectCapa(capa)}> {/* Llama al handler al hacer clic */}
+            {bobinadoElegido.capas.map((capa, index) => (
+              <tr key={capa.id} onClick={() => handleSelectCapa(capa)}> {/* Llama al handler al hacer clic */}
                 <td>{index + 1}</td>
                 <td>{capa.alfa_original}</td>
                 <td>{capa.alfa_corregido}</td>
@@ -260,7 +263,7 @@ const MostrarCapas: React.FC<MostrarCapasProps> = ({ bobinadoElegido }) => {
 
       {/* Modal para ver patrones */}
       {isViewPatronModalOpen && (
-          <ModalVerPatron
+        <ModalVerPatron
           patrones={patrones}
           loading={loading}
           onClose={() => setIsViewPatronModalOpen(false)}
@@ -284,18 +287,18 @@ const MostrarCapas: React.FC<MostrarCapasProps> = ({ bobinadoElegido }) => {
           setIsDeleteModalOpen={setIsDeleteModalOpen}
           eliminarCapa={eliminarCapa}
         />
-    )}
+      )}
 
 
       {/* Modal con formulario para añadir capa */}
       {isAddCapaModalOpen && (
         <ModalAñadirCapa
-        isOpen={isAddCapaModalOpen}
-        nuevaCapa={nuevaCapa}
-        setIsAddCapaModalOpen={setIsAddCapaModalOpen}
-        handleInputChange={handleInputChange}
-        agregarCapa={agregarCapa}
-      />
+          isOpen={isAddCapaModalOpen}
+          nuevaCapa={nuevaCapa}
+          setIsAddCapaModalOpen={setIsAddCapaModalOpen}
+          handleInputChange={handleInputChange}
+          agregarCapa={agregarCapa}
+        />
       )}
     </div>
   );

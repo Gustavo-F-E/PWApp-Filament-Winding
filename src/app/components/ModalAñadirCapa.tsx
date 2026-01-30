@@ -37,28 +37,28 @@ const ModalAñadirCapa: React.FC<ModalAñadirCapaProps> = ({
         <h2>Añadir Nueva Capa</h2>
         <form>
           <input
-            type="number"
+            type="text"
             name="longitud_util"
             value={nuevaCapa.longitud_util}
             onChange={handleInputChange}
             placeholder="Longitud útil"
           />
           <input
-            type="number"
+            type="text"
             name="espesor"
             value={nuevaCapa.espesor}
             onChange={handleInputChange}
             placeholder="Espesor"
           />
           <input
-            type="number"
+            type="text"
             name="coeficiente_rozamiento"
             value={nuevaCapa.coeficiente_rozamiento}
             onChange={handleInputChange}
             placeholder="Coef. Rozamiento"
           />
           <input
-            type="number"
+            type="text"
             name="pines"
             value={nuevaCapa.pines}
             onChange={handleInputChange}

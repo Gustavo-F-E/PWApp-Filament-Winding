@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from '../css/crearMandril_component_ModalEditarCapa.module.css';
+import { handleNumericChangeValidation } from '@/utils/validation';
 
 interface Capa {
   id: string;
@@ -32,9 +33,10 @@ const ModalEditarCapa: React.FC<ModalEditarCapaProps> = ({
   if (!isOpen || !capaSeleccionada) return null;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    handleNumericChangeValidation(e, (msg) => alert(msg));
     const { name, value } = e.target;
     setCapaSeleccionada((prev) =>
-      prev ? { ...prev, [name]: parseFloat(value) } : null
+      prev ? { ...prev, [name]: parseFloat(value) || 0 } : null
     );
   };
 
@@ -50,14 +52,14 @@ const ModalEditarCapa: React.FC<ModalEditarCapaProps> = ({
         <h2>Editar Capa</h2>
         <form>
           <input
-            type="number"
+            type="text"
             name="alfa_original"
             value={capaSeleccionada.alfa_original}
             onChange={handleInputChange}
             placeholder="Ángulo Original"
           />
           <input
-            type="number"
+            type="text"
             name="alfa_corregido"
             value={capaSeleccionada.alfa_corregido}
             onChange={handleInputChange}

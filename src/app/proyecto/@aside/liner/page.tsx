@@ -1,3 +1,5 @@
+//src\app\proyecto\@aside\liner\page.tsx
+
 "use client";
 
 import React from "react";
