@@ -5,9 +5,9 @@
 import { useCapas } from "../../../capas/CapasContext";
 import { useProyecto } from "../../../proyecto/ProyectoContext";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 
-export default function SeleccionarPatronPage() {
+function SeleccionarPatronContent() {
   const {
     isSubmitting,
     layerDraft,
@@ -275,5 +275,13 @@ export default function SeleccionarPatronPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function SeleccionarPatronPage() {
+  return (
+    <Suspense fallback={<div className="p-10 text-center">Cargando selector de patrones...</div>}>
+      <SeleccionarPatronContent />
+    </Suspense>
   );
 }
