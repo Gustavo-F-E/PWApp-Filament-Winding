@@ -1,12 +1,9 @@
+// src\app\proyecto\@aside\GCode\page.tsx
+
 "use client";
 
-import React from "react";
-import AsideProyecto from "../../../components/AsideProyecto";
+import ProyectoAsideLogic from "@/app/components/ProyectoAsideLogic";
 
-export default function CrearProyectoAside() {
-    return (
-        <div className="h-full overflow-y-auto">
-            <AsideProyecto />
-        </div>
-    );
+export default function GCodeAside() {
+  return <ProyectoAsideLogic />;
 }

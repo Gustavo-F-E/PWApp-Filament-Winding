@@ -93,20 +93,22 @@ function LayoutContent({
           <aside
             id="asideProyecto"
             className={`
-              fixed right-0 top-[10vh] landscape:top-[0vh] h-full z-30 border-2 border-blue-200 bg-blue-100
-              transform transition-transform duration-300 ease-in-out
+              fixed right-0 top-[10vh] landscape:top-[0vh] bottom-0 z-30 border-2 border-blue-200 bg-blue-100
+              transform transition-transform duration-300 ease-in-out overflow-y-auto
               ${isAsideOpen ? "translate-x-0" : "translate-x-full"}
               w-[90vw] landscape:w-[75vw]
             `}
             onClick={(e) => e.stopPropagation()}
           >
-            {aside}
+            <div className="pb-20">
+              {aside}
+            </div>
           </aside>
         </div>
       )}
 
       {/* aside derecho para desktop (Slot @aside) */}
-      <aside className="hidden lg:block lg:row-[7/24] lg:col-[13/19] bg-blue-100 lg:h-full">
+      <aside className="hidden lg:block lg:row-[7/24] lg:col-[13/19] bg-blue-100 lg:h-full overflow-y-auto">
         {aside}
       </aside>
 

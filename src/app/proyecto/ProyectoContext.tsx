@@ -21,24 +21,48 @@ export interface Project {
   updated_at: string;
 }
 
+export interface LinerSection {
+  tipo: string;
+  diametro_menor: number;
+  diametro_mayor: number;
+  longitud: number;
+  diametro: number;
+}
+
 export interface Liner {
   id: string;
   name: string;
   tipo_liner: string;
   user_email: string;
-  extremo_inicial?: { tipo: string;[key: string]: any };
-  medio?: { tipo: string;[key: string]: any };
-  extremo_final?: { tipo: string;[key: string]: any };
+  extremo_inicial: LinerSection;
+  medio: LinerSection;
+  extremo_final: LinerSection;
   created_at?: string;
   updated_at?: string;
+}
+
+export interface MachineAxis {
+  eje: string;
+  unidad?: string;
 }
 
 export interface Machine {
   id: string;
   name: string;
   tipo: string;
+  posicion_inicial: string;
+  coordenadas: {
+    x_p: number;
+    y_p: number;
+    x_pp: number;
+    y_pp: number;
+  };
+  giro_mandril: MachineAxis;
+  longitudinal: MachineAxis;
+  giro_devanador: MachineAxis;
+  acercamiento_devanador: MachineAxis;
+  velocidad_maquina: number;
   user_email: string;
-  velocidad_maquina?: number;
   created_at?: string;
   updated_at?: string;
 }
@@ -315,6 +339,7 @@ export function ProyectoProvider({ children }: { children: React.ReactNode }) {
       }
       setEditingProject(null);
       setShowForm(false);
+      if (isAsideOpen) toggleAside();
       alert("Proyecto actualizado exitosamente");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Error desconocido");
@@ -406,6 +431,7 @@ export function ProyectoProvider({ children }: { children: React.ReactNode }) {
 
       await fetchLiners();
       setEditingLiner(null);
+      if (isAsideOpen) toggleAside();
       alert("Liner actualizado exitosamente");
     } catch (err) {
       alert("Error: " + (err instanceof Error ? err.message : "Desconocido"));
@@ -431,6 +457,7 @@ export function ProyectoProvider({ children }: { children: React.ReactNode }) {
 
       await fetchMachines();
       setEditingMachine(null);
+      if (isAsideOpen) toggleAside();
       alert("Máquina actualizada exitosamente");
     } catch (err) {
       alert("Error: " + (err instanceof Error ? err.message : "Desconocido"));
@@ -452,26 +479,30 @@ export function ProyectoProvider({ children }: { children: React.ReactNode }) {
     setEditingMachine(null);
     setEditingProject(project);
     setShowForm(false);
-  }, []);
+    if (!isAsideOpen) toggleAside();
+  }, [isAsideOpen, toggleAside]);
 
   const handleEditLiner = useCallback((liner: Liner) => {
     setEditingProject(null);
     setEditingMachine(null);
     setEditingLiner(liner);
-  }, []);
+    if (!isAsideOpen) toggleAside();
+  }, [isAsideOpen, toggleAside]);
 
   const handleEditMachine = useCallback((machine: Machine) => {
     setEditingProject(null);
     setEditingLiner(null);
     setEditingMachine(machine);
-  }, []);
+    if (!isAsideOpen) toggleAside();
+  }, [isAsideOpen, toggleAside]);
 
   const handleCancelForm = useCallback(() => {
     setShowForm(false);
     setEditingProject(null);
     setEditingLiner(null);
     setEditingMachine(null);
-  }, []);
+    if (isAsideOpen) toggleAside();
+  }, [isAsideOpen, toggleAside]);
 
   const contextValue = React.useMemo(() => ({
     projects,
