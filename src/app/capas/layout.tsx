@@ -71,10 +71,9 @@ function LayoutContent({
         className={`
           flex-1 w-full lg:row-[7/24] lg:col-[1/13] bg-blue-50 lg:grid lg:grid-cols-[repeat(12,1fr)] lg:h-full lg:min-h-0
           transition-all duration-300 ease-in-out overflow-hidden
-          ${isAsideOpen ? "lg:block" : "block"}
           ${isAsideOpen
-            ? "transform -translate-x-[90vw] landscape:-translate-x-[50vw]"
-            : "translate-x-0"
+            ? "max-lg:transform max-lg:-translate-x-[90vw] max-lg:landscape:-translate-x-[50vw]"
+            : "max-lg:translate-x-0"
           }
       `}
       >
@@ -94,8 +93,8 @@ function LayoutContent({
           <aside
             id="asideCapas"
             className={`
-              fixed right-0 top-[10vh] landscape:top-[0vh] h-full z-30 border-2 border-blue-200 bg-blue-100
-              transform transition-transform duration-300 ease-in-out
+              fixed right-0 top-[10vh] landscape:top-[0vh] h-[90vh] landscape:h-full z-30 border-2 border-blue-200 bg-blue-100
+              transform transition-transform duration-300 ease-in-out overflow-y-auto
               ${isAsideOpen ? "translate-x-0" : "translate-x-full"}
               w-[90vw] landscape:w-[75vw]
             `}
@@ -107,7 +106,7 @@ function LayoutContent({
       )}
 
       {/* aside derecho para desktop (Slot @aside) */}
-      <aside className="hidden lg:block lg:row-[7/24] lg:col-[13/19] bg-blue-100 lg:h-full">
+      <aside className="hidden lg:block lg:row-[7/24] lg:col-[13/19] bg-blue-100 lg:h-full overflow-y-auto">
         {aside}
       </aside>
 

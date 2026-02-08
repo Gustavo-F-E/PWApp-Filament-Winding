@@ -70,7 +70,7 @@ export default function ProyectoMain() {
             <h1 className="text-2xl font-bold text-blue-950">
               Gestión de Proyectos
             </h1>
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-white-500">
               Aquí se encuentran todos los proyectos del usuario.
             </p>
           </div>
@@ -87,7 +87,7 @@ export default function ProyectoMain() {
             </div>
           ) : (
             <div className="bg-white-50 rounded-lg shadow overflow-hidden border border-blue-200">
-              <table className="min-w-full divide-y divide-gray-200">
+              <table className="min-w-full divide-y divide-white-200">
                 <thead className="bg-blue-50">
                   <tr>
                     {/*<th className="px-6 py-3 text-left text-xs font-medium text-blue-900 uppercase tracking-wider w-16">
@@ -107,14 +107,14 @@ export default function ProyectoMain() {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white-50 divide-y divide-gray-200">
+                <tbody className="bg-white-50 divide-y divide-white-200">
                   {projects.length === 0 ? (
-                      <tr className="bg-white-50">
+                    <tr className="bg-white-50">
                       <td
                         colSpan={4}
                         className="px-6 py-4"
                       >
-                        <div className="text-center py-8 text-gray-500">
+                        <div className="text-center py-8 text-white-500">
                           No hay proyectos
                           registrados. ¡Crea tu primer
                           proyecto!
@@ -125,7 +125,7 @@ export default function ProyectoMain() {
                     projects.map((project) => (
                       <tr
                         key={project.id}
-                        className={`bg-white-50 hover:bg-gray-50 cursor-pointer ${selectedProject?.id ===
+                        className={`bg-white-50 hover:bg-white-50 cursor-pointer ${selectedProject?.id ===
                           project.id
                           ? "bg-blue-50"
                           : ""
@@ -155,7 +155,7 @@ export default function ProyectoMain() {
                             className={`font-medium ${selectedProject?.id ===
                               project.id
                               ? "font-bold text-blue-800"
-                              : "text-gray-900"
+                              : "text-white-900"
                               }`}
                           >
                             {project.name}
@@ -164,7 +164,7 @@ export default function ProyectoMain() {
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center">
                             {/* Barra de progreso visual */}
-                            <div className="w-full bg-gray-200 rounded-full h-2.5 mr-3">
+                            <div className="w-full bg-white-200 rounded-full h-2.5 mr-3">
                               <div
                                 className="bg-blue-600 h-2.5 rounded-full"
                                 style={{ width: `${project.completion_percentage}%` }}
@@ -174,13 +174,13 @@ export default function ProyectoMain() {
                             {/* Porcentaje numérico */}
                             <div className={`min-w-[40px] text-right ${selectedProject?.id === project.id
                               ? "font-bold text-blue-800"
-                              : "text-gray-900"
+                              : "text-white-900"
                               }`}>
                               {project.completion_percentage}%
                             </div>
                           </div>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-gray-500">
+                        <td className="px-6 py-4 whitespace-nowrap text-white-500">
                           {new Date(
                             project.created_at,
                           ).toLocaleDateString()}
@@ -228,13 +228,13 @@ export default function ProyectoMain() {
             <h1 className="text-2xl font-bold text-blue-950">
               Liners (Mandriles)
             </h1>
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-white-500">
               Aquí se encuentran todos los liners del usuario.
             </p>
           </div>
 
           <div className="bg-white-50 rounded-lg shadow overflow-hidden border border-blue-200">
-            <table className="min-w-full divide-y divide-gray-200">
+            <table className="min-w-full divide-y divide-white-200">
               <thead className="bg-blue-50">
                 <tr>
                   {/*<th className="px-6 py-3 text-left text-xs font-medium text-blue-900 uppercase tracking-wider w-16">
@@ -254,11 +254,11 @@ export default function ProyectoMain() {
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="bg-white divide-y divide-white-200">
                 {!liners || liners.length === 0 ? (
                   <tr>
                     <td colSpan={5} className="px-6 py-4">
-                      <div className="text-center py-8 text-gray-500">
+                      <div className="text-center py-8 text-white-500">
                         No hay liners registrados. ¡Crea
                         tu primer liner!
                       </div>
@@ -268,7 +268,7 @@ export default function ProyectoMain() {
                   liners.map((liner) => (
                     <tr
                       key={liner.id}
-                      className={`hover:bg-gray-50 cursor-pointer ${selectedLiner?.id === liner.id
+                      className={`hover:bg-white-50 cursor-pointer ${selectedLiner?.id === liner.id
                         ? "bg-blue-50"
                         : ""
                         }`}
@@ -297,18 +297,18 @@ export default function ProyectoMain() {
                           className={`font-medium ${selectedLiner?.id ===
                             liner.id
                             ? "font-bold text-blue-800"
-                            : "text-gray-900"
+                            : "text-white-900"
                             }`}
                         >
                           {liner.name}
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-gray-500">
+                      <td className="px-6 py-4 whitespace-nowrap text-white-500">
                         <span
                           className={`px-2 py-1 text-xs rounded-full ${liner.tipo_liner ===
                             "simple"
                             ? "bg-blue-100 text-blue-800"
-                            : "bg-gray-100 text-gray-800"
+                            : "bg-white-100 text-white-800"
                             }`}
                         >
                           {liner.tipo_liner
@@ -319,7 +319,7 @@ export default function ProyectoMain() {
                             ) || "Simple"}
                         </span>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-gray-500">
+                      <td className="px-6 py-4 whitespace-nowrap text-white-500">
                         {liner.created_at
                           ? new Date(
                             liner.created_at,
@@ -368,13 +368,13 @@ export default function ProyectoMain() {
             <h1 className="text-2xl font-bold text-blue-950">
               Máquinas
             </h1>
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-white-500">
               Aquí se encuentran todas las máquinas del usuario.
             </p>
           </div>
 
           <div className="bg-white-50 rounded-lg shadow overflow-hidden border border-blue-200">
-            <table className="min-w-full divide-y divide-gray-200">
+            <table className="min-w-full divide-y divide-white-200">
               <thead className="bg-blue-50">
                 <tr>
                   {/*<th className="px-6 py-3 text-left text-xs font-medium text-blue-900 uppercase tracking-wider w-16">
@@ -397,11 +397,11 @@ export default function ProyectoMain() {
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="bg-white divide-y divide-white-200">
                 {!machines || machines.length === 0 ? (
                   <tr>
                     <td colSpan={6} className="px-6 py-4">
-                      <div className="text-center py-8 text-gray-500">
+                      <div className="text-center py-8 text-white-500">
                         No hay máquinas registradas.
                         ¡Crea tu primera máquina!
                       </div>
@@ -411,7 +411,7 @@ export default function ProyectoMain() {
                   machines.map((machine) => (
                     <tr
                       key={machine.id}
-                      className={`hover:bg-gray-50 cursor-pointer ${selectedMachine?.id ===
+                      className={`hover:bg-white-50 cursor-pointer ${selectedMachine?.id ===
                         machine.id
                         ? "bg-blue-50"
                         : ""
@@ -441,27 +441,27 @@ export default function ProyectoMain() {
                           className={`font-medium ${selectedMachine?.id ===
                             machine.id
                             ? "font-bold text-blue-800"
-                            : "text-gray-900"
+                            : "text-white-900"
                             }`}
                         >
                           {machine.name}
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-gray-500">
+                      <td className="px-6 py-4 whitespace-nowrap text-white-500">
                         <span
                           className={`px-2 py-1 text-xs rounded-full ${machine.tipo === "CNC"
                             ? "bg-blue-100 text-blue-800"
-                            : "bg-gray-100 text-gray-800"
+                            : "bg-white-100 text-white-800"
                             }`}
                         >
                           {machine.tipo || "CNC"}
                         </span>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-gray-500">
+                      <td className="px-6 py-4 whitespace-nowrap text-white-500">
                         {machine.velocidad_maquina || 0}{" "}
                         mm/min
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-gray-500">
+                      <td className="px-6 py-4 whitespace-nowrap text-white-500">
                         {machine.created_at
                           ? new Date(
                             machine.created_at,

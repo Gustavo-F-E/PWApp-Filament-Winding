@@ -12,15 +12,15 @@ interface ModalRegistroProps {
   onOpenLogin: () => void // Nueva prop
 }
 
-export default function ModalRegistro({ 
-  isOpen, 
-  onClose, 
-  onOpenLogin 
+export default function ModalRegistro({
+  isOpen,
+  onClose,
+  onOpenLogin
 }: ModalRegistroProps) {
   //const { t } = useIdioma()
   const { login } = useAuth()
   const [isPoliticasOpen, setIsPoliticasOpen] = useState(false)
-  
+
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -39,7 +39,7 @@ export default function ModalRegistro({
         onClose()
       }
     }
-    
+
     window.addEventListener('keydown', handleEscape)
     return () => window.removeEventListener('keydown', handleEscape)
   }, [isOpen, onClose])
@@ -53,7 +53,7 @@ export default function ModalRegistro({
       document.body.style.overflow = 'auto'
       document.body.style.position = 'static'
     }
-    
+
     return () => {
       document.body.style.overflow = 'auto'
       document.body.style.position = 'static'
@@ -66,7 +66,7 @@ export default function ModalRegistro({
       ...prev,
       [name]: value
     }))
-    
+
     // Limpiar error específico cuando el usuario empieza a escribir
     if (errors[name]) {
       setErrors(prev => {
@@ -79,47 +79,47 @@ export default function ModalRegistro({
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {}
-    
+
     if (!formData.username.trim()) {
       newErrors.username = 'El nombre de usuario es requerido'
     } else if (formData.username.length < 3) {
       newErrors.username = 'El nombre de usuario debe tener al menos 3 caracteres'
     }
-    
+
     if (!formData.email.trim()) {
       newErrors.email = 'El email es requerido'
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = 'El email no es válido'
     }
-    
+
     if (!formData.password) {
       newErrors.password = 'La contraseña es requerida'
     } else if (formData.password.length < 6) {
       newErrors.password = 'La contraseña debe tener al menos 6 caracteres'
     }
-    
+
     if (!formData.confirmPassword) {
       newErrors.confirmPassword = 'Por favor confirma tu contraseña'
     } else if (formData.password !== formData.confirmPassword) {
       newErrors.confirmPassword = 'Las contraseñas no coinciden'
     }
-    
+
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    
+
     if (!validateForm()) {
       return
     }
-    
+
     setIsLoading(true)
-    
+
     // Simular registro y delay de red
     await new Promise(resolve => setTimeout(resolve, 1000))
-    
+
     try {
       // Aquí iría la lógica real de registro
       // Por ahora simulamos un registro exitoso
@@ -127,16 +127,16 @@ export default function ModalRegistro({
         username: formData.username,
         email: formData.email
       })
-      
+
       // Auto-login después del registro exitoso
       login({ email: formData.email, password: formData.password })
-      
+
       // Cerrar modal después de registro exitoso
       setTimeout(() => {
         onClose()
         resetForm()
       }, 500)
-      
+
     } catch (error) {
       console.log(`Error ${error}`)
       setErrors({
@@ -187,12 +187,12 @@ export default function ModalRegistro({
   return (
     <>
       {/* Overlay */}
-      <div 
+      <div
         className="fixed inset-0 bg-black/60 z-[9999] flex items-center justify-center p-4"
         onClick={handleOverlayClick}
       >
         {/* Modal */}
-        <div 
+        <div
           className="
             bg-white rounded-xl shadow-2xl w-full max-w-md 
             max-h-[90vh] overflow-y-auto relative
@@ -201,18 +201,18 @@ export default function ModalRegistro({
           style={{
             backgroundColor: 'white',
             backgroundImage: 'none'
-        }}
+          }}
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
-          <div className="bg-white border-b border-gray-200 p-6">
+          <div className="bg-white border-b border-white-200 p-6">
             <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-bold text-gray-900">
+              <h2 className="text-2xl font-bold text-white-900">
                 Crear Cuenta
               </h2>
               <button
                 onClick={handleClose}
-                className="text-gray-400 hover:text-gray-600 transition-colors p-1"
+                className="text-white-400 hover:text-white-600 transition-colors p-1"
                 aria-label="Cerrar modal"
               >
                 <CloseIcon className="w-6 h-6" />
@@ -222,7 +222,7 @@ export default function ModalRegistro({
 
           {/* Formulario de Registro */}
           <form onSubmit={handleSubmit} className="p-6 bg-white">
-          {errors.general && (
+            {errors.general && (
               <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
                 {errors.general}
               </div>
@@ -230,7 +230,7 @@ export default function ModalRegistro({
 
             {/* Campo Nombre de Usuario */}
             <div className="mb-4">
-              <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="username" className="block text-sm font-medium text-white-700 mb-2">
                 Nombre de Usuario
               </label>
               <input
@@ -239,9 +239,8 @@ export default function ModalRegistro({
                 type="text"
                 value={formData.username}
                 onChange={handleInputChange}
-                className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-gray-700 ${
-                  errors.username ? 'border-red-300' : 'border-gray-300'
-                }`}
+                className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-white-700 ${errors.username ? 'border-red-300' : 'border-white-300'
+                  }`}
                 placeholder="Ingresa tu nombre de usuario"
                 disabled={isLoading}
                 autoFocus
@@ -253,7 +252,7 @@ export default function ModalRegistro({
 
             {/* Campo Email */}
             <div className="mb-4">
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="email" className="block text-sm font-medium text-white-700 mb-2">
                 E-Mail
               </label>
               <input
@@ -262,9 +261,8 @@ export default function ModalRegistro({
                 type="email"
                 value={formData.email}
                 onChange={handleInputChange}
-                className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-gray-700 ${
-                  errors.email ? 'border-red-300' : 'border-gray-300'
-                }`}
+                className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-white-700 ${errors.email ? 'border-red-300' : 'border-white-300'
+                  }`}
                 placeholder="Ingresa tu email"
                 disabled={isLoading}
               />
@@ -275,7 +273,7 @@ export default function ModalRegistro({
 
             {/* Campo Contraseña */}
             <div className="mb-4">
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="password" className="block text-sm font-medium text-white-700 mb-2">
                 Ingrese una contraseña
               </label>
               <div className="relative">
@@ -285,16 +283,15 @@ export default function ModalRegistro({
                   type={showPassword ? 'text' : 'password'}
                   value={formData.password}
                   onChange={handleInputChange}
-                  className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all pr-12 text-gray-700 ${
-                    errors.password ? 'border-red-300' : 'border-gray-300'
-                  }`}
+                  className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all pr-12 text-white-700 ${errors.password ? 'border-red-300' : 'border-white-300'
+                    }`}
                   placeholder="Crea una contraseña segura"
                   disabled={isLoading}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 p-1"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white-500 hover:text-white-700 p-1"
                   disabled={isLoading}
                   aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
                 >
@@ -312,7 +309,7 @@ export default function ModalRegistro({
 
             {/* Campo Confirmar Contraseña */}
             <div className="mb-6">
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="confirmPassword" className="block text-sm font-medium text-white-700 mb-2">
                 Reingrese la contraseña
               </label>
               <div className="relative">
@@ -322,16 +319,15 @@ export default function ModalRegistro({
                   type={showConfirmPassword ? 'text' : 'password'}
                   value={formData.confirmPassword}
                   onChange={handleInputChange}
-                  className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all pr-12 text-gray-700 ${
-                    errors.confirmPassword ? 'border-red-300' : 'border-gray-300'
-                  }`}
+                  className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all pr-12 text-white-700 ${errors.confirmPassword ? 'border-red-300' : 'border-white-300'
+                    }`}
                   placeholder="Vuelve a escribir tu contraseña"
                   disabled={isLoading}
                 />
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 p-1"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white-500 hover:text-white-700 p-1"
                   disabled={isLoading}
                   aria-label={showConfirmPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
                 >
@@ -354,8 +350,8 @@ export default function ModalRegistro({
               className={`
                 w-full py-3 px-4 rounded-lg font-semibold text-white
                 transition-all duration-200 mb-6
-                ${isLoading 
-                  ? 'bg-blue-400 cursor-not-allowed' 
+                ${isLoading
+                  ? 'bg-blue-400 cursor-not-allowed'
                   : 'bg-blue-600 hover:bg-blue-700 active:bg-blue-800'}
               `}
             >
@@ -375,41 +371,41 @@ export default function ModalRegistro({
             {/* Separador con texto "Registrarse con:" */}
             <div className="mb-6">
               <div className="flex items-center">
-                <div className="flex-grow border-t border-gray-300"></div>
-                <span className="mx-4 text-sm text-gray-500">
+                <div className="flex-grow border-t border-white-300"></div>
+                <span className="mx-4 text-sm text-white-500">
                   Registrarse con:
                 </span>
-                <div className="flex-grow border-t border-gray-300"></div>
+                <div className="flex-grow border-t border-white-300"></div>
               </div>
             </div>
 
             {/* Botones de Redes Sociales */}
             <div className="flex justify-center space-x-4 mb-6">
-            <button
+              <button
                 type="button"
                 onClick={() => handleSocialRegister('google')}
                 disabled={isLoading}
-                className="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors disabled:opacity-50"
+                className="w-12 h-12 rounded-full border border-white-300 flex items-center justify-center hover:bg-white-50 transition-colors disabled:opacity-50"
                 aria-label="Registrarse con Google"
               >
                 <GoogleIcon className="w-6 h-6" />
               </button>
-              
+
               <button
                 type="button"
                 onClick={() => handleSocialRegister('github')}
                 disabled={isLoading}
-                className="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors disabled:opacity-50"
+                className="w-12 h-12 rounded-full border border-white-300 flex items-center justify-center hover:bg-white-50 transition-colors disabled:opacity-50"
                 aria-label="Registrarse con GitHub"
               >
                 <GithubIcon className="w-6 h-6" colorClass="#181717" />
               </button>
-              
+
               <button
                 type="button"
                 onClick={() => handleSocialRegister('twitter')}
                 disabled={isLoading}
-                className="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors disabled:opacity-50"
+                className="w-12 h-12 rounded-full border border-white-300 flex items-center justify-center hover:bg-white-50 transition-colors disabled:opacity-50"
                 aria-label="Registrarse con Twitter"
               >
                 <TwitterIcon className="w-6 h-6" />
@@ -417,7 +413,7 @@ export default function ModalRegistro({
             </div>
 
             {/* ENLACE PARA INICIAR SESIÓN - MODIFICADO */}
-            <div className="text-center text-sm text-gray-600">
+            <div className="text-center text-sm text-white-600">
               <span>¿Ya tienes una cuenta? </span>
               <button
                 type="button"
@@ -433,27 +429,27 @@ export default function ModalRegistro({
           </form>
 
           {/* Footer del Modal */}
-          <div className="border-t border-gray-200 p-4 bg-gray-50 rounded-b-xl">
-            <div className="text-center text-xs text-gray-500">
+          <div className="border-t border-white-200 p-4 bg-white-50 rounded-b-xl">
+            <div className="text-center text-xs text-white-500">
               Al registrarte, aceptas nuestros {' '}
               <button
-        type="button"
-        className="text-blue-600 hover:text-blue-800 hover:underline"
-        onClick={() => setIsPoliticasOpen(true)}
-      >
-        Términos de Servicio y Política de Privacidad
-      </button>
+                type="button"
+                className="text-blue-600 hover:text-blue-800 hover:underline"
+                onClick={() => setIsPoliticasOpen(true)}
+              >
+                Términos de Servicio y Política de Privacidad
+              </button>
             </div>
-          {/* Añade el modal de políticas al final del componente */}
-                <ModalPoliticas
-                    isOpen={isPoliticasOpen}
-                    onClose={() => setIsPoliticasOpen(false)}
-                    showAcceptButton={true}
-                    onAccept={() => {
-                    // Lógica cuando el usuario acepta los términos
-                    console.log('Usuario aceptó los términos')
-                    }}
-                />
+            {/* Añade el modal de políticas al final del componente */}
+            <ModalPoliticas
+              isOpen={isPoliticasOpen}
+              onClose={() => setIsPoliticasOpen(false)}
+              showAcceptButton={true}
+              onAccept={() => {
+                // Lógica cuando el usuario acepta los términos
+                console.log('Usuario aceptó los términos')
+              }}
+            />
           </div>
 
         </div>

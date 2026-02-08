@@ -76,8 +76,8 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
           {project ? "Configurar Proyecto" : "Nuevo Proyecto"}
         </h3>
         <div className="text-right">
-          <span className="text-sm font-semibold text-gray-500 block">Definición</span>
-          <div className="w-32 h-2 bg-gray-200 rounded-full mt-1 overflow-hidden">
+          <span className="text-sm font-semibold text-white-500 block">Definición</span>
+          <div className="w-32 h-2 bg-white-200 rounded-full mt-1 overflow-hidden">
             <div
               className="h-full bg-blue-500 transition-all duration-500"
               style={{ width: `${percentage}%` }}
@@ -89,7 +89,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-white-700 mb-1">
             Nombre del Proyecto *
           </label>
           <input
@@ -98,14 +98,14 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
             value={formData.name}
             onChange={handleChange}
             required
-            className="w-full px-3 py-2 text-gray-700 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
+            className="w-full px-3 py-2 text-white-700 border border-white-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
             placeholder="Nombre identificativo"
             disabled={isSubmitting}
           />
         </div>
 
         <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-white-700 mb-1">
             Descripción
           </label>
           <textarea
@@ -113,21 +113,21 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
             value={formData.description}
             onChange={handleChange}
             rows={2}
-            className="w-full px-3 py-2 text-gray-700 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
+            className="w-full px-3 py-2 text-white-700 border border-white-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
             placeholder="Descripción breve (Añade 10% de definición)"
             disabled={isSubmitting}
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-white-700 mb-1">
             Seleccionar Liner
           </label>
           <select
             name="liner_name"
             value={formData.liner_name}
             onChange={handleChange}
-            className="w-full px-3 py-2 text-gray-700 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
+            className="w-full px-3 py-2 text-white-700 border border-white-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
             disabled={isSubmitting}
           >
             <option value="">-- Sin Liner --</option>
@@ -138,14 +138,14 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-white-700 mb-1">
             Seleccionar Máquina
           </label>
           <select
             name="machine_name"
             value={formData.machine_name}
             onChange={handleChange}
-            className="w-full px-3 py-2 text-gray-700 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
+            className="w-full px-3 py-2 text-white-700 border border-white-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
             disabled={isSubmitting}
           >
             <option value="">-- Sin Máquina --</option>
@@ -163,16 +163,16 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
             </label>
             <div className="flex flex-col items-stretch p-4 bg-white rounded-lg border border-blue-200 shadow-sm gap-4">
               <div className="flex items-center gap-3">
-                <div className={`p-2 rounded-full ${hasLayers ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400'}`}>
+                <div className={`p-2 rounded-full ${hasLayers ? 'bg-blue-100 text-blue-600' : 'bg-white-100 text-white-400'}`}>
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                   </svg>
                 </div>
                 <div className="flex flex-col overflow-hidden">
-                  <span className={`text-sm font-mono font-bold truncate ${hasLayers ? 'text-blue-900' : 'text-gray-400'}`}>
+                  <span className={`text-sm font-mono font-bold truncate ${hasLayers ? 'text-blue-900' : 'text-white-400'}`}>
                     {layersListName}
                   </span>
-                  <span className="text-xs text-gray-500 italic">
+                  <span className="text-xs text-white-500 italic">
                     {hasLayers ? `${project.layers.length} capas definidas` : "No hay capas creadas"}
                   </span>
                 </div>
@@ -211,11 +211,11 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
         )}
       </div>
 
-      <div className="flex justify-end space-x-4 pt-4 border-t border-gray-100">
+      <div className="flex justify-end space-x-4 pt-4 border-t border-white-100">
         <button
           type="button"
           onClick={onCancel}
-          className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors"
+          className="px-4 py-2 border border-white-300 rounded-md text-white-700 hover:bg-white-50 transition-colors"
           disabled={isSubmitting}
         >
           Cancelar

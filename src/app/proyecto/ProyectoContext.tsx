@@ -86,9 +86,6 @@ interface ProyectoContextType {
   handleDeleteMachine: (id: string) => void;
   handleUpdateLiner: (id: string, formData: any) => Promise<void>;
   handleUpdateMachine: (id: string, formData: any) => Promise<void>;
-  handleDeleteLayer: (projectId: string, index: number) => Promise<void>;
-  handleReorderLayer: (projectId: string, fromIndex: number, toIndex: number) => Promise<void>;
-  handleClearLayers: (projectId: string) => Promise<void>;
   handleCancelForm: () => void;
   fetchProjects: () => void;
   fetchLiners: () => void;
@@ -442,67 +439,6 @@ export function ProyectoProvider({ children }: { children: React.ReactNode }) {
     }
   }, [API_BASE_URL, fetchMachines]);
 
-  const handleDeleteLayer = useCallback(async (projectId: string, index: number) => {
-    const project = projects.find(p => p.id === projectId);
-    if (!project) return;
-
-    if (!confirm("¿Estás seguro de eliminar esta capa?")) return;
-
-    const newLayers = [...project.layers];
-    newLayers.splice(index, 1);
-
-    try {
-      const token = localStorage.getItem("auth_token");
-      const response = await fetch(`${API_BASE_URL}/projects/${projectId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        },
-        body: JSON.stringify({ ...project, layers: newLayers }),
-      });
-
-      if (!response.ok) throw new Error("Error al eliminar capa");
-
-      const updatedProject = await response.json();
-      setProjects(prev => prev.map(p => p.id === projectId ? updatedProject : p));
-      if (selectedProject?.id === projectId) setSelectedProject(updatedProject);
-    } catch (err) {
-      alert("Error: " + (err instanceof Error ? err.message : "Desconocido"));
-    }
-  }, [API_BASE_URL, projects, selectedProject]);
-
-  const handleReorderLayer = useCallback(async (projectId: string, fromIndex: number, toIndex: number) => {
-    const project = projects.find(p => p.id === projectId);
-    if (!project) return;
-
-    if (toIndex < 0 || toIndex >= project.layers.length) return;
-
-    const newLayers = [...project.layers];
-    const [movedLayer] = newLayers.splice(fromIndex, 1);
-    newLayers.splice(toIndex, 0, movedLayer);
-
-    try {
-      const token = localStorage.getItem("auth_token");
-      const response = await fetch(`${API_BASE_URL}/projects/${projectId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        },
-        body: JSON.stringify({ ...project, layers: newLayers }),
-      });
-
-      if (!response.ok) throw new Error("Error al reordenar capa");
-
-      const updatedProject = await response.json();
-      setProjects(prev => prev.map(p => p.id === projectId ? updatedProject : p));
-      if (selectedProject?.id === projectId) setSelectedProject(updatedProject);
-    } catch (err) {
-      alert("Error: " + (err instanceof Error ? err.message : "Desconocido"));
-    }
-  }, [API_BASE_URL, projects, selectedProject]);
-
   const handleFormSubmit = useCallback((formData: any) => {
     if (editingProject) {
       handleUpdateProject(formData);
@@ -515,7 +451,7 @@ export function ProyectoProvider({ children }: { children: React.ReactNode }) {
     setEditingLiner(null);
     setEditingMachine(null);
     setEditingProject(project);
-    setShowForm(false); // No mostrar en Main, sino en Aside
+    setShowForm(false);
   }, []);
 
   const handleEditLiner = useCallback((liner: Liner) => {
@@ -536,34 +472,6 @@ export function ProyectoProvider({ children }: { children: React.ReactNode }) {
     setEditingLiner(null);
     setEditingMachine(null);
   }, []);
-
-  const handleClearLayers = useCallback(async (projectId: string) => {
-    const project = projects.find(p => p.id === projectId);
-    if (!project) return;
-
-    if (!confirm("¿Estás seguro de que quieres borrar TODA la lista de capas de este proyecto?")) return;
-
-    try {
-      const token = localStorage.getItem("auth_token");
-      const response = await fetch(`${API_BASE_URL}/projects/${projectId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        },
-        body: JSON.stringify({ ...project, layers: [] }),
-      });
-
-      if (!response.ok) throw new Error("Error al borrar lista de capas");
-
-      const updatedProject = await response.json();
-      setProjects(prev => prev.map(p => p.id === projectId ? updatedProject : p));
-      if (selectedProject?.id === projectId) setSelectedProject(updatedProject);
-      alert("Lista de capas borrada exitosamente");
-    } catch (err) {
-      alert("Error: " + (err instanceof Error ? err.message : "Desconocido"));
-    }
-  }, [API_BASE_URL, projects, selectedProject]);
 
   const contextValue = React.useMemo(() => ({
     projects,
@@ -598,9 +506,6 @@ export function ProyectoProvider({ children }: { children: React.ReactNode }) {
     handleDeleteMachine,
     handleUpdateLiner,
     handleUpdateMachine,
-    handleDeleteLayer,
-    handleReorderLayer,
-    handleClearLayers,
     handleCancelForm,
     fetchProjects,
     fetchLiners,
@@ -612,7 +517,7 @@ export function ProyectoProvider({ children }: { children: React.ReactNode }) {
     selectedProject, selectedLiner, selectedMachine,
     isSubmitting, isAsideOpen, isAsideVisible, toggleAside,
     handleFormSubmit, handleEditClick, handleEditLiner, handleEditMachine, handleDeleteProject,
-    handleUpdateLiner, handleUpdateMachine, handleDeleteLayer, handleReorderLayer, handleClearLayers, handleCancelForm,
+    handleDeleteLiner, handleDeleteMachine, handleUpdateLiner, handleUpdateMachine, handleCancelForm,
     fetchProjects, fetchLiners, fetchMachines, materials, fetchMaterials
   ]);
 

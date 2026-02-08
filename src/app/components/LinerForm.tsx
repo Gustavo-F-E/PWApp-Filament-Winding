@@ -76,7 +76,7 @@ export default function LinerForm({ initialData, onSave, onCancel, title }: Line
             </label>
             <input
               type="text"
-              className="w-full border rounded-md px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
+              className="w-full border rounded-md px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500 text-white-700"
               placeholder="Ej: Liner de Vidrio 1"
               value={linerName}
               onChange={(e) => setLinerName(e.target.value)}
@@ -94,7 +94,7 @@ export default function LinerForm({ initialData, onSave, onCancel, title }: Line
             value={linerDescription}
             onChange={(e) => setLinerDescription(e.target.value)}
             rows={2}
-            className="w-full px-3 py-2 text-gray-700 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
+            className="w-full px-3 py-2 text-white-700 border border-white-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
             placeholder="Descripción breve"
             disabled={isSubmitting}
           />
@@ -113,13 +113,13 @@ export default function LinerForm({ initialData, onSave, onCancel, title }: Line
                 checked={tipoLiner === "simple"}
                 onChange={() => setTipoLiner("simple")}
               />
-              <span className="text-gray-700">Simple</span>
+              <span className="text-white-700">Simple</span>
             </label>
-            <label className="flex items-center gap-2 text-gray-400 cursor-not-allowed">
+            <label className="flex items-center gap-2 text-white-400 cursor-not-allowed">
               <input type="radio" disabled />
               <span>Compuesto</span>
             </label>
-            <label className="flex items-center gap-2 text-gray-400 cursor-not-allowed">
+            <label className="flex items-center gap-2 text-white-400 cursor-not-allowed">
               <input type="radio" disabled />
               <span>No-axisimetrico</span>
             </label>
@@ -141,14 +141,14 @@ export default function LinerForm({ initialData, onSave, onCancel, title }: Line
                     checked={extremoInicial.tipo === t}
                     onChange={() => setExtremoInicial({ ...extremoInicial, tipo: t })}
                   />
-                  <span className="text-gray-700">{t}</span>
+                  <span className="text-white-700">{t}</span>
                 </label>
               ))}
-              <div className="grid grid-cols-1 gap-2 mt-4 text-gray-700">
+              <div className="grid grid-cols-1 gap-2 mt-4 text-white-700">
                 <label className="text-xs font-bold text-blue-600">Diámetro Menor</label>
                 <input
                   type="text"
-                  className="w-full border rounded p-1 text-sm disabled:bg-gray-100"
+                  className="w-full border rounded p-1 text-sm disabled:bg-white-100"
                   disabled={extremoInicial.tipo === "Ninguno"}
                   value={isNaN(extremoInicial.diametro_menor) ? "" : extremoInicial.diametro_menor}
                   onChange={(e) => {
@@ -159,7 +159,7 @@ export default function LinerForm({ initialData, onSave, onCancel, title }: Line
                 <label className="text-xs font-bold text-blue-600">Diámetro Mayor</label>
                 <input
                   type="text"
-                  className="w-full border rounded p-1 text-sm disabled:bg-gray-100"
+                  className="w-full border rounded p-1 text-sm disabled:bg-white-100"
                   disabled={extremoInicial.tipo === "Ninguno"}
                   value={isNaN(extremoInicial.diametro_mayor) ? "" : extremoInicial.diametro_mayor}
                   onChange={(e) => {
@@ -185,11 +185,11 @@ export default function LinerForm({ initialData, onSave, onCancel, title }: Line
                       checked={medio.tipo === t}
                       onChange={() => setMedio({ ...medio, tipo: t })}
                     />
-                    <span className="text-gray-700">{t}</span>
+                    <span className="text-white-700">{t}</span>
                   </label>
                 ))}
               </div>
-              <div className="grid grid-cols-1 gap-3 text-gray-700">
+              <div className="grid grid-cols-1 gap-3 text-white-700">
                 <div>
                   <label className="text-xs font-bold text-blue-600">Longitud útil</label>
                   <input
@@ -206,7 +206,7 @@ export default function LinerForm({ initialData, onSave, onCancel, title }: Line
                   <label className="text-xs font-bold text-blue-600">Diámetro</label>
                   <input
                     type="text"
-                    className="w-full border rounded p-1 text-sm disabled:bg-gray-100"
+                    className="w-full border rounded p-1 text-sm disabled:bg-white-100"
                     disabled={medio.tipo !== "Cilindro"}
                     value={isNaN(medio.diametro) ? "" : medio.diametro}
                     onChange={(e) => {
@@ -220,7 +220,7 @@ export default function LinerForm({ initialData, onSave, onCancel, title }: Line
                     <label className="text-xs font-bold text-blue-600">D. Mayor</label>
                     <input
                       type="text"
-                      className="w-full border rounded p-1 text-sm disabled:bg-gray-100"
+                      className="w-full border rounded p-1 text-sm disabled:bg-white-100"
                       disabled={medio.tipo !== "Conico"}
                       value={isNaN(medio.diametro_mayor) ? "" : medio.diametro_mayor}
                       onChange={(e) => {
@@ -233,7 +233,7 @@ export default function LinerForm({ initialData, onSave, onCancel, title }: Line
                     <label className="text-xs font-bold text-blue-600">D. Menor</label>
                     <input
                       type="text"
-                      className="w-full border rounded p-1 text-sm disabled:bg-gray-100"
+                      className="w-full border rounded p-1 text-sm disabled:bg-white-100"
                       disabled={medio.tipo !== "Conico"}
                       value={isNaN(medio.diametro_menor) ? "" : medio.diametro_menor}
                       onChange={(e) => {
@@ -261,14 +261,14 @@ export default function LinerForm({ initialData, onSave, onCancel, title }: Line
                     checked={extremoFinal.tipo === t}
                     onChange={() => setExtremoFinal({ ...extremoFinal, tipo: t })}
                   />
-                  <span className="text-gray-700">{t}</span>
+                  <span className="text-white-700">{t}</span>
                 </label>
               ))}
-              <div className="grid grid-cols-1 gap-2 mt-4 text-gray-700">
+              <div className="grid grid-cols-1 gap-2 mt-4 text-white-700">
                 <label className="text-xs font-bold text-blue-600">Diámetro Menor</label>
                 <input
                   type="text"
-                  className="w-full border rounded p-1 text-sm disabled:bg-gray-100"
+                  className="w-full border rounded p-1 text-sm disabled:bg-white-100"
                   disabled={extremoFinal.tipo === "Ninguno"}
                   value={isNaN(extremoFinal.diametro_menor) ? "" : extremoFinal.diametro_menor}
                   onChange={(e) => {
@@ -279,7 +279,7 @@ export default function LinerForm({ initialData, onSave, onCancel, title }: Line
                 <label className="text-xs font-bold text-blue-600">Diámetro Mayor</label>
                 <input
                   type="text"
-                  className="w-full border rounded p-1 text-sm disabled:bg-gray-100"
+                  className="w-full border rounded p-1 text-sm disabled:bg-white-100"
                   disabled={extremoFinal.tipo === "Ninguno"}
                   value={isNaN(extremoFinal.diametro_mayor) ? "" : extremoFinal.diametro_mayor}
                   onChange={(e) => {
@@ -303,7 +303,7 @@ export default function LinerForm({ initialData, onSave, onCancel, title }: Line
           <button
             type="button"
             onClick={onCancel}
-            className="w-full bg-gray-200 text-gray-700 py-2 rounded-lg font-semibold hover:bg-gray-300 transition-colors"
+            className="w-full bg-white-200 text-white-700 py-2 rounded-lg font-semibold hover:bg-white-300 transition-colors"
           >
             Cancelar
           </button>

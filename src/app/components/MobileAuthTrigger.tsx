@@ -11,10 +11,10 @@ export default function MobileAuthTrigger() {
   const { isMobile } = useMobile()
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false)
-  
+
   // Botón flotante para móviles
   if (!isMobile) return null
-  
+
   return (
     <>
       {/* Botón flotante para móviles */}
@@ -27,29 +27,29 @@ export default function MobileAuthTrigger() {
           >
             <LoginIcon className="w-6 h-6" />
           </button>
-          
+
           <button
             onClick={() => setIsRegisterModalOpen(true)}
-            className="bg-green-600 hover:bg-green-700 text-white rounded-full p-4 shadow-xl"
+            className="bg-blue-600 hover:bg-blue-700 text-white rounded-full p-4 shadow-xl"
             aria-label="Registrarse"
           >
             <UserPlusIcon className="w-6 h-6" />
           </button>
         </div>
       </div>
-      
+
       {/* Modales */}
-      <ModalIniciarSesion 
-        isOpen={isLoginModalOpen} 
+      <ModalIniciarSesion
+        isOpen={isLoginModalOpen}
         onClose={() => setIsLoginModalOpen(false)}
         onOpenRegister={() => {
           setIsLoginModalOpen(false)
           setIsRegisterModalOpen(true)
         }}
       />
-      
-      <ModalRegistro 
-        isOpen={isRegisterModalOpen} 
+
+      <ModalRegistro
+        isOpen={isRegisterModalOpen}
         onClose={() => setIsRegisterModalOpen(false)}
         onOpenLogin={() => {
           setIsRegisterModalOpen(false)

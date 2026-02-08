@@ -71,10 +71,9 @@ function LayoutContent({
         className={`
           flex-1 w-full lg:row-[7/24] lg:col-[1/13] bg-blue-50 lg:grid lg:grid-cols-[repeat(12,1fr)] lg:h-full lg:min-h-0
           transition-all duration-300 ease-in-out overflow-hidden
-          ${isAsideOpen ? "lg:block" : "block"}
           ${isAsideOpen
-            ? "transform -translate-x-[90vw] landscape:-translate-x-[50vw]"
-            : "translate-x-0"
+            ? "max-lg:transform max-lg:-translate-x-[90vw] max-lg:landscape:-translate-x-[50vw]"
+            : "max-lg:translate-x-0"
           }
       `}
       >

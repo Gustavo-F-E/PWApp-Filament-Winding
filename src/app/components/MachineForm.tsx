@@ -103,7 +103,7 @@ export default function MachineForm({ initialData, onSave, onCancel, title }: Ma
       </label>
       <div className="flex gap-4">
         <select
-          className="flex-1 border rounded px-3 py-1 outline-none focus:ring-1 focus:ring-blue-500 text-gray-700"
+          className="flex-1 border rounded px-3 py-1 outline-none focus:ring-1 focus:ring-blue-500 text-white-700"
           value={value.eje}
           onChange={(e) =>
             onChange({ ...value, eje: e.target.value as EjeType })
@@ -116,7 +116,7 @@ export default function MachineForm({ initialData, onSave, onCancel, title }: Ma
           ))}
         </select>
         {showUnit && (
-          <div className="flex gap-3 text-xs items-center text-gray-700">
+          <div className="flex gap-3 text-xs items-center text-white-700">
             {["Radianes", "Grados"].map((u) => (
               <label key={u} className="flex items-center gap-1">
                 <input
@@ -147,7 +147,7 @@ export default function MachineForm({ initialData, onSave, onCancel, title }: Ma
             </label>
             <input
               type="text"
-              className="w-full border rounded-md px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
+              className="w-full border rounded-md px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500 text-white-700"
               placeholder="Ej: CNC Standard 1"
               value={machineName}
               onChange={(e) => setMachineName(e.target.value)}
@@ -158,7 +158,7 @@ export default function MachineForm({ initialData, onSave, onCancel, title }: Ma
             <label className="block text-sm font-bold text-blue-900 mb-2">
               Tipo de Máquina
             </label>
-            <div className="flex bg-white-50 gap-6 border rounded-md px-3 py-2 text-gray-700">
+            <div className="flex bg-white-50 gap-6 border rounded-md px-3 py-2 text-white-700">
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="radio"
@@ -167,7 +167,7 @@ export default function MachineForm({ initialData, onSave, onCancel, title }: Ma
                 />
                 <span>CNC</span>
               </label>
-              <label className="flex items-center gap-2 text-gray-400 cursor-not-allowed">
+              <label className="flex items-center gap-2 text-white-400 cursor-not-allowed">
                 <input type="radio" disabled />
                 <span>Robot</span>
               </label>
@@ -184,7 +184,7 @@ export default function MachineForm({ initialData, onSave, onCancel, title }: Ma
               <label className="block text-sm text-blue-800 font-semibold mb-2">
                 Posición Inicial
               </label>
-              <div className="flex flex-col gap-2 text-gray-700">
+              <div className="flex flex-col gap-2 text-white-700">
                 {["giro horario", "giro antihorario"].map((p) => (
                   <label key={p} className="flex items-center gap-2 cursor-pointer capitalize">
                     <input
@@ -205,7 +205,7 @@ export default function MachineForm({ initialData, onSave, onCancel, title }: Ma
                   </label>
                   <input
                     type="text"
-                    className="w-full border rounded px-2 py-1 text-sm outline-none focus:ring-1 focus:ring-blue-500 text-gray-700"
+                    className="w-full border rounded px-2 py-1 text-sm outline-none focus:ring-1 focus:ring-blue-500 text-white-700"
                     value={isNaN(coordenadas[c as keyof CoordenadasType]) ? "" : coordenadas[c as keyof CoordenadasType]}
                     onChange={(e) => {
                       handleNumericChangeValidation(e, onValidationError);
@@ -235,7 +235,7 @@ export default function MachineForm({ initialData, onSave, onCancel, title }: Ma
           <div className="flex items-center gap-2">
             <input
               type="text"
-              className="w-32 border rounded px-3 py-1 outline-none focus:ring-1 focus:ring-blue-500 text-gray-700"
+              className="w-32 border rounded px-3 py-1 outline-none focus:ring-1 focus:ring-blue-500 text-white-700"
               value={isNaN(velocidad) ? "" : velocidad}
               onChange={(e) => {
                 handleNumericChangeValidation(e, onValidationError);
@@ -257,7 +257,7 @@ export default function MachineForm({ initialData, onSave, onCancel, title }: Ma
           <button
             type="button"
             onClick={onCancel}
-            className="w-full bg-gray-200 text-gray-700 py-2 rounded-lg font-semibold hover:bg-gray-300 transition-colors"
+            className="w-full bg-white-200 text-white-700 py-2 rounded-lg font-semibold hover:bg-white-300 transition-colors"
           >
             Cancelar
           </button>
