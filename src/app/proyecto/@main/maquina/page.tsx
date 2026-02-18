@@ -5,6 +5,7 @@
 import React from "react";
 import { useProyecto } from "../../ProyectoContext";
 import MachineForm from "@/app/components/MachineForm";
+import { getCurrentLocation } from "@/utils/geolocation";
 
 export default function MaquinaPage() {
   const { fetchMachines } = useProyecto();
@@ -14,13 +15,14 @@ export default function MaquinaPage() {
   const handleSave = async (data: any) => {
     try {
       const token = localStorage.getItem("auth_token");
+      const location = await getCurrentLocation();
       const response = await fetch(`${API_BASE_URL}/machines/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify({ ...data, location })
       });
 
       if (response.ok) {

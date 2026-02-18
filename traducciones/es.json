@@ -51,6 +51,11 @@
         "iniciar": "Iniciar Sesión",
         "pregunta": "¿No tienes cuenta?",
         "registro": "Regístrate",
-        "cerrar": "Cerrar Sesión"
+        "cerrar": "Cerrar Sesión",
+        "borrarCuenta": "Cerrar cuenta de Fil-Wind",
+        "confirmarBorrarTitulo": "¿Realmente desea cerrar su cuenta de Fil-wind?",
+        "confirmarBorrarTexto": "Todos sus proyectos serán borrados de la base de datos.",
+        "botonConfirmarBorrar": "Sí, deseo cerrar mi cuenta",
+        "botonCancelarBorrar": "Cancelar"
     }
 }

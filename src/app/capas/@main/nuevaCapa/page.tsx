@@ -21,17 +21,14 @@ export default function NuevaCapaPage() {
   };
 
   const handleMaterialChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const matId = e.target.value;
-    if (!matId) return;
+    const materialName = e.target.value;
+    if (!materialName) return;
 
-    const selectedMat = materials.find(m => m.id === matId);
+    const selectedMat = materials.find(m => m.name === materialName);
     if (selectedMat) {
       setLayerDraft(prev => ({
         ...prev,
-        espesor: selectedMat.espesor,
-        ancho: selectedMat.ancho,
-        coeficiente_rozamiento: selectedMat.coeficiente_rozamiento,
-        // También podemos guardar el nombre en la descripción o algo así si es necesario
+        material_name: selectedMat.name,
       }));
     }
   };
@@ -44,12 +41,12 @@ export default function NuevaCapaPage() {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Si ya tenemos material (espesor) y patrón, podemos crear la capa directamente
-    if (layerDraft.espesor && layerDraft.patron_elegido) {
+    // Si ya tenemos material (material_name) y patrón, podemos crear la capa directamente
+    if (layerDraft.material_name && layerDraft.patron_elegido) {
       await handleAddLayer();
       router.push("/capas");
-    } else if (!layerDraft.espesor) {
-      router.push("/capas/material");
+    } else if (!layerDraft.material_name) {
+      alert("Por favor, selecciona un material antes de continuar");
     } else {
       router.push("/capas/seleccionarPatron");
     }
@@ -159,24 +156,49 @@ export default function NuevaCapaPage() {
                 </select>
               </div>
 
+              <div>
+                <label className="block text-sm font-medium text-white-700 mb-1">
+                  Corregir ángulo
+                </label>
+                <select
+                  name="corregir_angulo"
+                  value={layerDraft.corregir_angulo ? "true" : "false"}
+                  onChange={(e) => setLayerDraft(prev => ({ ...prev, corregir_angulo: e.target.value === "true" }))}
+                  className="w-full px-3 py-2 text-white-700 border border-white-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
+                >
+                  <option value="true">Sí</option>
+                  <option value="false">No</option>
+                </select>
+              </div>
+
               <div className="md:col-span-2 border-t pt-4 mt-2">
-                <h4 className="text-md font-semibold text-blue-900 mb-3">Material y Patrón</h4>
+                <h4 className="text-md font-semibold text-blue-900 mb-3">Material</h4>
                 <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-white-700 mb-1">
-                      Seleccionar Material
+                      Seleccionar Material *
                     </label>
                     {materials.length > 0 ? (
-                      <select
-                        onChange={handleMaterialChange}
-                        className="w-full px-3 py-2 text-white-700 border border-white-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
-                        defaultValue=""
-                      >
-                        <option value="" disabled>-- Elegir Material --</option>
-                        {materials.map(m => (
-                          <option key={m.id} value={m.id}>{m.name} ({m.espesor}mm x {m.ancho}mm)</option>
-                        ))}
-                      </select>
+                      <>
+                        <select
+                          value={layerDraft.material_name || ""}
+                          onChange={handleMaterialChange}
+                          className="w-full px-3 py-2 text-white-700 border border-white-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
+                          required
+                        >
+                          <option value="">-- Elegir Material --</option>
+                          {materials.map(m => (
+                            <option key={m.id} value={m.name}>{m.name}</option>
+                          ))}
+                        </select>
+                        {layerDraft.material_name && materials.find(m => m.name === layerDraft.material_name) && (
+                          <div className="mt-2 text-xs text-blue-700 bg-blue-50 p-2 rounded border border-blue-100">
+                            <div><strong>Ancho:</strong> {materials.find(m => m.name === layerDraft.material_name)?.ancho} mm</div>
+                            <div><strong>Espesor:</strong> {materials.find(m => m.name === layerDraft.material_name)?.espesor} mm</div>
+                            <div><strong>Coef. Rozamiento:</strong> {materials.find(m => m.name === layerDraft.material_name)?.coeficiente_rozamiento}</div>
+                          </div>
+                        )}
+                      </>
                     ) : (
                       <button
                         type="button"
@@ -186,34 +208,6 @@ export default function NuevaCapaPage() {
                         + Crear Primer Material
                       </button>
                     )}
-                    {layerDraft.espesor ? (
-                      <p className="mt-1 text-xs text-white-500">
-                        Seleccionado: {layerDraft.espesor}mm, {layerDraft.ancho}mm, μ={layerDraft.coeficiente_rozamiento}
-                      </p>
-                    ) : null}
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-white-700 mb-1">
-                      Patrón de Bobinado
-                    </label>
-                    <button
-                      type="button"
-                      onClick={() => router.push("/capas/seleccionarPatron")}
-                      className={`
-                        flex flex-col items-center justify-center p-4 rounded-xl border-2 cursor-pointer transition-all
-                        ${layerDraft.patron_elegido
-                          ? "bg-white-50 text-blue-700 border-blue-200 hover:bg-blue-100"
-                          : "bg-white-50 text-blue-700 border-blue-200 hover:bg-blue-100"
-                        }`}
-                    >
-                      {layerDraft.patron_elegido ? "✓ Editar Patrón Seleccionado" : "Seleccionar Patrón"}
-                    </button>
-                    {layerDraft.patron_elegido ? (
-                      <p className="mt-1 text-xs text-white-500">
-                        NP: {layerDraft.NP}, Patrón: {layerDraft.patron_elegido}
-                      </p>
-                    ) : null}
                   </div>
                 </div>
               </div>
@@ -233,7 +227,7 @@ export default function NuevaCapaPage() {
                 disabled={isSubmitting}
                 className="px-6 py-2 bg-blue-600 text-white-50 font-semibold rounded-md hover:bg-blue-700 transition-colors shadow-sm disabled:opacity-50"
               >
-                {layerDraft.espesor && layerDraft.patron_elegido
+                {layerDraft.material_name && layerDraft.patron_elegido
                   ? (isSubmitting ? "Creando..." : "Crear Capa")
                   : "Siguiente"}
               </button>

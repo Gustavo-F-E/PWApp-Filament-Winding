@@ -7,6 +7,7 @@ import { useMobile } from "@/context/MobileContext";
 import { useAuth } from "@/context/AuthContext";
 import MenuProyecto from "./MenuProyecto";
 import { useRouter } from "next/navigation";
+import { getCurrentLocation } from "@/utils/geolocation";
 
 export interface Project {
   id: string;
@@ -282,10 +283,11 @@ export function ProyectoProvider({ children }: { children: React.ReactNode }) {
         "Authorization": `Bearer ${token}`
       };
 
+      const location = await getCurrentLocation();
       const response = await fetch(`${API_BASE_URL}/projects/`, {
         method: "POST",
         headers,
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, location }),
       });
 
       if (!response.ok) {

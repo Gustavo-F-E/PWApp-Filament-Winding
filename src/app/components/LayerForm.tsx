@@ -24,8 +24,8 @@ export default function LayerForm({ initialData, onSave, onCancel, isSubmitting,
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
-    // Handle numeric fields
-    const numericFields = ["espesor", "ancho", "coeficiente_rozamiento", "velocidad_de_alimentacion", "alfa_original", "NP", "patron_elegido", "pines", "system_vueltas"];
+    // Handle numeric fields (removed material properties: espesor, ancho, coeficiente_rozamiento)
+    const numericFields = ["velocidad_de_alimentacion", "alfa_original", "NP", "patron_elegido", "pines", "system_vueltas"];
     let val: any = value;
 
     if (numericFields.includes(name)) {
@@ -36,14 +36,12 @@ export default function LayerForm({ initialData, onSave, onCancel, isSubmitting,
   };
 
   const handleMaterialChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const matId = e.target.value;
-    const selectedMat = materials.find(m => m.id === matId);
+    const materialName = e.target.value;
+    const selectedMat = materials.find(m => m.name === materialName);
     if (selectedMat) {
       setFormData(prev => ({
         ...prev,
-        espesor: selectedMat.espesor,
-        ancho: selectedMat.ancho,
-        coeficiente_rozamiento: selectedMat.coeficiente_rozamiento,
+        material_name: selectedMat.name,
       }));
     }
   };
@@ -132,18 +130,26 @@ export default function LayerForm({ initialData, onSave, onCancel, isSubmitting,
         {/* Material (Hide for System Layers) */}
         {!formData.is_system && (
           <div className="bg-blue-50/50 p-4 rounded-xl border border-blue-100">
-            <label className="block text-sm font-bold text-blue-900 mb-2">Material</label>
+            <label className="block text-sm font-bold text-blue-900 mb-2">Material *</label>
             <select
+              value={formData.material_name || ""}
               onChange={handleMaterialChange}
               className="w-full px-3 py-2 text-white-400 border border-blue-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 mb-3 bg-white"
-              defaultValue=""
               disabled={isSubmitting}
+              required
             >
-              <option value="" disabled>-- Cargar desde Material --</option>
+              <option value="">-- Seleccionar Material --</option>
               {materials.map(m => (
-                <option key={m.id} value={m.id}>{m.name} ({m.espesor}mm x {m.ancho}mm)</option>
+                <option key={m.id} value={m.name}>{m.name}</option>
               ))}
             </select>
+            {formData.material_name && materials.find(m => m.name === formData.material_name) && (
+              <div className="mt-2 text-xs text-blue-700 bg-blue-100 p-2 rounded border border-blue-200">
+                <div><strong>Ancho:</strong> {materials.find(m => m.name === formData.material_name)?.ancho} mm</div>
+                <div><strong>Espesor:</strong> {materials.find(m => m.name === formData.material_name)?.espesor} mm</div>
+                <div><strong>Coef. Rozamiento:</strong> {materials.find(m => m.name === formData.material_name)?.coeficiente_rozamiento}</div>
+              </div>
+            )}
           </div>
         )}
 

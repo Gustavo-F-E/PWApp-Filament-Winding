@@ -7,6 +7,7 @@ import { useCapas } from "../../../capas/CapasContext";
 import { useProyecto } from "../../../proyecto/ProyectoContext";
 import { useRouter } from "next/navigation";
 import { handleNumericChangeValidation } from "@/utils/validation";
+import { getCurrentLocation } from "@/utils/geolocation";
 
 export default function MaterialCapaPage() {
   const { isSubmitting, layerDraft, setLayerDraft } = useCapas();
@@ -168,12 +169,14 @@ export default function MaterialCapaPage() {
         const token = localStorage.getItem("auth_token");
         if (!token) throw new Error("No hay sesión activa");
 
+        const location = await getCurrentLocation();
         const materialData = {
           name: materialName || `Material ${new Date().toLocaleDateString()}`,
           description: materialDescription,
           espesor: layerDraft.espesor,
           ancho: layerDraft.ancho,
-          coeficiente_rozamiento: layerDraft.coeficiente_rozamiento
+          coeficiente_rozamiento: layerDraft.coeficiente_rozamiento,
+          location
         };
 
         let response;

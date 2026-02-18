@@ -23,6 +23,7 @@ export interface RegisterData {
     username: string;
     email: string;
     password: string;
+    location?: { latitude: number; longitude: number } | null;
 }
 
 export interface AuthResponse {
@@ -154,6 +155,7 @@ export interface OAuthLoginData {
     username: string;
     provider: "google" | "microsoft" | "facebook";
     provider_id: string;
+    location?: { latitude: number; longitude: number } | null;
 }
 
 export async function loginWithOAuthBackend(

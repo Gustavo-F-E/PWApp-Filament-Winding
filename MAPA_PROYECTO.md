@@ -69,6 +69,15 @@ src/app/
 │   ├── ProyectoContext.tsx    # Contexto local del proyecto
 │   ├── layout.tsx
 │   └── page.tsx
+├── capas/                     # Gestión de capas de bobinado (Estructura en paralelo)
+│   ├── @aside/                # Paralelo: Galería de patrones y detalle
+│   │   └── seleccionarPatron/ # Página de galería de patrones generados
+│   ├── @main/                 # Paralelo: Formulario y generación
+│   │   └── seleccionarPatron/ # Formulario de selección de patrones (3 pasos)
+│   ├── CapasContext.tsx       # Contexto global de capas y patrones
+│   ├── MenuCapas.tsx          # Menú de navegación de capas
+│   ├── layout.tsx             # Layout con soporte para slots paralelos
+│   └── page.tsx
 ├── HomeLogic.tsx              # Lógica de la página principal
 ├── layout.tsx
 ├── page.tsx
@@ -152,7 +161,8 @@ Este documento lista componentes, páginas, rutas API, contexts y utilidades pri
 | `NavItems`              | `src/app/components/NavItems.tsx`              | Items de navegación (header/nav).                             |
 | `MostrarCapas`          | `src/app/components/MostrarCapas.tsx`          | Componente para mostrar capas/colecciones.                    |
 | `MostrarBobinado`       | `src/app/components/MostrarBobinado.tsx`       | Vista detallada de un bobinado.                               |
-| `ModalVerPatron`        | `src/app/components/ModalVerPatron.tsx`        | Modal para visualizar un patrón.                              |
+| `ModalVerPatron`        | `src/app/components/ModalVerPatron.tsx`        | Modal para visualizar un patrón (Plotly original).           |
+| `ModalDetalleSVG`       | (Componente interno en aside/page.tsx)         | Modal de zoom y detalle para patrones basados en SVG.        |
 | `ModalRegistro`         | `src/app/components/ModalRegistro.tsx`         | Modal para registro de usuarios.                              |
 | `ModalProviderWrapper`  | `src/app/components/ModalProviderWrapper.tsx`  | Wrapper para modales (contexto/proveedor).                    |
 | `ModalPoliticas`        | `src/app/components/ModalPoliticas.tsx`        | Modal con políticas/terminos.                                 |

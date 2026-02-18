@@ -51,6 +51,11 @@
         "iniciar": "Log In",
         "pregunta": "Don't have an account?",
         "registro": "Sign Up",
-        "cerrar": "Log Out"
+        "cerrar": "Log Out",
+        "borrarCuenta": "Close Fil-Wind account",
+        "confirmarBorrarTitulo": "Do you really want to close your Fil-Wind account?",
+        "confirmarBorrarTexto": "All your projects will be deleted from the database.",
+        "botonConfirmarBorrar": "Yes, I want to close my account",
+        "botonCancelarBorrar": "Cancel"
     }
 }

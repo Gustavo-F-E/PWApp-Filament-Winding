@@ -2,25 +2,27 @@
 
 import React, { createContext, useContext, useState, useCallback } from "react";
 import { useProyecto } from "../proyecto/ProyectoContext";
+import { getCurrentLocation } from "@/utils/geolocation";
 
 export interface Layer {
   id?: string;
   name: string;
   description: string;
+  material_name?: string;
   longitud_util: number;
-  espesor: number;
-  coeficiente_rozamiento: number;
   pines: number;
+  corregir_angulo: boolean;
   alfa_original: number;
   alfa_corregido: number;
   velocidad_de_alimentacion: number;
-  ancho: number;
   ancho_eff: number;
   NP: number;
   patron_elegido: number;
   orden_capa: number;
   is_system?: boolean;
   system_vueltas?: number;
+  calculos_iniciales?: any;
+  patron_elegido_data?: any;
 }
 
 interface CapasContextType {
@@ -42,6 +44,20 @@ interface CapasContextType {
   handleBulkReorder: (project_id: string, layerIds: string[]) => Promise<void>;
   layers: Layer[];
   fetchLayers: () => Promise<void>;
+  // Shared Pattern state
+  generatedPatterns: string[];
+  setGeneratedPatterns: React.Dispatch<React.SetStateAction<string[]>>;
+  thumbnails: string[];
+  setThumbnails: React.Dispatch<React.SetStateAction<string[]>>;
+  currentNP: number | null;
+  setCurrentNP: React.Dispatch<React.SetStateAction<number | null>>;
+  calculosIniciales: any;
+  setCalculosIniciales: React.Dispatch<React.SetStateAction<any>>;
+  diccionarioCapa: any;
+  setDiccionarioCapa: React.Dispatch<React.SetStateAction<any>>;
+  selectedPatternIndex: number | null;
+  setSelectedPatternIndex: React.Dispatch<React.SetStateAction<number | null>>;
+  handleSeeDetail: (index: number) => Promise<{ plot_svg: string, patternData: any } | null>;
 }
 
 const CapasContext = createContext<CapasContextType | undefined>(undefined);
@@ -57,18 +73,27 @@ export function CapasProvider({ children }: { children: React.ReactNode }) {
   const [layerDraft, setLayerDraft] = useState<Partial<Layer>>({
     name: "",
     description: "",
+    material_name: "",
     longitud_util: 0,
-    espesor: 0,
-    coeficiente_rozamiento: 0,
     pines: 0,
+    corregir_angulo: false,
     alfa_original: 0,
     alfa_corregido: 0,
     velocidad_de_alimentacion: 0,
-    ancho: 0,
     ancho_eff: 0,
     NP: 0,
     patron_elegido: 0,
+    calculos_iniciales: null,
+    patron_elegido_data: null,
   });
+
+  // Shared Pattern state
+  const [generatedPatterns, setGeneratedPatterns] = useState<string[]>([]);
+  const [thumbnails, setThumbnails] = useState<string[]>([]);
+  const [currentNP, setCurrentNP] = useState<number | null>(null);
+  const [calculosIniciales, setCalculosIniciales] = useState<any>(null);
+  const [diccionarioCapa, setDiccionarioCapa] = useState<any>(null);
+  const [selectedPatternIndex, setSelectedPatternIndex] = useState<number | null>(null);
 
   const API_BASE_URL = process.env.NEXT_PUBLIC_URL_BACKEND || "http://localhost:8000";
 
@@ -76,17 +101,18 @@ export function CapasProvider({ children }: { children: React.ReactNode }) {
     setLayerDraft({
       name: "",
       description: "",
+      material_name: "",
       longitud_util: 0,
-      espesor: 0,
-      coeficiente_rozamiento: 0,
       pines: 0,
+      corregir_angulo: false,
       alfa_original: 0,
       alfa_corregido: 0,
       velocidad_de_alimentacion: 0,
-      ancho: 0,
       ancho_eff: 0,
       NP: 0,
       patron_elegido: 0,
+      calculos_iniciales: null,
+      patron_elegido_data: null,
     });
   }, []);
 
@@ -140,13 +166,14 @@ export function CapasProvider({ children }: { children: React.ReactNode }) {
       const token = localStorage.getItem("auth_token");
       if (!token) throw new Error("No hay sesión activa");
 
+      const location = await getCurrentLocation();
       const response = await fetch(`${API_BASE_URL}/layers/?project_id=${selectedProject.id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`
         },
-        body: JSON.stringify(layerDraft),
+        body: JSON.stringify({ ...layerDraft, location }),
       });
 
       if (!response.ok) {
@@ -163,7 +190,7 @@ export function CapasProvider({ children }: { children: React.ReactNode }) {
     } finally {
       setIsSubmitting(false);
     }
-  }, [selectedProject, layerDraft, API_BASE_URL, fetchProjects, resetDraft]);
+  }, [selectedProject, layerDraft, API_BASE_URL, fetchProjects, resetDraft, fetchLayers]);
 
   const handleUpdateLayer = useCallback(async (layerId: string, data: Partial<Layer>) => {
     try {
@@ -226,8 +253,25 @@ export function CapasProvider({ children }: { children: React.ReactNode }) {
     }
   }, [API_BASE_URL, fetchProjects, fetchLayers]);
 
-  const handleReorderLayer = useCallback(async (projectId: string, fromIndex: number, toIndex: number) => {
+  const handleReorderLayer = useCallback(async (projectId: string, fromUIIndex: number, toUIIndex: number) => {
     try {
+      // Mapear índices de la UI (que incluyen virtuales) a índices reales (solo físicas)
+      const physicalLayers = layers.filter(l => !l.is_system);
+      const fromLayer = layers[fromUIIndex];
+      const toLayer = layers[toUIIndex];
+
+      if (!fromLayer || !toLayer || fromLayer.is_system || toLayer.is_system) {
+        console.warn("Intento de reordenar capas inválidas o de sistema");
+        return;
+      }
+
+      const fromIndex = physicalLayers.indexOf(fromLayer);
+      const toIndex = physicalLayers.indexOf(toLayer);
+
+      if (fromIndex === -1 || toIndex === -1) {
+        throw new Error("No se pudieron encontrar las capas físicas correspondientes");
+      }
+
       setIsSubmitting(true);
       const token = localStorage.getItem("auth_token");
       if (!token) throw new Error("No hay sesión activa");
@@ -251,7 +295,7 @@ export function CapasProvider({ children }: { children: React.ReactNode }) {
     } finally {
       setIsSubmitting(false);
     }
-  }, [API_BASE_URL, fetchProjects, fetchLayers]);
+  }, [API_BASE_URL, fetchProjects, fetchLayers, layers]);
 
   const handleBulkReorder = useCallback(async (projectId: string, layerIds: string[]) => {
     try {
@@ -284,6 +328,40 @@ export function CapasProvider({ children }: { children: React.ReactNode }) {
     }
   }, [API_BASE_URL, fetchProjects, fetchLayers]);
 
+  const handleSeeDetail = useCallback(async (index: number) => {
+    if (!diccionarioCapa) return null;
+
+    try {
+      const token = localStorage.getItem("auth_token");
+      const response = await fetch(`${API_BASE_URL}/calculations/pattern-detail`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          diccionario_capa: diccionarioCapa,
+          patron_index: index
+        })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        return {
+          plot_svg: data.plot_svg,
+          patternData: data.patron_elegido_data
+        };
+      } else {
+        alert("Error al obtener detalle del patrón");
+        return null;
+      }
+    } catch (error) {
+      console.error("Error fetching detail:", error);
+      alert("Error de conexión");
+      return null;
+    }
+  }, [diccionarioCapa, API_BASE_URL]);
+
   return (
     <CapasContext.Provider value={{
       layerDraft,
@@ -303,7 +381,20 @@ export function CapasProvider({ children }: { children: React.ReactNode }) {
       isEditingOrder,
       setIsEditingOrder,
       layers,
-      fetchLayers
+      fetchLayers,
+      generatedPatterns,
+      setGeneratedPatterns,
+      thumbnails,
+      setThumbnails,
+      currentNP,
+      setCurrentNP,
+      calculosIniciales,
+      setCalculosIniciales,
+      diccionarioCapa,
+      setDiccionarioCapa,
+      selectedPatternIndex,
+      setSelectedPatternIndex,
+      handleSeeDetail
     }}>
       {children}
     </CapasContext.Provider>
