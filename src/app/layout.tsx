@@ -99,6 +99,7 @@ export default function RootLayout({ children }: Readonly<{
         <meta name="format-detection" content="telephone=no" />
       </head>
       <body
+        suppressHydrationWarning
         className={`${geistSans.variable} ${geistMono.variable} antialiased lg:grid lg:min-h-screen lg:w-full lg:grid-rows-[repeat(24,1fr)] lg:grid-cols-[repeat(24,1fr)] h-screen w-screen overflow-hidden lg:overflow-visible`}
       >
         <IdiomaProvider>

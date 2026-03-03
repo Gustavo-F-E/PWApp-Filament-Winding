@@ -221,15 +221,7 @@ function SeleccionarPatronContent() {
       if (selectedLayerId) {
         await handleUpdateLayer(selectedLayerId, updatedDraft);
       } else {
-        // Actualizamos el draft en el contexto antes de añadir
-        setLayerDraft(updatedDraft);
-        // Esperamos un tick para que el estado se propague (o pasamos el data directo si handleAddLayer lo soportara)
-        // Como handleAddLayer usa el estado interno del contexto, aseguremonos de que se llame con el estado correcto.
-        setTimeout(async () => {
-          await handleAddLayer();
-          router.push("/capas");
-        }, 100);
-        return;
+        await handleAddLayer(updatedDraft);
       }
       router.push("/capas");
     } catch (error) {
@@ -264,6 +256,7 @@ function SeleccionarPatronContent() {
                     setSelectedLayerId("");
                   }}
                   disabled={projectsLoading}
+                  suppressHydrationWarning
                 >
                   <option value="">-- Seleccionar Proyecto --</option>
                   {projects.map(p => (
@@ -278,6 +271,7 @@ function SeleccionarPatronContent() {
                   value={selectedLayerId}
                   onChange={(e) => setSelectedLayerId(e.target.value)}
                   disabled={!selectedProject}
+                  suppressHydrationWarning
                 >
                   <option value="">-- Nueva Capa (Crear) --</option>
                   {layers.filter(l => !l.is_system).map(l => (
@@ -305,6 +299,7 @@ function SeleccionarPatronContent() {
                 onClick={handleGeneratePatterns}
                 disabled={isGenerating || !selectedProject}
                 className="px-6 py-2 bg-blue-600 text-white-50 font-semibold rounded-md hover:bg-blue-700 transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
+                suppressHydrationWarning
               >
                 {isGenerating ? "Calculando..." : "Generar Patrones"}
               </button>
@@ -329,6 +324,7 @@ function SeleccionarPatronContent() {
                 onClick={() => router.back()}
                 className="px-6 py-2 border border-white-300 rounded-md text-white-700 hover:bg-white-50 transition-colors font-bold"
                 disabled={isSubmitting}
+                suppressHydrationWarning
               >
                 Volver
               </button>
@@ -337,6 +333,7 @@ function SeleccionarPatronContent() {
                 onClick={handleFinalSave}
                 disabled={selectedPatternIndex === null || isSubmitting}
                 className="px-8 py-2 bg-blue-600 text-white-50 font-bold rounded-lg hover:bg-blue-700 transition-colors shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                suppressHydrationWarning
               >
                 {isSubmitting ? "Guardando..." : (selectedLayerId ? "Actualizar Patrón" : "Seleccionar Patrón")}
               </button>

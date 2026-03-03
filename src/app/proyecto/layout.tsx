@@ -54,6 +54,7 @@ function LayoutContent({
             hover:bg-blue-900 hover:scale-105 active:scale-95
           `}
           onClick={toggleAside}
+          suppressHydrationWarning
         >
           <span className="block transform transition-transform duration-300">
             {isAsideOpen ? ">>" : "<<"}

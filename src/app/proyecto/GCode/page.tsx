@@ -1,7 +1,6 @@
 "use client";
 
-
-
 export default function GCodePage() {
-        return null;
+  // Parallel routes (@main and @aside) handle the UI.
+  return null;
 }

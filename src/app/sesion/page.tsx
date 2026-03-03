@@ -90,6 +90,7 @@ export default function Sesion() {
                           placeholder="Nombre de usuario o dirección de email"
                           disabled={isLoading}
                           autoFocus
+                          suppressHydrationWarning
                         />
                       </div>
 
@@ -145,6 +146,7 @@ export default function Sesion() {
                       <button
                         type="submit"
                         disabled={isLoading}
+                        suppressHydrationWarning
                         className={`
                                 w-full py-3 px-4 rounded-lg font-semibold text-white
                                 transition-all duration-200
@@ -229,6 +231,7 @@ export default function Sesion() {
                       onClick={() =>
                         router.push("/recuperar-contrasena")
                       }
+                      suppressHydrationWarning
                     >
                       ¿Olvidaste tu contraseña?
                     </button>

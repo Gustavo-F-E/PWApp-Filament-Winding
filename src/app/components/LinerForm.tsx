@@ -19,6 +19,7 @@ export default function LinerForm({ initialData, onSave, onCancel, title }: Line
   const [linerName, setLinerName] = useState(initialData?.name || "");
   const [linerDescription, setLinerDescription] = useState(initialData?.description || "");
   const [tipoLiner, setTipoLiner] = useState(initialData?.tipo_liner || "simple");
+  const [longitudTotal, setLongitudTotal] = useState(initialData?.longitud_total || 0);
 
   const [extremoInicial, setExtremoInicial] = useState(initialData?.extremo_inicial || {
     tipo: "Ninguno",
@@ -46,12 +47,17 @@ export default function LinerForm({ initialData, onSave, onCancel, title }: Line
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (medio.longitud > longitudTotal) {
+      onValidationError("La longitud útil no puede ser mayor a la longitud total.");
+      return;
+    }
     setIsSubmitting(true);
     try {
       await onSave({
         name: linerName || `Liner ${selectedProject?.name || "Nuevo"}`,
         description: linerDescription,
         tipo_liner: tipoLiner,
+        longitud_total: longitudTotal,
         extremo_inicial: extremoInicial,
         medio: medio,
         extremo_final: extremoFinal,
@@ -190,6 +196,18 @@ export default function LinerForm({ initialData, onSave, onCancel, title }: Line
                 ))}
               </div>
               <div className="grid grid-cols-1 gap-3 text-white-700">
+                <div>
+                  <label className="text-xs font-bold text-blue-600">Longitud total</label>
+                  <input
+                    type="text"
+                    className="w-full border rounded p-1 text-sm font-bold bg-blue-50"
+                    value={isNaN(longitudTotal) ? "" : longitudTotal}
+                    onChange={(e) => {
+                      handleNumericChangeValidation(e, onValidationError);
+                      setLongitudTotal(parseFloat(e.target.value) || 0);
+                    }}
+                  />
+                </div>
                 <div>
                   <label className="text-xs font-bold text-blue-600">Longitud útil</label>
                   <input

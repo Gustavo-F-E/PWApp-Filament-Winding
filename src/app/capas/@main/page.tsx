@@ -210,16 +210,19 @@ export default function CapasDashboard() {
                                   <>
                                     <button
                                       onClick={() => {
+                                        const prevPhysicalIndex = localLayers.slice(0, index).findLastIndex(l => !l.is_system);
+                                        if (prevPhysicalIndex === -1) return;
+
                                         if (isEditingOrder) {
                                           const newLayers = [...localLayers];
-                                          [newLayers[index], newLayers[index - 1]] = [newLayers[index - 1], newLayers[index]];
+                                          [newLayers[index], newLayers[prevPhysicalIndex]] = [newLayers[prevPhysicalIndex], newLayers[index]];
                                           setLocalLayers(newLayers);
                                         } else {
-                                          handleReorderLayer(selectedProject.id, index, index - 1);
+                                          handleReorderLayer(selectedProject.id, index, prevPhysicalIndex);
                                         }
                                       }}
-                                      disabled={index <= 1 || !isEditingOrder} // Cannot move above "Start Layer" or if it is the first physical layer just after start.
-                                      className={`p-1.5 rounded-md transition-all ${isEditingOrder ? "bg-blue-100 text-blue-700 hover:bg-blue-200" : "text-white-300 cursor-not-allowed"}`}
+                                      disabled={localLayers.slice(0, index).findLastIndex(l => !l.is_system) === -1 || !isEditingOrder}
+                                      className={`p-1.5 rounded-md transition-all ${isEditingOrder && localLayers.slice(0, index).findLastIndex(l => !l.is_system) !== -1 ? "bg-blue-100 text-blue-700 hover:bg-blue-200" : "text-white-300 cursor-not-allowed"}`}
                                       title="Subir"
                                     >
                                       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -228,16 +231,20 @@ export default function CapasDashboard() {
                                     </button>
                                     <button
                                       onClick={() => {
+                                        const nextPhysicalIndex = localLayers.slice(index + 1).findIndex(l => !l.is_system);
+                                        if (nextPhysicalIndex === -1) return;
+                                        const actualNextIndex = index + 1 + nextPhysicalIndex;
+
                                         if (isEditingOrder) {
                                           const newLayers = [...localLayers];
-                                          [newLayers[index], newLayers[index + 1]] = [newLayers[index + 1], newLayers[index]];
+                                          [newLayers[index], newLayers[actualNextIndex]] = [newLayers[actualNextIndex], newLayers[index]];
                                           setLocalLayers(newLayers);
                                         } else {
-                                          handleReorderLayer(selectedProject.id, index, index + 1);
+                                          handleReorderLayer(selectedProject.id, index, actualNextIndex);
                                         }
                                       }}
-                                      disabled={index >= localLayers.length - 1 || !isEditingOrder}
-                                      className={`p-1.5 rounded-md transition-all ${isEditingOrder ? "bg-blue-100 text-blue-700 hover:bg-blue-200" : "text-white-300 cursor-not-allowed"}`}
+                                      disabled={localLayers.slice(index + 1).findIndex(l => !l.is_system) === -1 || !isEditingOrder}
+                                      className={`p-1.5 rounded-md transition-all ${isEditingOrder && localLayers.slice(index + 1).findIndex(l => !l.is_system) !== -1 ? "bg-blue-100 text-blue-700 hover:bg-blue-200" : "text-white-300 cursor-not-allowed"}`}
                                       title="Bajar"
                                     >
                                       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

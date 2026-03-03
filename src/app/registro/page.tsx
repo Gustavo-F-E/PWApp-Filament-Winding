@@ -72,12 +72,13 @@ export default function Registro() {
                       value={formData.username}
                       onChange={handleInputChange}
                       className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-white-700 ${errors.username
-                          ? "border-red-300"
-                          : "border-white-300"
+                        ? "border-red-300"
+                        : "border-white-300"
                         }`}
                       placeholder="Ingresa tu nombre de usuario"
                       disabled={isLoading}
                       autoFocus
+                      suppressHydrationWarning
                     />
                     {errors.username && (
                       <p className="mt-1 text-sm text-red-600">
@@ -101,11 +102,12 @@ export default function Registro() {
                       value={formData.email}
                       onChange={handleInputChange}
                       className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-white-700 ${errors.email
-                          ? "border-red-300"
-                          : "border-white-300"
+                        ? "border-red-300"
+                        : "border-white-300"
                         }`}
                       placeholder="Ingresa tu email"
                       disabled={isLoading}
+                      suppressHydrationWarning
                     />
                     {errors.email && (
                       <p className="mt-1 text-sm text-red-600">
@@ -130,8 +132,8 @@ export default function Registro() {
                         value={formData.password}
                         onChange={handleInputChange}
                         className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all pr-12 text-white-700 ${errors.password
-                            ? "border-red-300"
-                            : "border-white-300"
+                          ? "border-red-300"
+                          : "border-white-300"
                           }`}
                         placeholder="Crea una contraseña segura"
                         disabled={isLoading}
@@ -183,8 +185,8 @@ export default function Registro() {
                         value={formData.confirmPassword}
                         onChange={handleInputChange}
                         className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all pr-12 text-white-700 ${errors.confirmPassword
-                            ? "border-red-300"
-                            : "border-white-300"
+                          ? "border-red-300"
+                          : "border-white-300"
                           }`}
                         placeholder="Vuelve a escribir tu contraseña"
                         disabled={isLoading}
@@ -255,6 +257,7 @@ export default function Registro() {
                       handleSubmit(event);
                     }}
                     disabled={isLoading}
+                    suppressHydrationWarning
                     className={`
                 w-full py-3 px-4 rounded-lg font-semibold text-white
                 transition-all duration-200 mb-6

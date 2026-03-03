@@ -31,7 +31,7 @@ interface CapasContextType {
   editingLayer: Layer | null;
   setEditingLayer: React.Dispatch<React.SetStateAction<Layer | null>>;
   isSubmitting: boolean;
-  handleAddLayer: () => Promise<void>;
+  handleAddLayer: (data?: Partial<Layer>) => Promise<void>;
   handleUpdateLayer: (layerId: string, data: Partial<Layer>) => Promise<void>;
   handleDeleteLayer: (layerId: string) => Promise<void>;
   handleReorderLayer: (projectId: string, fromIndex: number, toIndex: number) => Promise<void>;
@@ -155,7 +155,7 @@ export function CapasProvider({ children }: { children: React.ReactNode }) {
     fetchLayers();
   }, [fetchLayers]);
 
-  const handleAddLayer = useCallback(async () => {
+  const handleAddLayer = useCallback(async (data?: Partial<Layer>) => {
     if (!selectedProject) {
       alert("No hay un proyecto seleccionado");
       return;
@@ -167,13 +167,17 @@ export function CapasProvider({ children }: { children: React.ReactNode }) {
       if (!token) throw new Error("No hay sesión activa");
 
       const location = await getCurrentLocation();
+      const payload = data || layerDraft;
       const response = await fetch(`${API_BASE_URL}/layers/?project_id=${selectedProject.id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`
         },
-        body: JSON.stringify({ ...layerDraft, location }),
+        body: JSON.stringify({
+          ...payload,
+          location
+        }),
       });
 
       if (!response.ok) {

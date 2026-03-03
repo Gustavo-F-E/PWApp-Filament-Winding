@@ -35,10 +35,16 @@ export default function MaterialCapaPage() {
 
   // Sincronizar estado local con el draft cuando cambia el draft (ej. al seleccionar material)
   React.useEffect(() => {
-    setLocalEspesor(layerDraft.espesor?.toString() || "");
-    setLocalAncho(layerDraft.ancho?.toString() || "");
-    setLocalCoeficiente(layerDraft.coeficiente_rozamiento?.toString() || "");
-  }, [layerDraft.espesor, layerDraft.ancho, layerDraft.coeficiente_rozamiento, selectedMaterialId, mode]);
+    // Si estamos en modo "existing", buscamos el material seleccionado para mostrar sus datos
+    if (mode === "existing" && selectedMaterialId) {
+      const m = materials.find((mat: any) => mat.id === selectedMaterialId || mat._id === selectedMaterialId);
+      if (m) {
+        setLocalEspesor(m.espesor?.toString() || "");
+        setLocalAncho(m.ancho?.toString() || "");
+        setLocalCoeficiente(m.coeficiente_rozamiento?.toString() || "");
+      }
+    }
+  }, [selectedMaterialId, mode, materials]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -60,13 +66,9 @@ export default function MaterialCapaPage() {
     if (name === "ancho") setLocalAncho(value);
     if (name === "coeficiente_rozamiento") setLocalCoeficiente(value);
 
-    // Actualizar el draft solo si es un número válido
-    // Permitir vacío para borrado
-    const floatVal = parseFloat(value);
-    setLayerDraft(prev => ({
-      ...prev,
-      [name]: isNaN(floatVal) ? 0 : floatVal
-    }));
+    // Actualizar el draft solo si es un nombre o descripción de material (opcional)
+    // Pero los valores numéricos se guardan en el material, no en la capa.
+    // La capa solo guarda el material_name.
   };
 
   const handleModeChange = (newMode: "existing" | "new" | "editing") => {
@@ -79,9 +81,7 @@ export default function MaterialCapaPage() {
       // O mantenerlos. Mejor limpiar para "Nuevo"
       setLayerDraft(prev => ({
         ...prev,
-        espesor: 0,
-        ancho: 0,
-        coeficiente_rozamiento: 0
+        material_name: ""
       }));
     }
   };
@@ -95,12 +95,11 @@ export default function MaterialCapaPage() {
       if (sourceMaterial) {
         setLayerDraft(prev => ({
           ...prev,
-          name: sourceMaterial.name,
-          description: sourceMaterial.description || "",
-          espesor: sourceMaterial.espesor,
-          ancho: sourceMaterial.ancho,
-          coeficiente_rozamiento: sourceMaterial.coeficiente_rozamiento
+          material_name: sourceMaterial.name,
         }));
+        setLocalEspesor(sourceMaterial.espesor?.toString() || "");
+        setLocalAncho(sourceMaterial.ancho?.toString() || "");
+        setLocalCoeficiente(sourceMaterial.coeficiente_rozamiento?.toString() || "");
       }
     }
   };
@@ -139,10 +138,11 @@ export default function MaterialCapaPage() {
         // Limpiar draft
         setLayerDraft(prev => ({
           ...prev,
-          espesor: 0,
-          ancho: 0,
-          coeficiente_rozamiento: 0
+          material_name: "",
         }));
+        setLocalEspesor("");
+        setLocalAncho("");
+        setLocalCoeficiente("");
         alert("Material eliminado correctamente");
       } else {
         alert("Error al eliminar material");
@@ -173,9 +173,9 @@ export default function MaterialCapaPage() {
         const materialData = {
           name: materialName || `Material ${new Date().toLocaleDateString()}`,
           description: materialDescription,
-          espesor: layerDraft.espesor,
-          ancho: layerDraft.ancho,
-          coeficiente_rozamiento: layerDraft.coeficiente_rozamiento,
+          espesor: parseFloat(localEspesor) || 0,
+          ancho: parseFloat(localAncho) || 0,
+          coeficiente_rozamiento: parseFloat(localCoeficiente) || 0,
           location
         };
 
@@ -247,12 +247,9 @@ export default function MaterialCapaPage() {
       if (selectedMaterialId) {
         const m = materials.find((mat: any) => mat.id === selectedMaterialId || mat._id === selectedMaterialId);
         if (m) {
-          setLayerDraft(prev => ({
-            ...prev,
-            espesor: m.espesor,
-            ancho: m.ancho,
-            coeficiente_rozamiento: m.coeficiente_rozamiento
-          }));
+          setLocalEspesor(m.espesor?.toString() || "");
+          setLocalAncho(m.ancho?.toString() || "");
+          setLocalCoeficiente(m.coeficiente_rozamiento?.toString() || "");
         }
       }
     } else {

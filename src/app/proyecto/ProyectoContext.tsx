@@ -27,6 +27,8 @@ export interface LinerSection {
   diametro_menor: number;
   diametro_mayor: number;
   longitud: number;
+  longitud_util?: number; // Alias for longitud for consistency
+  longitud_total?: number;
   diametro: number;
 }
 
@@ -34,6 +36,7 @@ export interface Liner {
   id: string;
   name: string;
   tipo_liner: string;
+  longitud_total: number;
   user_email: string;
   extremo_inicial: LinerSection;
   medio: LinerSection;
@@ -117,6 +120,10 @@ interface ProyectoContextType {
   fetchMachines: () => void;
   materials: Material[];
   fetchMaterials: () => void;
+  gcodeData: any | null;
+  setGcodeData: (val: any | null) => void;
+  isCalculatingGCode: boolean;
+  setIsCalculatingGCode: (val: boolean) => void;
 }
 
 const ProyectoContext = createContext<ProyectoContextType | undefined>(undefined);
@@ -167,6 +174,8 @@ export function ProyectoProvider({ children }: { children: React.ReactNode }) {
   const [selectedLiner, setSelectedLiner] = useState<Liner | null>(null);
   const [selectedMachine, setSelectedMachine] = useState<Machine | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [gcodeData, setGcodeData] = useState<any | null>(null);
+  const [isCalculatingGCode, setIsCalculatingGCode] = useState(false);
 
   const API_BASE_URL = process.env.NEXT_PUBLIC_URL_BACKEND || "http://localhost:8000";
 
@@ -189,7 +198,10 @@ export function ProyectoProvider({ children }: { children: React.ReactNode }) {
         headers,
       });
 
-      if (!response.ok) throw new Error("Error al cargar proyectos");
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Error al cargar proyectos (${response.status}): ${errorText}`);
+      }
 
       const data = await response.json();
       setProjects(data);
@@ -204,33 +216,75 @@ export function ProyectoProvider({ children }: { children: React.ReactNode }) {
     try {
       const token = localStorage.getItem("auth_token");
       if (!token) return;
+
       const response = await fetch(`${API_BASE_URL}/liners/`, {
-        headers: { "Authorization": `Bearer ${token}` }
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json"
+        }
       });
-      if (response.ok) setLiners(await response.json());
-    } catch (err) { console.error("Error fetching liners:", err); }
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error(`Error fetching liners (${response.status}):`, errorText);
+        return;
+      }
+
+      const data = await response.json();
+      setLiners(data);
+    } catch (err) {
+      console.error("Error fetching liners (fetch error):", err);
+    }
   }, [API_BASE_URL]);
 
   const fetchMachines = useCallback(async () => {
     try {
       const token = localStorage.getItem("auth_token");
       if (!token) return;
+
       const response = await fetch(`${API_BASE_URL}/machines/`, {
-        headers: { "Authorization": `Bearer ${token}` }
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json"
+        }
       });
-      if (response.ok) setMachines(await response.json());
-    } catch (err) { console.error("Error fetching machines:", err); }
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error(`Error fetching machines (${response.status}):`, errorText);
+        return;
+      }
+
+      const data = await response.json();
+      setMachines(data);
+    } catch (err) {
+      console.error("Error fetching machines (fetch error):", err);
+    }
   }, [API_BASE_URL]);
 
   const fetchMaterials = useCallback(async () => {
     try {
       const token = localStorage.getItem("auth_token");
       if (!token) return;
+
       const response = await fetch(`${API_BASE_URL}/materials/`, {
-        headers: { "Authorization": `Bearer ${token}` }
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json"
+        }
       });
-      if (response.ok) setMaterials(await response.json());
-    } catch (err) { console.error("Error fetching materials:", err); }
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error(`Error fetching materials (${response.status}):`, errorText);
+        return;
+      }
+
+      const data = await response.json();
+      setMaterials(data);
+    } catch (err) {
+      console.error("Error fetching materials (fetch error):", err);
+    }
   }, [API_BASE_URL]);
 
   useEffect(() => {
@@ -258,6 +312,11 @@ export function ProyectoProvider({ children }: { children: React.ReactNode }) {
       setSelectedProject(latest);
     }
   }, [projects, selectedProject]);
+
+  // Limpiar GCode cuando se cambia de proyecto
+  useEffect(() => {
+    setGcodeData(null);
+  }, [selectedProject]);
 
 
   const toggleAside = useCallback(() => {
@@ -545,13 +604,18 @@ export function ProyectoProvider({ children }: { children: React.ReactNode }) {
     fetchMachines,
     materials,
     fetchMaterials,
+    gcodeData,
+    setGcodeData,
+    isCalculatingGCode,
+    setIsCalculatingGCode,
   }), [
     projects, liners, machines, loading, error, showForm, editingProject, editingLiner, editingMachine,
     selectedProject, selectedLiner, selectedMachine,
     isSubmitting, isAsideOpen, isAsideVisible, toggleAside,
     handleFormSubmit, handleEditClick, handleEditLiner, handleEditMachine, handleDeleteProject,
     handleDeleteLiner, handleDeleteMachine, handleUpdateLiner, handleUpdateMachine, handleCancelForm,
-    fetchProjects, fetchLiners, fetchMachines, materials, fetchMaterials
+    fetchProjects, fetchLiners, fetchMachines, materials, fetchMaterials,
+    gcodeData, isCalculatingGCode
   ]);
 
   return (
